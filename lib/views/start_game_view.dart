@@ -1,3 +1,4 @@
+import 'package:chaperone/views/select_game_view.dart';
 import 'package:flutter/material.dart';
 
 class GameLandingPage extends StatefulWidget {
@@ -117,13 +118,25 @@ class GameLandingPageState extends State<GameLandingPage>
     );
   }
 
-  Widget _buildGameIconAndButton() {
+  Widget _buildGameIconAndButton({
+    String? imageUrl,
+    double iconSize = 200,
+    Color iconBackgroundColor = Colors.white,
+    Color iconColor = const Color(0xFFB3E0FF),
+    String buttonText = 'Start Game',
+    Color buttonForegroundColor = const Color(0xFFB3E0FF),
+    Color buttonBackgroundColor = Colors.white,
+    double buttonFontSize = 24,
+    EdgeInsets buttonPadding =
+        const EdgeInsets.symmetric(horizontal: 50, vertical: 20),
+    VoidCallback? onPressed,
+  }) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Container(
-          width: 200,
-          height: 200,
+          width: iconSize,
+          height: iconSize,
           decoration: BoxDecoration(
             shape: BoxShape.circle,
             boxShadow: [
@@ -136,15 +149,15 @@ class GameLandingPageState extends State<GameLandingPage>
           ),
           child: ClipOval(
             child: Image.network(
-              'https://your-game-icon-url.com/icon.png',
+              imageUrl ?? 'https://your-game-icon-url.com/icon.png',
               fit: BoxFit.cover,
               errorBuilder: (context, error, stackTrace) {
                 return Container(
-                  color: Colors.white,
+                  color: iconBackgroundColor,
                   child: Icon(
                     Icons.games,
-                    size: 100,
-                    color: Color(0xFFB3E0FF),
+                    size: iconSize / 2,
+                    color: iconColor,
                   ),
                 );
               },
@@ -155,22 +168,27 @@ class GameLandingPageState extends State<GameLandingPage>
         ScaleTransition(
           scale: _pulseAnimation,
           child: ElevatedButton(
-            onPressed: () {
-              // Add game start logic here
-            },
+            onPressed: onPressed ??
+                () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const StoryCarousel()),
+                  );
+                },
             style: ElevatedButton.styleFrom(
-              foregroundColor: Color(0xFFB3E0FF),
-              backgroundColor: Colors.white,
-              padding: EdgeInsets.symmetric(horizontal: 50, vertical: 20),
+              foregroundColor: buttonForegroundColor,
+              backgroundColor: buttonBackgroundColor,
+              padding: buttonPadding,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(30),
               ),
               elevation: 8,
             ),
-            child: const Text(
-              'Start Game',
+            child: Text(
+              buttonText,
               style: TextStyle(
-                fontSize: 24,
+                fontSize: buttonFontSize,
                 fontWeight: FontWeight.bold,
               ),
             ),
