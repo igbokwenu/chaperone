@@ -1,3 +1,4 @@
+import 'package:chaperone/test2.dart';
 import 'package:flutter/material.dart';
 
 // Mock data model
@@ -228,7 +229,7 @@ class StoryCard extends StatelessWidget {
                     const Spacer(),
                     ElevatedButton(
                       onPressed: () {
-                        // Implement play functionality
+                        Navigator.pop(context);
                       },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Colors.blue,
