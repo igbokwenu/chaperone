@@ -9,18 +9,38 @@ dependencies:
   flutter:
     sdk: flutter
   cupertino_icons: ^1.0.8
-  firebase_core: ^3.6.0
+  firebase_core: ^3.9.0
   firebase_auth: ^5.3.1
-  firebase_storage: ^12.3.4
+  firebase_storage: ^12.3.7
   google_sign_in: ^6.2.1
   firebase_vertexai: ^1.0.1
   google_generative_ai: ^0.4.6
   flutter_riverpod: ^2.6.1
+  cloud_firestore: ^5.6.0
+  shared_preferences: ^2.3.4
+  toastification: ^2.3.0
+  url_launcher: ^6.3.1
+  http: ^1.2.2
+  amplify_flutter: ^2.5.0
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_lints: ^4.0.0
+# To launch run: dart run flutter_native_splash:create
+  flutter_native_splash: ^2.4.3
+# To launch run: dart run flutter_launcher_icons
+  flutter_launcher_icons: ^0.14.2
+flutter_native_splash:
+  color: "#212121"
+  image: "assets/images/logo.png"
+flutter_icons:
+  image_path: "assets/images/logo_only_4x.png"
+  android: true
+  ios: true
+  web:
+   generate: true
+   image_path: "assets/images/logo_only_4x.png"
 flutter:
   uses-material-design: true
 
