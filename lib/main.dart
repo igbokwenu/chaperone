@@ -1,6 +1,4 @@
-import 'package:chaperone/test.dart';
 import 'package:chaperone/test2.dart';
-import 'package:chaperone/views/start_game_view.dart';
 import 'package:flutter/material.dart';
 
 void main() {

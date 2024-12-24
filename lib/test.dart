@@ -84,10 +84,10 @@ class DiscoverScreen extends StatelessWidget {
                       color: Colors.grey[200],
                       borderRadius: BorderRadius.circular(12),
                     ),
-                    child: Row(
+                    child: const Row(
                       children: [
                         Icon(Icons.trending_up, size: 16),
-                        const SizedBox(width: 4),
+                        SizedBox(width: 4),
                         Text('3,580'),
                       ],
                     ),
@@ -200,8 +200,8 @@ class StoryCard extends StatelessWidget {
                       ),
                     ),
                     if (scenario.isVerified)
-                      Padding(
-                        padding: const EdgeInsets.only(left: 4),
+                      const Padding(
+                        padding: EdgeInsets.only(left: 4),
                         child: Icon(
                           Icons.verified,
                           color: Colors.blue,

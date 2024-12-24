@@ -36,7 +36,7 @@ class GameLandingPageState extends State<GameLandingPage>
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           gradient: LinearGradient(
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
@@ -57,7 +57,7 @@ class GameLandingPageState extends State<GameLandingPage>
                   width: isLandscape
                       ? constraints.maxWidth * 0.8
                       : constraints.maxWidth,
-                  padding: EdgeInsets.symmetric(horizontal: 20),
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
                   child: isLandscape
                       ? Row(
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -88,10 +88,10 @@ class GameLandingPageState extends State<GameLandingPage>
   }
 
   Widget _buildTitleAndSubtitle() {
-    return Column(
+    return const Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        const Text(
+        Text(
           'Chaperone',
           style: TextStyle(
             fontSize: 48,
@@ -106,7 +106,7 @@ class GameLandingPageState extends State<GameLandingPage>
             ],
           ),
         ),
-        const Text(
+        Text(
           'Stories That Serve You',
           style: TextStyle(
             fontSize: 24,
@@ -137,7 +137,7 @@ class GameLandingPageState extends State<GameLandingPage>
         Container(
           width: iconSize,
           height: iconSize,
-          decoration: BoxDecoration(
+          decoration: const BoxDecoration(
             shape: BoxShape.circle,
             boxShadow: [
               BoxShadow(

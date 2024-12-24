@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 class StoryCard extends StatefulWidget {
   final Story story;
 
-  StoryCard({required this.story});
+  const StoryCard({super.key, required this.story});
 
   @override
   State<StoryCard> createState() => _StoryCardState();
@@ -185,11 +185,11 @@ class HomeScreenState extends State<HomeScreen> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Padding(
-              padding: EdgeInsets.all(16.0),
+              padding: const EdgeInsets.all(16.0),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text(
+                  const Text(
                     'Discover',
                     style: TextStyle(
                       fontSize: 38,
@@ -206,10 +206,10 @@ class HomeScreenState extends State<HomeScreen> {
                       color: Colors.grey[200],
                       borderRadius: BorderRadius.circular(12),
                     ),
-                    child: Row(
+                    child: const Row(
                       children: [
                         Icon(Icons.trending_up, size: 16),
-                        const SizedBox(width: 4),
+                        SizedBox(width: 4),
                         Text('3,580'),
                       ],
                     ),
