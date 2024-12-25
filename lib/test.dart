@@ -1,6 +1,7 @@
 import 'package:chaperone/test2.dart';
 import 'package:chaperone/utils/reusable_functions.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 // Mock data model
 class StoryScenario {
@@ -415,12 +416,14 @@ class StoryPreviewCard extends StatelessWidget {
                     icon: const Icon(Icons.arrow_back),
                     onPressed: () => Navigator.pop(context),
                   ),
-                  const SizedBox(width: 8),
-                  Text(
-                    scenario.title,
-                    style: const TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
+                  const Spacer(),
+                  Center(
+                    child: Text(
+                      scenario.title,
+                      style: const TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                   ),
                   const Spacer(),
@@ -443,7 +446,10 @@ class StoryPreviewCard extends StatelessWidget {
                     width: double.infinity,
                     height: double.infinity,
                     child: ClipRRect(
-                      borderRadius: BorderRadius.circular(24),
+                      borderRadius: const BorderRadius.only(
+                        topLeft: Radius.circular(24),
+                        topRight: Radius.circular(24),
+                      ),
                       child: Image.network(
                         scenario.thumbnailUrl,
                         fit: BoxFit.cover,
@@ -504,16 +510,23 @@ class StoryPreviewCard extends StatelessWidget {
                             ),
                           ),
                           const SizedBox(width: 8),
-                          // Social media buttons
+                          Text(
+                            scenario.author,
+                            style: const TextStyle(
+                              color: Colors.white70,
+                              fontSize: 14,
+                            ),
+                          ),
+                          const Spacer(),
                           Row(
                             children: [
                               IconButton(
-                                icon: const Icon(Icons.flutter_dash,
+                                icon: const Icon(FontAwesomeIcons.twitter,
                                     color: Colors.white),
                                 onPressed: () {},
                               ),
                               IconButton(
-                                icon: const Icon(Icons.camera_alt,
+                                icon: const Icon(FontAwesomeIcons.instagram,
                                     color: Colors.white),
                                 onPressed: () {},
                               ),
@@ -562,7 +575,7 @@ class StoryPreviewCard extends StatelessWidget {
                                   borderRadius: BorderRadius.circular(20),
                                 ),
                               ),
-                              child: const Text('Play'),
+                              child: const Text('Start Game'),
                             ),
                           ],
                         ),
