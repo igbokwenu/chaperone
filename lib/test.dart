@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:chaperone/test2.dart';
 import 'package:chaperone/utils/reusable_functions.dart';
 import 'package:flutter/material.dart';
@@ -15,25 +17,30 @@ class StoryScenario {
   final int comments;
   final bool isBookmarked;
   final String? description;
+  final String? questionOne;
+  final String? questionOneImage;
 
-  StoryScenario(
-      {required this.id,
-      required this.title,
-      required this.author,
-      required this.thumbnailUrl,
-      required this.isVerified,
-      required this.views,
-      required this.likes,
-      required this.comments,
-      this.isBookmarked = false,
-      this.description});
+  StoryScenario({
+    required this.id,
+    required this.title,
+    required this.author,
+    required this.thumbnailUrl,
+    required this.isVerified,
+    required this.views,
+    required this.likes,
+    required this.comments,
+    this.isBookmarked = false,
+    this.description,
+    this.questionOne,
+    this.questionOneImage,
+  });
 }
 
 // Mock data
 List<StoryScenario> mockScenarios = [
   StoryScenario(
     id: '1',
-    title: 'Job Interview',
+    title: 'The Job Interview',
     author: 'By Yuhang Han',
     thumbnailUrl:
         'https://firebasestorage.googleapis.com/v0/b/chaperonegame.firebasestorage.app/o/placeholder_images%2Fimage9.png?alt=media&token=3325b642-0ccf-419f-b6f7-2453a3844359',
@@ -43,11 +50,15 @@ List<StoryScenario> mockScenarios = [
     comments: 6780,
     isBookmarked: false,
     description:
-        'How do you handle workplace discrimination in a job interview.',
+        'Enter the shoes of a determined woman who dares to shatter societal prejudices and workplace stereotypes. In this gripping narrative game, you face a grueling job interview where every question becomes a battlefield. Will you let their biases define you, or will you turn the tables with wit, resilience, and undeniable competence?',
+    questionOne:
+        'The hiring manager looks at you with a smile and asks, \n"So, are you married? Do you have plans to have children soon? How will you manage the demands of this job with family responsibilities?"',
+    questionOneImage:
+        'https://firebasestorage.googleapis.com/v0/b/chaperonegame.firebasestorage.app/o/placeholder_images%2Fimage1.png?alt=media&token=8e7ba19f-8446-4e20-ba85-212f44e2c481',
   ),
   StoryScenario(
     id: '2',
-    title: 'He Was A Vampire',
+    title: 'Bloodlines of the Heart',
     author: 'By Jonathan Stiller',
     thumbnailUrl:
         'https://firebasestorage.googleapis.com/v0/b/chaperonegame.firebasestorage.app/o/placeholder_images%2Fimage10.png?alt=media&token=73ff6db0-8a45-421f-8774-a73e3ac37749',
@@ -57,7 +68,7 @@ List<StoryScenario> mockScenarios = [
     comments: 5430,
     isBookmarked: true,
     description:
-        'He is a vampire, but he is desperately in love with me. Can his love for me overcome his beastly thirst for blood?',
+        "He is a vampire, but he is desperately in love with me. Can his love for me overcome his beastly thirst for blood? \nStep into a world where love defies the very laws of nature. You, a mortal with a heart full of life, find yourself irresistibly drawn to a centuries-old vampire whose very existence revolves around the essence of human blood. His love for you burns brighter than the eternal moonlight, but his monstrous instincts threaten to tear you apart.",
   ),
 ];
 
@@ -568,14 +579,32 @@ class StoryPreviewCard extends StatelessWidget {
                                 _formatNumber(scenario.comments)),
                             const Spacer(),
                             ElevatedButton(
-                              onPressed: () {},
+                              onPressed: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => QuestionCard(
+                                      scenario: scenario,
+                                      onTimeUp: () {
+                                        MyReusableFunctions.showCustomDialog(
+                                            context: context,
+                                            message:
+                                                'Time Up! Looks like you are struggling with - ${scenario.title} 😈');
+                                      },
+                                    ),
+                                  ),
+                                );
+                              },
                               style: ElevatedButton.styleFrom(
                                 backgroundColor: Colors.blue,
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(20),
                                 ),
                               ),
-                              child: const Text('Start Game'),
+                              child: const Text(
+                                'Start Game',
+                                style: TextStyle(color: Colors.white),
+                              ),
                             ),
                           ],
                         ),
@@ -618,5 +647,210 @@ class StoryPreviewCard extends StatelessWidget {
       return '${(number / 1000).toStringAsFixed(1)}k';
     }
     return number.toString();
+  }
+}
+
+class QuestionCard extends StatefulWidget {
+  final StoryScenario scenario;
+  final VoidCallback onTimeUp;
+
+  const QuestionCard({
+    Key? key,
+    required this.scenario,
+    required this.onTimeUp,
+  }) : super(key: key);
+
+  @override
+  State<QuestionCard> createState() => _QuestionCardState();
+}
+
+class _QuestionCardState extends State<QuestionCard>
+    with SingleTickerProviderStateMixin {
+  late Timer _timer;
+  double _progress = 1.0;
+  final int _totalSeconds = 20;
+  late AnimationController _animationController;
+  late Animation<double> _scaleAnimation;
+
+  @override
+  void initState() {
+    super.initState();
+    startTimer();
+
+    _animationController = AnimationController(
+      duration: const Duration(seconds: 20),
+      vsync: this,
+    );
+
+    _scaleAnimation = Tween<double>(
+      begin: 1.0,
+      end: 1.2,
+    ).animate(_animationController);
+
+    _animationController.forward();
+  }
+
+  void startTimer() {
+    const duration = Duration(milliseconds: 50);
+    _timer = Timer.periodic(duration, (Timer timer) {
+      setState(() {
+        _progress -= 1 / (_totalSeconds * 20); // Update 20 times per second
+        if (_progress <= 0) {
+          _progress -= 1 / (_totalSeconds * 20); // Update 20 times per second
+          timer.cancel();
+          widget.onTimeUp();
+        }
+      });
+    });
+  }
+
+  @override
+  void dispose() {
+    _timer.cancel();
+    _animationController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Stack(
+        children: [
+          // Question image
+          if (widget.scenario.questionOneImage != null)
+            AnimatedBuilder(
+              animation: _scaleAnimation,
+              builder: (context, child) {
+                return Transform.scale(
+                  scale: _scaleAnimation.value,
+                  child: Image.network(
+                    widget.scenario.questionOneImage!,
+                    width: double.infinity,
+                    height: double.infinity,
+                    fit: BoxFit.cover,
+                  ),
+                );
+              },
+            ),
+          Column(
+            children: [
+              SafeArea(
+                child: Container(
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                      begin: Alignment.topCenter,
+                      end: Alignment.bottomCenter,
+                      colors: [
+                        Colors.black.withOpacity(0.5),
+                        Colors.transparent,
+                      ],
+                    ),
+                  ),
+                  child: Column(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                        child: Row(
+                          children: [
+                            IconButton(
+                              icon: const Icon(Icons.arrow_back,
+                                  color: Colors.white),
+                              onPressed: () => Navigator.pop(context),
+                            ),
+                            Expanded(
+                              child: Center(
+                                child: Text(
+                                  widget.scenario.title,
+                                  style: const TextStyle(
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.white,
+                                  ),
+                                ),
+                              ),
+                            ),
+                            IconButton(
+                              icon:
+                                  const Icon(Icons.close, color: Colors.white),
+                              onPressed: () => Navigator.pop(context),
+                            ),
+                          ],
+                        ),
+                      ),
+                      // Timer bar
+                      Padding(
+                        padding: EdgeInsets.symmetric(
+                          horizontal: MediaQuery.of(context).size.width * 0.2,
+                        ),
+                        child: ClipRRect(
+                          child: LinearProgressIndicator(
+                            value: _progress,
+                            backgroundColor: Colors.white.withOpacity(0.3),
+                            valueColor: const AlwaysStoppedAnimation<Color>(
+                                Colors.blue),
+                            minHeight: 4,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              Expanded(
+                child: Align(
+                  alignment: Alignment.bottomCenter,
+                  child: Container(
+                    padding: const EdgeInsets.all(16),
+                    decoration: BoxDecoration(
+                      gradient: LinearGradient(
+                        begin: Alignment.topCenter,
+                        end: Alignment.bottomCenter,
+                        colors: [
+                          Colors.transparent,
+                          Colors.black.withOpacity(0.8),
+                        ],
+                      ),
+                    ),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Padding(
+                          padding: EdgeInsets.symmetric(
+                            horizontal: MediaQuery.of(context).size.width * 0.2,
+                          ),
+                          child: Divider(
+                            color: Colors.white.withOpacity(0.5),
+                            thickness: 1,
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 8.0),
+                          child: Text(
+                            widget.scenario.questionOne ?? '',
+                            style: const TextStyle(
+                              color: Colors.white,
+                              fontSize: 16,
+                            ),
+                          ),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.symmetric(
+                            horizontal: MediaQuery.of(context).size.width * 0.2,
+                          ),
+                          child: Divider(
+                            color: Colors.white.withOpacity(0.5),
+                            thickness: 1,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
   }
 }
