@@ -19,6 +19,8 @@ class StoryScenario {
   final String? description;
   final String? questionOne;
   final String? questionOneImage;
+  final String? answer1a;
+  final String? answer1b;
 
   StoryScenario({
     required this.id,
@@ -33,6 +35,8 @@ class StoryScenario {
     this.description,
     this.questionOne,
     this.questionOneImage,
+    this.answer1a,
+    this.answer1b,
   });
 }
 
@@ -55,6 +59,9 @@ List<StoryScenario> mockScenarios = [
         'The hiring manager looks at you with a smile and asks, \n"So, are you married? Do you have plans to have children soon? How will you manage the demands of this job with family responsibilities?"',
     questionOneImage:
         'https://firebasestorage.googleapis.com/v0/b/chaperonegame.firebasestorage.app/o/placeholder_images%2Fimage1.png?alt=media&token=8e7ba19f-8446-4e20-ba85-212f44e2c481',
+    answer1a:
+        'You feel uncomfortable but decide to respond politely. "I\'d prefer to focus on my qualifications and how I can contribute to the company. My personal life should not impact my professional abilities."',
+    answer1b: 'I am married and have plans to have children.',
   ),
   StoryScenario(
     id: '2',
