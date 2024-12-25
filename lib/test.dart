@@ -57,7 +57,7 @@ List<StoryScenario> mockScenarios = [
     description:
         'Enter the shoes of a determined woman who dares to shatter societal prejudices and workplace stereotypes. In this gripping narrative game, you face a grueling job interview where every question becomes a battlefield. Will you let their biases define you, or will you turn the tables with wit, resilience, and undeniable competence?',
     questionOne:
-        'The hiring manager looks at you with a smile and asks, \n"So, are you married? Do you have plans to have children soon? How will you manage the demands of this job with family responsibilities?"',
+        'The hiring manager looks at you with a smile and asks: "So, are you married? Do you have plans to have children soon? How will you manage the demands of this job with family responsibilities?"',
     questionOneImage:
         'https://firebasestorage.googleapis.com/v0/b/chaperonegame.firebasestorage.app/o/placeholder_images%2Fimage1.png?alt=media&token=8e7ba19f-8446-4e20-ba85-212f44e2c481',
     answer1a:
