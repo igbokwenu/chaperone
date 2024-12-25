@@ -32,7 +32,7 @@ List<StoryScenario> mockScenarios = [
   StoryScenario(
     id: '1',
     title: 'Job Interview',
-    author: 'Author',
+    author: 'By Yuhang Han',
     thumbnailUrl:
         'https://firebasestorage.googleapis.com/v0/b/chaperonegame.firebasestorage.app/o/placeholder_images%2Fimage9.png?alt=media&token=3325b642-0ccf-419f-b6f7-2453a3844359',
     isVerified: true,
@@ -43,8 +43,8 @@ List<StoryScenario> mockScenarios = [
   ),
   StoryScenario(
     id: '2',
-    title: 'Market Analysis',
-    author: 'Name of the Author',
+    title: 'He Was A Vampire',
+    author: 'By Jonathan Stiller',
     thumbnailUrl:
         'https://firebasestorage.googleapis.com/v0/b/chaperonegame.firebasestorage.app/o/placeholder_images%2Fimage10.png?alt=media&token=73ff6db0-8a45-421f-8774-a73e3ac37749',
     isVerified: true,
@@ -282,36 +282,43 @@ class StoryCard extends StatelessWidget {
                 right: 0,
                 child: Padding(
                   padding: const EdgeInsets.all(16.0),
-                  child: Row(
-                    children: [
-                      _buildGlossyStat(Icons.visibility_outlined,
-                          _formatNumber(scenario.views)),
-                      const SizedBox(width: 16),
-                      _buildGlossyStat(
-                          Icons.favorite_border, _formatNumber(scenario.likes)),
-                      const SizedBox(width: 16),
-                      _buildGlossyStat(Icons.chat_bubble_outline,
-                          _formatNumber(scenario.comments)),
-                      const Spacer(),
-                      ElevatedButton(
-                        onPressed: () {
-                          MyReusableFunctions.showProcessingToast();
-                          // Navigator.push(
-                          //   context,
-                          //   MaterialPageRoute(
-                          //       builder: (context) => const DiscoverScreen()),
-                          // );
-                        },
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.blue,
-                          foregroundColor: Colors.white,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(20),
-                          ),
-                        ),
-                        child: const Text('Play'),
+                  child: Container(
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                    decoration: BoxDecoration(
+                      color: Colors.black.withOpacity(0.3),
+                      borderRadius: BorderRadius.circular(50),
+                      border: Border.all(
+                        color: Colors.white.withOpacity(0.2),
+                        width: 1,
                       ),
-                    ],
+                    ),
+                    child: Row(
+                      children: [
+                        _buildGlossyStat(Icons.visibility_outlined,
+                            _formatNumber(scenario.views)),
+                        const SizedBox(width: 16),
+                        _buildGlossyStat(Icons.favorite_border,
+                            _formatNumber(scenario.likes)),
+                        const SizedBox(width: 16),
+                        _buildGlossyStat(Icons.chat_bubble_outline,
+                            _formatNumber(scenario.comments)),
+                        const Spacer(),
+                        ElevatedButton(
+                          onPressed: () {
+                            MyReusableFunctions.showProcessingToast();
+                          },
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.blue,
+                            foregroundColor: Colors.white,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(20),
+                            ),
+                          ),
+                          child: const Text('Play'),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),
@@ -323,33 +330,22 @@ class StoryCard extends StatelessWidget {
   }
 
   Widget _buildGlossyStat(IconData icon, String value) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-      decoration: BoxDecoration(
-        color: Colors.black.withOpacity(0.3),
-        borderRadius: BorderRadius.circular(8),
-        border: Border.all(
-          color: Colors.white.withOpacity(0.2),
-          width: 1,
+    return Row(
+      children: [
+        Icon(
+          icon,
+          size: 20,
+          color: Colors.white70,
         ),
-      ),
-      child: Row(
-        children: [
-          Icon(
-            icon,
-            size: 20,
+        const SizedBox(width: 4),
+        Text(
+          value,
+          style: const TextStyle(
             color: Colors.white70,
+            fontSize: 14,
           ),
-          const SizedBox(width: 4),
-          Text(
-            value,
-            style: const TextStyle(
-              color: Colors.white70,
-              fontSize: 14,
-            ),
-          ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 
