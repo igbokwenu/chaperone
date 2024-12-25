@@ -95,7 +95,7 @@ class MyReusableFunctions {
     String description = '', // Required parameter
     ToastificationType type = ToastificationType.info,
     ToastificationStyle style = ToastificationStyle.flat,
-    String title = "Processing... please wait",
+    String title = "Loading Game...",
     Alignment alignment = Alignment.topCenter,
     Duration duration = const Duration(seconds: 4),
     BorderRadius borderRadius = const BorderRadius.all(Radius.circular(12.0)),
@@ -166,7 +166,7 @@ class MyReusableFunctions {
     );
   }
 
-static String generateRandomUsername() {
+  static String generateRandomUsername() {
     // List of name prefixes
     final List<String> namePrefixes = [
       "Shadow",
