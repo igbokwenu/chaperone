@@ -7,6 +7,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 // Mock data model
 class StoryScenario {
+// Mock data model
   final String id;
   final String title;
   final String author;
@@ -61,7 +62,8 @@ List<StoryScenario> mockScenarios = [
         'https://firebasestorage.googleapis.com/v0/b/chaperonegame.firebasestorage.app/o/placeholder_images%2Fimage1.png?alt=media&token=8e7ba19f-8446-4e20-ba85-212f44e2c481',
     answer1a:
         'You feel uncomfortable but decide to respond politely. "I\'d prefer to focus on my qualifications and how I can contribute to the company. My personal life should not impact my professional abilities."',
-    answer1b: 'I am married and have plans to have children.',
+    answer1b:
+        'You smile and say "I am married and have plans to have children."',
   ),
   StoryScenario(
     id: '2',
@@ -76,6 +78,14 @@ List<StoryScenario> mockScenarios = [
     isBookmarked: true,
     description:
         "He is a vampire, but he is desperately in love with me. Can his love for me overcome his beastly thirst for blood? \nStep into a world where love defies the very laws of nature. You, a mortal with a heart full of life, find yourself irresistibly drawn to a centuries-old vampire whose very existence revolves around the essence of human blood. His love for you burns brighter than the eternal moonlight, but his monstrous instincts threaten to tear you apart.",
+    questionOne:
+        'You find yourself alone with him under the full moon. His crimson eyes glow faintly, filled with both love and torment. He says, \n"I can no longer deny it—I thirst for you, in every possible way. Tell me, do you trust me enough to resist my darkest instincts?"',
+    questionOneImage:
+        'https://firebasestorage.googleapis.com/v0/b/chaperonegame.firebasestorage.app/o/placeholder_images%2Fimage2.png?alt=media&token=4b8b52c0-34fe-40cb-b6fb-374c717d89c0',
+    answer1a:
+        'You take a deep breath and reply, "I trust you with all my heart. I believe love can conquer even the darkest shadows within you."',
+    answer1b:
+        'You hesitate, tears welling up in your eyes. "I want to trust you, but how can I be sure your love will always prevail over your thirst?"',
   ),
 ];
 
@@ -593,10 +603,137 @@ class StoryPreviewCard extends StatelessWidget {
                                     builder: (context) => QuestionCard(
                                       scenario: scenario,
                                       onTimeUp: () {
-                                        MyReusableFunctions.showCustomDialog(
-                                            context: context,
-                                            message:
-                                                'Time Up! Looks like you are struggling with - ${scenario.title} 😈');
+                                        showModalBottomSheet(
+                                          context: context,
+                                          backgroundColor: Colors.transparent,
+                                          builder: (BuildContext context) {
+                                            return Container(
+                                              padding: const EdgeInsets.all(24),
+                                              decoration: BoxDecoration(
+                                                color: Colors.white
+                                                    .withOpacity(0.9),
+                                                borderRadius:
+                                                    const BorderRadius.only(
+                                                  topLeft: Radius.circular(32),
+                                                  topRight: Radius.circular(32),
+                                                ),
+                                                boxShadow: [
+                                                  BoxShadow(
+                                                    color: Colors.black
+                                                        .withOpacity(0.2),
+                                                    blurRadius: 10,
+                                                    spreadRadius: 2,
+                                                  )
+                                                ],
+                                                border: Border.all(
+                                                  color: Colors.white
+                                                      .withOpacity(0.3),
+                                                  width: 1.5,
+                                                ),
+                                              ),
+                                              child: Column(
+                                                mainAxisSize: MainAxisSize.min,
+                                                children: [
+                                                  Container(
+                                                    width: 40,
+                                                    height: 4,
+                                                    margin:
+                                                        const EdgeInsets.only(
+                                                            bottom: 20),
+                                                    decoration: BoxDecoration(
+                                                      color: Colors.grey
+                                                          .withOpacity(0.3),
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              2),
+                                                    ),
+                                                  ),
+                                                  ElevatedButton(
+                                                    onPressed: () {
+                                                      Navigator.pop(context);
+                                                      MyReusableFunctions
+                                                          .showCustomDialog(
+                                                        context: context,
+                                                        message:
+                                                            'Next Question is not yet ready 🥲 \n\nStay tuned for updates on - ${scenario.title}',
+                                                      );
+                                                    },
+                                                    style: ElevatedButton
+                                                        .styleFrom(
+                                                      minimumSize: const Size(
+                                                          double.infinity, 56),
+                                                      backgroundColor: Colors
+                                                          .white
+                                                          .withOpacity(0.9),
+                                                      elevation: 8,
+                                                      shadowColor: Colors.blue
+                                                          .withOpacity(0.5),
+                                                      shape:
+                                                          RoundedRectangleBorder(
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(16),
+                                                      ),
+                                                      padding:
+                                                          const EdgeInsets.all(
+                                                              16),
+                                                    ),
+                                                    child: Text(
+                                                      scenario.answer1a ?? '',
+                                                      style: const TextStyle(
+                                                        color: Colors.black,
+                                                        fontSize: 16,
+                                                        fontWeight:
+                                                            FontWeight.w600,
+                                                      ),
+                                                    ),
+                                                  ),
+                                                  const SizedBox(height: 16),
+                                                  ElevatedButton(
+                                                    onPressed: () {
+                                                      Navigator.pop(context);
+                                                      MyReusableFunctions
+                                                          .showCustomDialog(
+                                                        context: context,
+                                                        message:
+                                                            'Next Question is not yet ready 🥲 \n\nStay tuned for updates on - ${scenario.title}',
+                                                      );
+                                                    },
+                                                    style: ElevatedButton
+                                                        .styleFrom(
+                                                      minimumSize: const Size(
+                                                          double.infinity, 56),
+                                                      backgroundColor: Colors
+                                                          .white
+                                                          .withOpacity(0.9),
+                                                      elevation: 8,
+                                                      shadowColor: Colors.blue
+                                                          .withOpacity(0.5),
+                                                      shape:
+                                                          RoundedRectangleBorder(
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(16),
+                                                      ),
+                                                      padding:
+                                                          const EdgeInsets.all(
+                                                              16),
+                                                    ),
+                                                    child: Text(
+                                                      scenario.answer1b ?? '',
+                                                      style: const TextStyle(
+                                                        color: Colors.black,
+                                                        fontSize: 16,
+                                                        fontWeight:
+                                                            FontWeight.w600,
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                            );
+                                          },
+                                        );
                                       },
                                     ),
                                   ),
