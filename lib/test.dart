@@ -799,10 +799,10 @@ class QuestionCard extends StatefulWidget {
   final VoidCallback onTimeUp;
 
   const QuestionCard({
-    Key? key,
+    super.key,
     required this.scenario,
     required this.onTimeUp,
-  }) : super(key: key);
+  });
 
   @override
   State<QuestionCard> createState() => _QuestionCardState();

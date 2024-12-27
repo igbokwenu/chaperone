@@ -31,7 +31,7 @@ class HomeScreenG extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: Colors.white,
         elevation: 0,
-        title: Text(
+        title: const Text(
           "Discover",
           style: TextStyle(
             color: Colors.black,
@@ -39,9 +39,9 @@ class HomeScreenG extends StatelessWidget {
             fontWeight: FontWeight.bold,
           ),
         ),
-        actions: [
+        actions: const [
           Padding(
-            padding: const EdgeInsets.only(right: 16.0),
+            padding: EdgeInsets.only(right: 16.0),
             child: Row(
               children: [
                 Icon(Icons.notifications_none, color: Colors.black),
@@ -61,7 +61,7 @@ class HomeScreenG extends StatelessWidget {
             padding: const EdgeInsets.all(16.0),
             child: TextField(
               decoration: InputDecoration(
-                prefixIcon: Icon(Icons.search),
+                prefixIcon: const Icon(Icons.search),
                 hintText: "Search",
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(30),
@@ -109,12 +109,12 @@ class HomeScreenG extends StatelessWidget {
                                     children: [
                                       Text(
                                         story["title"],
-                                        style: TextStyle(
+                                        style: const TextStyle(
                                           fontSize: 18,
                                           fontWeight: FontWeight.bold,
                                         ),
                                       ),
-                                      Icon(
+                                      const Icon(
                                         Icons.verified,
                                         color: Colors.blue,
                                         size: 20,
@@ -123,24 +123,24 @@ class HomeScreenG extends StatelessWidget {
                                   ),
                                   Text(
                                     story["author"],
-                                    style: TextStyle(color: Colors.grey),
+                                    style: const TextStyle(color: Colors.grey),
                                   ),
-                                  SizedBox(height: 8),
+                                  const SizedBox(height: 8),
                                   Row(
                                     children: [
-                                      Icon(Icons.remove_red_eye,
+                                      const Icon(Icons.remove_red_eye,
                                           size: 16, color: Colors.grey),
-                                      SizedBox(width: 4),
+                                      const SizedBox(width: 4),
                                       Text("${story["views"]}"),
-                                      SizedBox(width: 16),
-                                      Icon(Icons.favorite,
+                                      const SizedBox(width: 16),
+                                      const Icon(Icons.favorite,
                                           size: 16, color: Colors.grey),
-                                      SizedBox(width: 4),
+                                      const SizedBox(width: 4),
                                       Text("${story["likes"]}"),
-                                      SizedBox(width: 16),
-                                      Icon(Icons.comment,
+                                      const SizedBox(width: 16),
+                                      const Icon(Icons.comment,
                                           size: 16, color: Colors.grey),
-                                      SizedBox(width: 4),
+                                      const SizedBox(width: 4),
                                       Text("${story["comments"]}"),
                                     ],
                                   ),
@@ -155,11 +155,12 @@ class HomeScreenG extends StatelessWidget {
                           child: ElevatedButton(
                             onPressed: () {},
                             style: ElevatedButton.styleFrom(
-                              shape: CircleBorder(),
-                              padding: EdgeInsets.all(12),
+                              shape: const CircleBorder(),
+                              padding: const EdgeInsets.all(12),
                               backgroundColor: Colors.blue,
                             ),
-                            child: Icon(Icons.play_arrow, color: Colors.white),
+                            child: const Icon(Icons.play_arrow,
+                                color: Colors.white),
                           ),
                         ),
                       ],
@@ -172,7 +173,7 @@ class HomeScreenG extends StatelessWidget {
         ],
       ),
       bottomNavigationBar: BottomNavigationBar(
-        items: [
+        items: const [
           BottomNavigationBarItem(
             icon: Icon(Icons.home),
             label: "Home",
