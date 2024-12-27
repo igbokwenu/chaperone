@@ -33,10 +33,10 @@ dev_dependencies:
 # To launch run: dart run flutter_launcher_icons
   flutter_launcher_icons: ^0.14.2
 flutter_native_splash:
-  color: "#212121"
-  image: "assets/images/logo_4x.png"
+  color: "#000000"
+  image: "assets/images/logo_4x_black_bg.jpeg"
 flutter_icons:
-  image_path: "assets/images/logo_only_4x.png"
+  image_path: "assets/images/logo_only_4x_black_bg.jpeg"
   android: true
   ios: true
   web:
