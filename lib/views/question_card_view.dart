@@ -3,8 +3,6 @@ import 'dart:async';
 import 'package:chaperone/models/story_model.dart';
 import 'package:flutter/material.dart';
 
-import '';
-
 class QuestionCard extends StatefulWidget {
   final StoryScenario scenario;
   final VoidCallback onTimeUp;
@@ -23,7 +21,7 @@ class _QuestionCardState extends State<QuestionCard>
     with SingleTickerProviderStateMixin {
   late Timer _timer;
   double _progress = 1.0;
-  final int _totalSeconds = 20;
+  final int _totalSeconds = 12;
   late AnimationController _animationController;
   late Animation<double> _scaleAnimation;
 
@@ -33,7 +31,7 @@ class _QuestionCardState extends State<QuestionCard>
     startTimer();
 
     _animationController = AnimationController(
-      duration: const Duration(seconds: 20),
+      duration: Duration(seconds: _totalSeconds),
       vsync: this,
     );
 
