@@ -163,10 +163,10 @@ class StoryPreviewCard extends StatelessWidget {
                           children: [
                             _buildStat(Icons.visibility_outlined,
                                 _formatNumber(scenario.views)),
-                            const SizedBox(width: 16),
+                            const SizedBox(width: 8),
                             _buildStat(Icons.favorite_border,
                                 _formatNumber(scenario.likes)),
-                            const SizedBox(width: 16),
+                            const SizedBox(width: 8),
                             _buildStat(Icons.chat_bubble_outline,
                                 _formatNumber(scenario.comments)),
                             const Spacer(),
@@ -234,13 +234,6 @@ class StoryPreviewCard extends StatelessWidget {
                                                           ),
                                                         ),
                                                       );
-                                                      // Navigator.pop(context);
-                                                      // MyReusableFunctions
-                                                      //     .showCustomDialog(
-                                                      //   context: context,
-                                                      //   message:
-                                                      //       'Next Question is not yet ready 🥲 \n\nStay tuned for updates on - ${scenario.title}',
-                                                      // );
                                                     },
                                                     style: ElevatedButton
                                                         .styleFrom(
@@ -284,13 +277,6 @@ class StoryPreviewCard extends StatelessWidget {
                                                           ),
                                                         ),
                                                       );
-                                                      // Navigator.pop(context);
-                                                      // MyReusableFunctions
-                                                      //     .showCustomDialog(
-                                                      //   context: context,
-                                                      //   message:
-                                                      //       'Next Question is not yet ready 🥲 \n\nStay tuned for updates on - ${scenario.title}',
-                                                      // );
                                                     },
                                                     style: ElevatedButton
                                                         .styleFrom(

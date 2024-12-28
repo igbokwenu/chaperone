@@ -162,7 +162,7 @@ class _ResultViewState extends State<ResultView> with TickerProviderStateMixin {
                             borderRadius: BorderRadius.circular(8),
                           ),
                           child: const Text(
-                            'Suggests the player is uncomfortable with bias but prefers to focus on professionalism or address the issue privately rather than openly.',
+                            'You are uncomfortable with bias but prefer to focus on professionalism or address the issue privately rather than openly.',
                             style: TextStyle(
                               color: Colors.white,
                               fontSize: 16,

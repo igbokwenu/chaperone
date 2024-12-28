@@ -140,10 +140,10 @@ class StoryCard extends StatelessWidget {
                       children: [
                         _buildGlossyStat(Icons.visibility_outlined,
                             _formatNumber(scenario.views)),
-                        const SizedBox(width: 16),
+                        const SizedBox(width: 12),
                         _buildGlossyStat(Icons.favorite_border,
                             _formatNumber(scenario.likes)),
-                        const SizedBox(width: 16),
+                        const SizedBox(width: 12),
                         _buildGlossyStat(Icons.chat_bubble_outline,
                             _formatNumber(scenario.comments)),
                         const Spacer(),
@@ -186,7 +186,7 @@ class StoryCard extends StatelessWidget {
           size: 20,
           color: Colors.white70,
         ),
-        const SizedBox(width: 4),
+        const SizedBox(width: 2),
         Text(
           value,
           style: const TextStyle(
