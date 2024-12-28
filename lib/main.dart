@@ -1,4 +1,4 @@
-import 'package:chaperone/views/discovery_view.dart';
+import 'package:chaperone/views/home_view.dart';
 import 'package:flutter/material.dart';
 import 'package:toastification/toastification.dart';
 
@@ -19,7 +19,7 @@ class MyApp extends StatelessWidget {
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
           useMaterial3: true,
         ),
-        home: const DiscoverScreen(),
+        home: const HomeView(),
       ),
     );
   }

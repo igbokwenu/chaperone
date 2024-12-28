@@ -99,3 +99,19 @@ const homeImageVideoResource = 'assets/images/viewing_phone.jpeg';
 const String communityImageUrl =
     'https://firebasestorage.googleapis.com/v0/b/anecdotalhq.appspot.com/o/general%2Fapp_branding_images%2Fcommunity_avatar.jpeg?alt=media&token=233d4f87-3ac4-409b-a1b6-2df1fbd27487';
 
+const String createGamePitchText = """
+Bring Your Stories to Life in a Game!
+
+Step into the exciting world of interactive storytelling. Create your own game about “anything”! Whether it's a story inspired by true events, an emotional journey from your life, a fantastical fiction, or a topic you're passionate about, the possibilities are endless!
+
+Here, you are doing more than just creating a game—it's a chance to connect. Use your creation to spark meaningful conversations, process emotions in a creative way, or share a unique perspective with those you care about. Invite your friends and family to play, making your stories come alive in a fun, engaging way!  
+
+Why create a game?  
+- A Creative Outlet: Channel your ideas, emotions, and imagination into an interactive masterpiece.  
+- Deeper Connections: Share your experiences and perspectives in a way that words alone can't express.  
+- A Safe Space: Explore sensitive or difficult topics in a non-confrontational, immersive way.  
+- Collaborative Fun: Invite others to explore your world and experience your story, turning every playthrough into a shared moment of joy, curiosity, or reflection.  
+- Empowerment Through Storytelling: Shape the narrative, decide the outcomes, and make your voice heard.  
+
+Whether you're looking to heal, entertain, or simply explore your creativity, Chaperone offers a unique and rewarding way to do it. Create, share, and game on—your story deserves to be told ❤️
+""";
