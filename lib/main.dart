@@ -1,6 +1,4 @@
-import 'package:chaperone/test.dart';
-import 'package:chaperone/test2.dart';
-import 'package:chaperone/test3.dart';
+import 'package:chaperone/views/discovery_view.dart';
 import 'package:flutter/material.dart';
 import 'package:toastification/toastification.dart';
 
