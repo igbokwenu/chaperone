@@ -196,6 +196,7 @@ class _ResultViewState extends State<ResultView> with TickerProviderStateMixin {
                         onPressed: () {},
                         child: Text(
                           'Stay tuned for more games by ${widget.scenario.author}',
+                          textAlign: TextAlign.center,
                           style: TextStyle(
                             color: Colors.white,
                             fontSize: 16,

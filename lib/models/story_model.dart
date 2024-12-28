@@ -36,7 +36,7 @@ List<StoryScenario> mockScenarios = [
   StoryScenario(
     id: '1',
     title: 'The Job Interview',
-    author: 'By Yuhang Han',
+    author: 'Yuhang Han',
     thumbnailUrl:
         'https://firebasestorage.googleapis.com/v0/b/chaperonegame.firebasestorage.app/o/placeholder_images%2Fimage9.png?alt=media&token=3325b642-0ccf-419f-b6f7-2453a3844359',
     isVerified: true,
@@ -58,7 +58,7 @@ List<StoryScenario> mockScenarios = [
   StoryScenario(
     id: '2',
     title: 'Bloodlines of the Heart',
-    author: 'By Jonathan Stiller',
+    author: 'Jonathan Stiller',
     thumbnailUrl:
         'https://firebasestorage.googleapis.com/v0/b/chaperonegame.firebasestorage.app/o/placeholder_images%2Fimage10.png?alt=media&token=73ff6db0-8a45-421f-8774-a73e3ac37749',
     isVerified: true,

@@ -109,7 +109,7 @@ class StoryCard extends StatelessWidget {
                       ),
                       const SizedBox(height: 4),
                       Text(
-                        scenario.author,
+                        'By ${scenario.author}',
                         style: const TextStyle(
                           color: Colors.white70,
                           fontSize: 14,
