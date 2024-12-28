@@ -1,6 +1,7 @@
 import 'package:chaperone/models/story_model.dart';
 import 'package:chaperone/utils/reusable_functions.dart';
 import 'package:chaperone/views/question_card_view.dart';
+import 'package:chaperone/views/result_view.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
@@ -224,13 +225,22 @@ class StoryPreviewCard extends StatelessWidget {
                                                   ),
                                                   ElevatedButton(
                                                     onPressed: () {
-                                                      Navigator.pop(context);
-                                                      MyReusableFunctions
-                                                          .showCustomDialog(
-                                                        context: context,
-                                                        message:
-                                                            'Next Question is not yet ready 🥲 \n\nStay tuned for updates on - ${scenario.title}',
+                                                      Navigator.push(
+                                                        context,
+                                                        MaterialPageRoute(
+                                                          builder: (context) =>
+                                                              ResultView(
+                                                            scenario: scenario,
+                                                          ),
+                                                        ),
                                                       );
+                                                      // Navigator.pop(context);
+                                                      // MyReusableFunctions
+                                                      //     .showCustomDialog(
+                                                      //   context: context,
+                                                      //   message:
+                                                      //       'Next Question is not yet ready 🥲 \n\nStay tuned for updates on - ${scenario.title}',
+                                                      // );
                                                     },
                                                     style: ElevatedButton
                                                         .styleFrom(
@@ -265,13 +275,22 @@ class StoryPreviewCard extends StatelessWidget {
                                                   const SizedBox(height: 16),
                                                   ElevatedButton(
                                                     onPressed: () {
-                                                      Navigator.pop(context);
-                                                      MyReusableFunctions
-                                                          .showCustomDialog(
-                                                        context: context,
-                                                        message:
-                                                            'Next Question is not yet ready 🥲 \n\nStay tuned for updates on - ${scenario.title}',
+                                                      Navigator.push(
+                                                        context,
+                                                        MaterialPageRoute(
+                                                          builder: (context) =>
+                                                              ResultView(
+                                                            scenario: scenario,
+                                                          ),
+                                                        ),
                                                       );
+                                                      // Navigator.pop(context);
+                                                      // MyReusableFunctions
+                                                      //     .showCustomDialog(
+                                                      //   context: context,
+                                                      //   message:
+                                                      //       'Next Question is not yet ready 🥲 \n\nStay tuned for updates on - ${scenario.title}',
+                                                      // );
                                                     },
                                                     style: ElevatedButton
                                                         .styleFrom(
