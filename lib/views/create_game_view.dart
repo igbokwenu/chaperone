@@ -1,4 +1,6 @@
 import 'package:chaperone/utils/constants/constants.dart';
+import 'package:chaperone/utils/reusable_functions.dart';
+import 'package:chaperone/views/home_view.dart';
 import 'package:flutter/material.dart';
 
 class CreateGameView extends StatelessWidget {
@@ -24,6 +26,17 @@ class CreateGameView extends StatelessWidget {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
+                          IconButton(
+                            icon: const Icon(Icons.arrow_back),
+                            onPressed: () {
+                              Navigator.of(context).pushAndRemoveUntil(
+                                MaterialPageRoute(
+                                  builder: (context) => const HomeView(),
+                                ),
+                                (route) => false,
+                              );
+                            },
+                          ),
                           const Spacer(),
                           const Text(
                             'The World Awaits',
@@ -58,12 +71,14 @@ class CreateGameView extends StatelessWidget {
                         borderRadius: BorderRadius.circular(20),
                         child: Stack(
                           children: [
-                            // Background Image
-                            Image.network(
-                              'https://firebasestorage.googleapis.com/v0/b/chaperonegame.firebasestorage.app/o/placeholder_images%2Fimage11.png?alt=media&token=971206dc-72f9-4d68-840c-eeffee94da73',
-                              fit: BoxFit.cover,
+                            // Background Image with Animation
+                            SizedBox(
                               height: 400,
                               width: double.infinity,
+                              child: _AnimatedBackgroundImage(
+                                imageUrl:
+                                    'https://firebasestorage.googleapis.com/v0/b/chaperonegame.firebasestorage.app/o/placeholder_images%2Fimage11.png?alt=media&token=971206dc-72f9-4d68-840c-eeffee94da73',
+                              ),
                             ),
 
                             // Gradient Overlay
@@ -88,7 +103,11 @@ class CreateGameView extends StatelessWidget {
                               right: 0,
                               child: Center(
                                 child: TextButton(
-                                  onPressed: () {},
+                                  onPressed: () {
+                                    MyReusableFunctions.showCustomToast(
+                                      description: 'Coming Soon. Stay Tuned!',
+                                    );
+                                  },
                                   child: Container(
                                     padding: const EdgeInsets.symmetric(
                                       horizontal: 24,
@@ -116,7 +135,7 @@ class CreateGameView extends StatelessWidget {
                                   ),
                                   const SizedBox(width: 8),
                                   Text(
-                                    'Name of the Author',
+                                    'Author',
                                     style: TextStyle(
                                       color: Colors.white.withOpacity(0.9),
                                       fontSize: 14,
@@ -130,20 +149,31 @@ class CreateGameView extends StatelessWidget {
                       ),
                     ),
 
-                    // About Section
                     const Padding(
                       padding: EdgeInsets.symmetric(horizontal: 16.0),
                       child: Align(
                         alignment: Alignment.centerLeft,
                         child: Text(
                           createGamePitchText,
+                          textAlign: TextAlign.center,
                           style: TextStyle(
                             color: Colors.black54,
-                            fontSize: 16,
+                            fontSize: 14,
                           ),
                         ),
                       ),
                     ),
+                    ElevatedButton(
+                      onPressed: () {
+                        MyReusableFunctions.showCustomToast(
+                          description: 'Coming Soon. Stay Tuned!',
+                        );
+                      },
+                      child: _AnimatedButtonText(),
+                    ),
+                    SizedBox(
+                      height: MediaQuery.of(context).size.height * 0.05,
+                    )
                   ],
                 ),
               ),
@@ -151,6 +181,77 @@ class CreateGameView extends StatelessWidget {
           ],
         ),
       ),
+    );
+  }
+}
+
+class _AnimatedBackgroundImage extends StatefulWidget {
+  final String imageUrl;
+
+  const _AnimatedBackgroundImage({required this.imageUrl});
+
+  @override
+  _AnimatedBackgroundImageState createState() =>
+      _AnimatedBackgroundImageState();
+}
+
+class _AnimatedBackgroundImageState extends State<_AnimatedBackgroundImage>
+    with TickerProviderStateMixin {
+  late AnimationController _scaleController;
+  late AnimationController _positionController;
+  late Animation<double> _scaleAnimation;
+  late Animation<double> _positionAnimation;
+
+  @override
+  void initState() {
+    super.initState();
+
+    _scaleController = AnimationController(
+      duration: const Duration(seconds: 40),
+      vsync: this,
+    )..repeat(reverse: true);
+
+    _positionController = AnimationController(
+      duration: const Duration(seconds: 40),
+      vsync: this,
+    )..repeat(reverse: true);
+
+    _scaleAnimation = Tween<double>(
+      begin: 1.0,
+      end: 1.2,
+    ).animate(_scaleController);
+
+    _positionAnimation = Tween<double>(
+      begin: 0.0,
+      end: 30.0,
+    ).animate(_positionController);
+  }
+
+  @override
+  void dispose() {
+    _scaleController.dispose();
+    _positionController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return AnimatedBuilder(
+      animation: Listenable.merge([_scaleController, _positionController]),
+      builder: (context, child) {
+        return Transform.scale(
+          scale: _scaleAnimation.value,
+          child: Transform.translate(
+            offset: Offset(0, -_positionAnimation.value),
+            child: Image.network(
+              widget.imageUrl,
+              fit: BoxFit.cover,
+              height: 400,
+              width: double.infinity,
+            ),
+          ),
+        );
+      },
     );
   }
 }
@@ -184,7 +285,7 @@ class _AnimatedButtonTextState extends State<_AnimatedButtonText> {
   Widget build(BuildContext context) {
     return AnimatedCrossFade(
       firstChild: const Text(
-        'Create A New Game',
+        'Create Your Game',
         style: TextStyle(
           color: Colors.black87,
           fontSize: 16,

@@ -1,4 +1,5 @@
 import 'package:chaperone/models/story_model.dart';
+import 'package:chaperone/views/home_view.dart';
 import 'package:flutter/material.dart';
 
 class ResultView extends StatefulWidget {
@@ -86,7 +87,11 @@ class _ResultViewState extends State<ResultView> with TickerProviderStateMixin {
                     children: [
                       IconButton(
                         icon: const Icon(Icons.arrow_back, color: Colors.white),
-                        onPressed: () => Navigator.pop(context),
+                        onPressed: () {
+                          Navigator.pop(context);
+                          Navigator.pop(context);
+                          Navigator.pop(context);
+                        },
                       ),
                       Expanded(
                         child: Text(
@@ -101,7 +106,14 @@ class _ResultViewState extends State<ResultView> with TickerProviderStateMixin {
                       ),
                       IconButton(
                         icon: const Icon(Icons.close, color: Colors.white),
-                        onPressed: () => Navigator.pop(context),
+                        onPressed: () {
+                          Navigator.of(context).pushAndRemoveUntil(
+                            MaterialPageRoute(
+                              builder: (context) => const HomeView(),
+                            ),
+                            (route) => false,
+                          );
+                        },
                       ),
                     ],
                   ),
@@ -176,7 +188,14 @@ class _ResultViewState extends State<ResultView> with TickerProviderStateMixin {
                             borderRadius: BorderRadius.circular(25),
                           ),
                         ),
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.of(context).pushAndRemoveUntil(
+                            MaterialPageRoute(
+                              builder: (context) => const HomeView(),
+                            ),
+                            (route) => false,
+                          );
+                        },
                         child: const Text(
                           'Next Game',
                           style: TextStyle(

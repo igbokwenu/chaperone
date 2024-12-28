@@ -100,9 +100,7 @@ const String communityImageUrl =
     'https://firebasestorage.googleapis.com/v0/b/anecdotalhq.appspot.com/o/general%2Fapp_branding_images%2Fcommunity_avatar.jpeg?alt=media&token=233d4f87-3ac4-409b-a1b6-2df1fbd27487';
 
 const String createGamePitchText = """
-Bring Your Stories to Life in a Game!
-
-Step into the exciting world of interactive storytelling. Create your own game about “anything”! Whether it's a story inspired by true events, an emotional journey from your life, a fantastical fiction, or a topic you're passionate about, the possibilities are endless!
+Step into the exciting world of interactive storytelling! Create your own game about anything! Whether it's a story inspired by true events, an emotional journey from your life, a fantastical fiction, or a topic you're passionate about, the possibilities are endless!
 
 Here, you are doing more than just creating a game—it's a chance to connect. Use your creation to spark meaningful conversations, process emotions in a creative way, or share a unique perspective with those you care about. Invite your friends and family to play, making your stories come alive in a fun, engaging way!  
 
