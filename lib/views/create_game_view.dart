@@ -207,12 +207,12 @@ class _AnimatedBackgroundImageState extends State<_AnimatedBackgroundImage>
     super.initState();
 
     _scaleController = AnimationController(
-      duration: const Duration(seconds: 40),
+      duration: const Duration(seconds: 25), // Reduced from 40 to 25 seconds
       vsync: this,
     )..repeat(reverse: true);
 
     _positionController = AnimationController(
-      duration: const Duration(seconds: 40),
+      duration: const Duration(seconds: 25), // Reduced from 40 to 25 seconds
       vsync: this,
     )..repeat(reverse: true);
 

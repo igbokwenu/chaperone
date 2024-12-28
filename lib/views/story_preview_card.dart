@@ -163,10 +163,10 @@ class StoryPreviewCard extends StatelessWidget {
                           children: [
                             _buildStat(Icons.visibility_outlined,
                                 _formatNumber(scenario.views)),
-                            const SizedBox(width: 8),
+                            const SizedBox(width: 16),
                             _buildStat(Icons.favorite_border,
                                 _formatNumber(scenario.likes)),
-                            const SizedBox(width: 8),
+                            const SizedBox(width: 16),
                             _buildStat(Icons.chat_bubble_outline,
                                 _formatNumber(scenario.comments)),
                             const Spacer(),
@@ -325,7 +325,7 @@ class StoryPreviewCard extends StatelessWidget {
                                 ),
                               ),
                               child: const Text(
-                                'Start Game',
+                                'Start',
                                 style: TextStyle(color: Colors.white),
                               ),
                             ),
