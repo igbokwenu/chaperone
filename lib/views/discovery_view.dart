@@ -1,5 +1,4 @@
 import 'package:chaperone/models/story_model.dart';
-import 'package:chaperone/views/create_game_view.dart';
 import 'package:chaperone/views/story_card_view.dart';
 import 'package:flutter/material.dart';
 

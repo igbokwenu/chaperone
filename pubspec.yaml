@@ -32,18 +32,20 @@ dev_dependencies:
   flutter_native_splash: ^2.4.3
 # To launch run: dart run flutter_launcher_icons
   flutter_launcher_icons: ^0.14.2
-flutter_native_splash:
-  color: "#212121"
-  image: "assets/images/logo_4x.png"
-flutter_icons:
-  image_path: "assets/images/logo_only_4x.png"
+flutter_launcher_icons:
+  image_path: "assets/images/logo_only_4x_black_bg_1152.jpeg"
   adaptive_icon_background: "#212121"
-  adaptive_icon_foreground: "assets/images/logo_only_4x.png"
+  adaptive_icon_foreground: "assets/images/logo_only_4x_black_bg_1152.jpeg"
   android: true
   ios: true
+  min_sdk_android: 21
   web:
    generate: true
    image_path: "assets/images/logo_only_4x.png"
+flutter_native_splash:
+  color: "#212121"
+  image: "assets/images/logo_4x.png"
+
 flutter:
   uses-material-design: true
 

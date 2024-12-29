@@ -72,7 +72,7 @@ class CreateGameView extends StatelessWidget {
                         child: Stack(
                           children: [
                             // Background Image with Animation
-                            SizedBox(
+                            const SizedBox(
                               height: 400,
                               width: double.infinity,
                               child: _AnimatedBackgroundImage(
@@ -285,7 +285,7 @@ class _AnimatedButtonTextState extends State<_AnimatedButtonText> {
   Widget build(BuildContext context) {
     return AnimatedCrossFade(
       firstChild: const Text(
-        'Create Your Game',
+        'Create A Game',
         style: TextStyle(
           color: Colors.black87,
           fontSize: 16,

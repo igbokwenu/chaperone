@@ -1,5 +1,4 @@
 import 'package:chaperone/models/story_model.dart';
-import 'package:chaperone/utils/reusable_functions.dart';
 import 'package:chaperone/views/question_card_view.dart';
 import 'package:chaperone/views/result_view.dart';
 import 'package:flutter/material.dart';

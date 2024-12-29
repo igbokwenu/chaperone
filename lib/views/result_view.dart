@@ -58,7 +58,7 @@ class _ResultViewState extends State<ResultView> with TickerProviderStateMixin {
                 return Transform.scale(
                   scale: _animation.value,
                   child: Container(
-                    decoration: BoxDecoration(
+                    decoration: const BoxDecoration(
                       image: DecorationImage(
                         image: NetworkImage(
                             'https://firebasestorage.googleapis.com/v0/b/chaperonegame.firebasestorage.app/o/placeholder_images%2Fimage7.png?alt=media&token=00568f96-1310-4e57-9dbb-8c324c44c0ff'),
@@ -96,7 +96,7 @@ class _ResultViewState extends State<ResultView> with TickerProviderStateMixin {
                       Expanded(
                         child: Text(
                           widget.scenario.title,
-                          style: TextStyle(
+                          style: const TextStyle(
                             color: Colors.white,
                             fontSize: 20,
                             fontWeight: FontWeight.w500,
@@ -216,7 +216,7 @@ class _ResultViewState extends State<ResultView> with TickerProviderStateMixin {
                         child: Text(
                           'Stay tuned for more games by ${widget.scenario.author}',
                           textAlign: TextAlign.center,
-                          style: TextStyle(
+                          style: const TextStyle(
                             color: Colors.white,
                             fontSize: 16,
                           ),
