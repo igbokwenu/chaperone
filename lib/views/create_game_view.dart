@@ -1,3 +1,4 @@
+import 'package:chaperone/test.dart';
 import 'package:chaperone/utils/constants/constants.dart';
 import 'package:chaperone/utils/reusable_functions.dart';
 import 'package:chaperone/views/home_view.dart';
@@ -104,8 +105,11 @@ class CreateGameView extends StatelessWidget {
                               child: Center(
                                 child: TextButton(
                                   onPressed: () {
-                                    MyReusableFunctions.showCustomToast(
-                                      description: 'Coming Soon. Stay Tuned!',
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              const TestGeminiScreen()),
                                     );
                                   },
                                   child: Container(
@@ -165,8 +169,10 @@ class CreateGameView extends StatelessWidget {
                     ),
                     ElevatedButton(
                       onPressed: () {
-                        MyReusableFunctions.showCustomToast(
-                          description: 'Coming Soon. Stay Tuned!',
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const TestGeminiScreen()),
                         );
                       },
                       child: _AnimatedButtonText(),
