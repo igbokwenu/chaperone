@@ -3,7 +3,7 @@ import 'package:chaperone/views/home_view.dart';
 import 'package:flutter/material.dart';
 
 class ResultView extends StatefulWidget {
-  final StoryScenario scenario;
+  final StoryModel scenario;
   const ResultView({super.key, required this.scenario});
 
   @override

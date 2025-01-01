@@ -1,4 +1,4 @@
-class StoryScenario {
+class StoryModel {
   final String id;
   final String title;
   final String author;
@@ -14,7 +14,7 @@ class StoryScenario {
   final String? answer1a;
   final String? answer1b;
 
-  StoryScenario({
+  StoryModel({
     required this.id,
     required this.title,
     required this.author,
@@ -32,8 +32,8 @@ class StoryScenario {
   });
 }
 
-List<StoryScenario> mockScenarios = [
-  StoryScenario(
+List<StoryModel> mockScenarios = [
+  StoryModel(
     id: '1',
     title: 'The Job Interview',
     author: 'Yuhang Han',
@@ -55,7 +55,7 @@ List<StoryScenario> mockScenarios = [
     answer1b:
         'You smile and say "I am married and have plans to have children."',
   ),
-  StoryScenario(
+  StoryModel(
     id: '2',
     title: 'Bloodlines of the Heart',
     author: 'Jonathan Stiller',

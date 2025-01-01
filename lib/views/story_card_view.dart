@@ -3,7 +3,7 @@ import 'package:chaperone/views/story_preview_card.dart';
 import 'package:flutter/material.dart';
 
 class StoryCard extends StatelessWidget {
-  final StoryScenario scenario;
+  final StoryModel scenario;
 
   const StoryCard({
     super.key,

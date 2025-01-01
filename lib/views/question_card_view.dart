@@ -4,7 +4,7 @@ import 'package:chaperone/models/story_model.dart';
 import 'package:flutter/material.dart';
 
 class QuestionCard extends StatefulWidget {
-  final StoryScenario scenario;
+  final StoryModel scenario;
   final VoidCallback onTimeUp;
 
   const QuestionCard({

@@ -35,11 +35,11 @@ class MyReusableFunctions {
       path: address ?? "okechukwu@habilisfusion.co",
       query: encodeQueryParameters(<String, String>{
         'subject': uid == null
-            ? 'Enquiries About Anecdotal'
-            : '❤️From Anecdotal App❤️',
+            ? 'Enquiries About Chaperone'
+            : '❤️From Chaperone App❤️',
         'body': uid == null
             ? ''
-            : 'Anecdotal User ID: ${FirebaseAuth.instance.currentUser?.uid} \n\n <--- Add Message Below This Text ---> \n\n',
+            : 'Chaperone User ID: ${FirebaseAuth.instance.currentUser?.uid} \n\n <--- Add Message Below This Text ---> \n\n',
       }),
     );
     if (!await launchUrl(url)) {
