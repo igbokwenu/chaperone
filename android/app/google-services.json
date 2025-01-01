@@ -29,6 +29,13 @@
             {
               "client_id": "338700867842-8mm3i8c3f98upf4pa5jtel2ne052lt4s.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "338700867842-ej4cl0g1lrg659hvt0fmbrkfveiq0t7q.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.increasedw.chaperonegame"
+              }
             }
           ]
         }
