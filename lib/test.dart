@@ -49,7 +49,7 @@ class _TestGeminiScreenState extends State<TestGeminiScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Story Creator UI Test'),
+        title: const Text('Story Creator Test'),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -58,7 +58,7 @@ class _TestGeminiScreenState extends State<TestGeminiScreen> {
             TextField(
               controller: _promptController,
               decoration: const InputDecoration(
-                labelText: 'Enter your prompt',
+                labelText: 'Enter your story prompt',
                 border: OutlineInputBorder(),
               ),
               maxLines: 3,

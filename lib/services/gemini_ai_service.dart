@@ -1,40 +1,6 @@
 import 'package:chaperone/utils/constants/constants.dart';
 import 'package:firebase_vertexai/firebase_vertexai.dart';
-
 import 'dart:convert';
-
-// class GeminiService {
-//   static Future<Map<String, dynamic>?> sendTextPrompt({
-//     required String message,
-//     String? preferredModel,
-//     required String apiKey,
-//   }) async {
-//     final model = GenerativeModel(
-//       model: preferredModel ?? geminiFlashModel,
-//       apiKey: apiKey,
-//       generationConfig: GenerationConfig(
-//         responseMimeType: "application/json",
-//         responseSchema: Schema.object(
-//           properties: {
-//             "summary": Schema.string(),
-//             "insights": Schema.array(items: Schema.string()),
-//             "recommendations": Schema.array(items: Schema.string()),
-//             "suggestions": Schema.array(items: Schema.string()),
-//             "citations": Schema.array(items: Schema.string()),
-//           },
-//         ),
-//       ),
-//     );
-
-//     final content = [Content.text(message)];
-//     final response = await model.generateContent(content);
-
-//     if (response.text != null) {
-//       return jsonDecode(response.text!);
-//     } else {
-//       return null;
-//     }
-//   }}
 
 class GeminiService {
   static String _cleanJsonResponse(String response) {
@@ -58,13 +24,22 @@ class GeminiService {
 
       final prompt = [
         Content.text('''
+        You are a story creator that creates story based game using a prompt provided by a user. The story should have a total of 3 questions and 6 answers and a player will only answer 2 questions per playthrough. Each answer should have a relevant and related follow up question. Each question should have a prompt for image generation that can be used to generate an image that reflects the question asked.
+       
         Respond with a JSON object containing the following fields without any markdown formatting or code blocks:
         {
-          "summary": "string",
-          "insights": ["string"],
-          "recommendations": ["string"],
-          "suggestions": ["string"],
-          "citations": ["string"]
+          "question1": "string",
+          "answer1a": "string",
+          "answer1b": "string",
+          "question1ImagePrompt": "string",
+          "question21a": "string",
+          "answer21a_1": "string",
+          "answer21a_2": "string",
+          "question21aImagePrompt": "string",
+          "question21b": "string",
+          "answer21b_1": "string",
+          "answer21b_2": "string",
+          "question21bImagePrompt": "string",
         }
 
         User message: $message
