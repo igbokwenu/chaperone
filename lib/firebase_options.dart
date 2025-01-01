@@ -73,4 +73,5 @@ class DefaultFirebaseOptions {
     iosClientId: '338700867842-ej4cl0g1lrg659hvt0fmbrkfveiq0t7q.apps.googleusercontent.com',
     iosBundleId: 'com.increasedw.chaperonegame',
   );
+
 }

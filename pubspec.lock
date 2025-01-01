@@ -245,50 +245,50 @@ packages:
     dependency: transitive
     description:
       name: firebase_app_check
-      sha256: b5b3c1df2698d6b6bd183f27fb10fbf61f9a0a564d8ccba3d87d0e0760a9ffea
+      sha256: a43785ac59b3a7dc274c80369e36568dac0cda1122f42faa6ea76149e4953737
       url: "https://pub.dev"
     source: hosted
-    version: "0.3.1+4"
+    version: "0.3.1+7"
   firebase_app_check_platform_interface:
     dependency: transitive
     description:
       name: firebase_app_check_platform_interface
-      sha256: "8dbb826d99c67512212331331461ee142e46645740f1c1209706ca2f72958e57"
+      sha256: c350d1a550228d21eafc964648f93224d473e75d7152af651be72a95e5a9fd27
       url: "https://pub.dev"
     source: hosted
-    version: "0.1.0+38"
+    version: "0.1.0+41"
   firebase_app_check_web:
     dependency: transitive
     description:
       name: firebase_app_check_web
-      sha256: d9cf8d7e7eb904399784ecdc21ac66119ff2a93181bd7a3f8ab43e8220ad0be8
+      sha256: "0ee99f137b91ececce78230a4ce357a6fb694d7e8f3037ac22b96c9025c6c9a5"
       url: "https://pub.dev"
     source: hosted
-    version: "0.2.0"
+    version: "0.2.0+3"
   firebase_auth:
     dependency: "direct main"
     description:
       name: firebase_auth
-      sha256: d453acec0d958ba0e25d41a9901b32cb77d1535766903dea7a61b2788c304596
+      sha256: "03483af6e67b7c4b696ca9386989a6cd5593569e1ac5af6907ea5f7fd9c16d8b"
       url: "https://pub.dev"
     source: hosted
-    version: "5.3.1"
+    version: "5.3.4"
   firebase_auth_platform_interface:
     dependency: transitive
     description:
       name: firebase_auth_platform_interface
-      sha256: "78966c2ef774f5bf2a8381a307222867e9ece3509110500f7a138c115926aa65"
+      sha256: "3e1409f48c48930635705b1237ebbdee8c54c19106a0a4fb321dbb4b642820c4"
       url: "https://pub.dev"
     source: hosted
-    version: "7.4.7"
+    version: "7.4.10"
   firebase_auth_web:
     dependency: transitive
     description:
       name: firebase_auth_web
-      sha256: "77ad3b252badedd3f08dfa21a4c7fe244be96c6da3a4067f253b13ea5d32424c"
+      sha256: d83fe95c44d73c9c29b006ac7df3aa5e1b8ce92b62edc44e8f86250951fe2cd0
       url: "https://pub.dev"
     source: hosted
-    version: "5.13.2"
+    version: "5.13.5"
   firebase_core:
     dependency: "direct main"
     description:
@@ -341,10 +341,10 @@ packages:
     dependency: "direct main"
     description:
       name: firebase_vertexai
-      sha256: c7d7a67a0d3b84e0d2e1b5c68a58df7378a2fab5b6b0481fc4b5344b1ef5454d
+      sha256: "25f7bff29ace7200414e43b32564fe9351f4d8b9644f52471149808c61662468"
       url: "https://pub.dev"
     source: hosted
-    version: "1.0.1"
+    version: "1.0.4"
   fixnum:
     dependency: transitive
     description:
@@ -408,14 +408,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "10.8.0"
-  google_generative_ai:
-    dependency: "direct main"
-    description:
-      name: google_generative_ai
-      sha256: "81dae159c89e4d9bdc46955b6f4ee5ae0a291f9e8f990d76f43944e0d6041d4f"
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.4.6"
   google_identity_services_web:
     dependency: transitive
     description:
