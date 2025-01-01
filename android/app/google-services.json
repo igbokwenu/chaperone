@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "338700867842",
+    "project_id": "chaperonegame",
+    "storage_bucket": "chaperonegame.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:338700867842:android:5b20594c0a7ff7a9954a1b",
+        "android_client_info": {
+          "package_name": "com.increasedw.chaperone"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "338700867842-8mm3i8c3f98upf4pa5jtel2ne052lt4s.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA2G4QXQauRdmBs2U4MsKGItJuJUdx6abI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "338700867842-8mm3i8c3f98upf4pa5jtel2ne052lt4s.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
