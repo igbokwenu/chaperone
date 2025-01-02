@@ -1,6 +1,5 @@
 import 'package:chaperone/test.dart';
 import 'package:chaperone/utils/constants/constants.dart';
-import 'package:chaperone/utils/reusable_functions.dart';
 import 'package:chaperone/views/home_view.dart';
 import 'package:flutter/material.dart';
 

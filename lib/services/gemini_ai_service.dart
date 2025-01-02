@@ -1,4 +1,3 @@
-import 'package:chaperone/utils/constants/constants.dart';
 import 'package:firebase_vertexai/firebase_vertexai.dart';
 import 'dart:convert';
 
