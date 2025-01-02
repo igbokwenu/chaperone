@@ -149,7 +149,7 @@ class TestGeminiScreenState extends State<TestGeminiScreen> {
                               color: Colors.grey[50],
                               borderRadius: BorderRadius.circular(12),
                             ),
-                            child: Text(
+                            child: SelectableText(
                               _response,
                               style: const TextStyle(fontSize: 15, height: 1.5),
                             ),

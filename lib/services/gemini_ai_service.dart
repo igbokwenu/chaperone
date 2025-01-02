@@ -35,6 +35,10 @@ For each question, provide an image generation prompt that captures the scene or
 
 Respond with a JSON object using this exact structure:
 {
+  "title": "A compelling and captivating title for the story",
+  "synopsis": "An engaging and intriguing description of the story.",
+  "previewImagePrompt": "A prompt to generate a captivating image for the story listing",
+  
   "question1": "The initial question",
   "answer1a": "First option for question 1",
   "answer1b": "Second option for question 1",

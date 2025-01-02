@@ -1,5 +1,5 @@
 class StoryModel {
-  final String id;
+  final String storyUid;
   final String title;
   final String author;
   final String thumbnailUrl;
@@ -8,14 +8,34 @@ class StoryModel {
   final int likes;
   final int comments;
   final bool isBookmarked;
-  final String? description;
-  final String? questionOne;
-  final String? questionOneImage;
+  final String? synopsis;
+  final String? question1;
+  final String? questionOneImageUrl;
   final String? answer1a;
   final String? answer1b;
+  final int? likeCount;
+  final int? commentCount;
+  final int? playCount;
+  final List<String>? likesUid;
+  final int? shareCount;
+  final bool? isPublished;
+  final bool? isApproved;
+  final bool? isRejected;
+  final bool? isTrending;
+  final bool? isBasedOnTrueStory;
+  final bool? isInspiredByTrueEvent;
+  final bool? isForAdult;
+  final String? gameUid;
+  final String? description;
+  final String? authorName;
+  final String? authorUid;
+  final bool? forMale;
+  final bool? forFemale;
+  final List<String>? followers;
+  final Map<String, dynamic>? storyData;
 
   StoryModel({
-    required this.id,
+    required this.storyUid,
     required this.title,
     required this.author,
     required this.thumbnailUrl,
@@ -24,17 +44,37 @@ class StoryModel {
     required this.likes,
     required this.comments,
     this.isBookmarked = false,
-    this.description,
-    this.questionOne,
-    this.questionOneImage,
+    this.synopsis,
+    this.question1,
+    this.questionOneImageUrl,
     this.answer1a,
     this.answer1b,
+    this.likeCount,
+    this.commentCount,
+    this.playCount,
+    this.likesUid,
+    this.shareCount,
+    this.isPublished,
+    this.isApproved,
+    this.isRejected,
+    this.isTrending,
+    this.isBasedOnTrueStory,
+    this.isInspiredByTrueEvent,
+    this.isForAdult,
+    this.gameUid,
+    this.description,
+    this.authorName,
+    this.authorUid,
+    this.forMale,
+    this.forFemale,
+    this.followers,
+    this.storyData
   });
 }
 
 List<StoryModel> mockScenarios = [
   StoryModel(
-    id: '1',
+    storyUid: '1',
     title: 'The Job Interview',
     author: 'Yuhang Han',
     thumbnailUrl:
@@ -44,19 +84,20 @@ List<StoryModel> mockScenarios = [
     likes: 27800,
     comments: 6780,
     isBookmarked: false,
-    description:
+    synopsis:
         'Enter the shoes of a determined woman who dares to shatter societal prejudices and workplace stereotypes. In this gripping narrative game, you face a grueling job interview where every question becomes a battlefield. Will you let their biases define you, or will you turn the tables with wit, resilience, and undeniable competence?',
-    questionOne:
+    question1:
         'The hiring manager looks at you with a smile and asks: "So, are you married? Do you have plans to have children soon? How will you manage the demands of this job with family responsibilities?"',
-    questionOneImage:
+    questionOneImageUrl:
         'https://firebasestorage.googleapis.com/v0/b/chaperonegame.firebasestorage.app/o/placeholder_images%2Fimage1.png?alt=media&token=8e7ba19f-8446-4e20-ba85-212f44e2c481',
     answer1a:
         'You feel uncomfortable but decide to respond politely. "I\'d prefer to focus on my qualifications and how I can contribute to the company. My personal life should not impact my professional abilities."',
     answer1b:
         'You smile and say "I am married and have plans to have children."',
+        storyData: Map()
   ),
   StoryModel(
-    id: '2',
+    storyUid: '2',
     title: 'Bloodlines of the Heart',
     author: 'Jonathan Stiller',
     thumbnailUrl:
@@ -66,11 +107,11 @@ List<StoryModel> mockScenarios = [
     likes: 24300,
     comments: 5430,
     isBookmarked: true,
-    description:
+    synopsis:
         "He is a vampire, but he is desperately in love with me. Can his love for me overcome his beastly thirst for blood? \nStep into a world where love defies the very laws of nature. You, a mortal with a heart full of life, find yourself irresistibly drawn to a centuries-old vampire whose very existence revolves around the essence of human blood. His love for you burns brighter than the eternal moonlight, but his monstrous instincts threaten to tear you apart.",
-    questionOne:
+    question1:
         'You find yourself alone with him under the full moon. His crimson eyes glow faintly, filled with both love and torment. He says, \n"I can no longer deny it—I thirst for you, in every possible way. Tell me, do you trust me enough to resist my darkest instincts?"',
-    questionOneImage:
+    questionOneImageUrl:
         'https://firebasestorage.googleapis.com/v0/b/chaperonegame.firebasestorage.app/o/placeholder_images%2Fimage2.png?alt=media&token=4b8b52c0-34fe-40cb-b6fb-374c717d89c0',
     answer1a:
         'You take a deep breath and reply, "I trust you with all my heart. I believe love can conquer even the darkest shadows within you."',

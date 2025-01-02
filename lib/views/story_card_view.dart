@@ -25,7 +25,7 @@ class StoryCard extends StatelessWidget {
           Stack(
             children: [
               Hero(
-                tag: 'story-image-${scenario.id}',
+                tag: 'story-image-${scenario.storyUid}',
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(kDefaultPadding),
                   child: Image.network(

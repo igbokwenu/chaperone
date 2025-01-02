@@ -49,7 +49,7 @@ class StoryPreviewCard extends StatelessWidget {
             child: Stack(
               children: [
                 Hero(
-                  tag: 'story-image-${scenario.id}',
+                  tag: 'story-image-${scenario.storyUid}',
                   child: SizedBox(
                     width: double.infinity,
                     height: double.infinity,
@@ -140,7 +140,7 @@ class StoryPreviewCard extends StatelessWidget {
                       ),
                       const SizedBox(height: 16),
                       Text(
-                        scenario.description ?? '',
+                        scenario.synopsis ?? '',
                         style: const TextStyle(
                           color: Colors.white,
                           fontSize: 14,

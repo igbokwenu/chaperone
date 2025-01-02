@@ -69,14 +69,14 @@ class _QuestionCardState extends State<QuestionCard>
     return Scaffold(
       body: Stack(
         children: [
-          if (widget.scenario.questionOneImage != null)
+          if (widget.scenario.questionOneImageUrl != null)
             AnimatedBuilder(
               animation: _scaleAnimation,
               builder: (context, child) {
                 return Transform.scale(
                   scale: _scaleAnimation.value,
                   child: Image.network(
-                    widget.scenario.questionOneImage!,
+                    widget.scenario.questionOneImageUrl!,
                     width: double.infinity,
                     height: double.infinity,
                     fit: BoxFit.cover,
@@ -177,7 +177,7 @@ class _QuestionCardState extends State<QuestionCard>
                         Padding(
                           padding: const EdgeInsets.symmetric(vertical: 8.0),
                           child: Text(
-                            widget.scenario.questionOne ?? '',
+                            widget.scenario.question1 ?? '',
                             style: const TextStyle(
                               color: Colors.white,
                               fontSize: 16,
