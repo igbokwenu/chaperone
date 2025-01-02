@@ -118,9 +118,10 @@ List<StoryModel> mockScenarios = [
   ),
   StoryModel(
     storyUid: '3',
-    title: 'Mirror, Mirror, On The Wall...',
-    author: 'Story Author',
-    thumbnailUrl: 'https://placeholder.com/story-thumbnail',
+    title: 'Mirror, Mirror, On The Wall',
+    author: 'Carlson Jonah',
+    thumbnailUrl:
+        'https://firebasestorage.googleapis.com/v0/b/chaperonegame.firebasestorage.app/o/placeholder_images%2Fimage2.png?alt=media&token=4b8b52c0-34fe-40cb-b6fb-374c717d89c0',
     isVerified: true,
     views: 15000,
     likes: 8500,
