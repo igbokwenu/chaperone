@@ -59,15 +59,7 @@ const String userDevice = 'device';
 const String userTimeStamp = 'timeStamp';
 const String usersMessagingToken = 'messagingToken';
 
-const homeImageTrackProgress = 'assets/images/generate_report_lady.jpeg';
-const homeImageVisualizeProgress = 'assets/images/visualize_healing.jpeg';
-const homeImageAboutUs = 'assets/images/black_woman_doctor.jpeg';
-const homeImageCommunity = 'assets/images/community.jpeg';
-const homeImageToDo = 'assets/images/todo_list.jpeg';
-const homeImageVideoResource = 'assets/images/viewing_phone.jpeg';
-
-const String communityImageUrl =
-    'https://firebasestorage.googleapis.com/v0/b/anecdotalhq.appspot.com/o/general%2Fapp_branding_images%2Fcommunity_avatar.jpeg?alt=media&token=233d4f87-3ac4-409b-a1b6-2df1fbd27487';
+const String placeholderImageUrl = 'https://firebasestorage.googleapis.com/v0/b/chaperonegame.firebasestorage.app/o/placeholder_images%2Fimage12.png?alt=media&token=b761023d-6840-4495-9cc7-731c17206f2f';
 
 const String createGamePitchText = """
 Step into the exciting world of interactive storytelling! Create your own game about anything! Whether it's a story inspired by true events, an emotional journey from your life, a fantastical fiction, or a topic you're passionate about, the possibilities are endless!

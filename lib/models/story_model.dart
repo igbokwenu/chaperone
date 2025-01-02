@@ -153,6 +153,8 @@ final Map<String, dynamic> mirrorStoryBranches = {
         'You stand before a mirror, staring at your reflection. Do you see beauty or flaws?',
     'imagePrompt':
         'A person staring at their reflection in a mirror, with a neutral expression. The mirror is old and ornate, with a chipped frame.',
+    'imageUrl':
+        'https://firebasestorage.googleapis.com/v0/b/chaperonegame.firebasestorage.app/o/placeholder_images%2Fimage12.png?alt=media&token=b761023d-6840-4495-9cc7-731c17206f2f',
     'options': {
       'a': {
         'text': 'I see beauty. I embrace my unique features.',
@@ -169,6 +171,8 @@ final Map<String, dynamic> mirrorStoryBranches = {
         'You smile at your reflection, feeling confident. What do you do next?',
     'imagePrompt':
         'A person standing in front of a mirror, smiling confidently. The background is a sunny cityscape.',
+    'imageUrl':
+        'https://firebasestorage.googleapis.com/v0/b/chaperonegame.firebasestorage.app/o/placeholder_images%2Fimage12.png?alt=media&token=b761023d-6840-4495-9cc7-731c17206f2f',
     'options': {
       'a': {
         'text': 'I walk out into the world, ready to conquer the day.',
@@ -186,6 +190,8 @@ final Map<String, dynamic> mirrorStoryBranches = {
         'You turn away from the mirror, feeling disheartened. What do you do next?',
     'imagePrompt':
         'A person looking away from a mirror, with a sad expression. The room is dimly lit, with shadows cast on the wall.',
+    'imageUrl':
+        'https://firebasestorage.googleapis.com/v0/b/chaperonegame.firebasestorage.app/o/placeholder_images%2Fimage12.png?alt=media&token=b761023d-6840-4495-9cc7-731c17206f2f',
     'options': {
       'a': {
         'text':
@@ -203,6 +209,8 @@ final Map<String, dynamic> mirrorStoryBranches = {
         'You confidently stride through the streets, feeling empowered. What happens next?',
     'imagePrompt':
         'A person walking down a crowded city street, with a confident smile. The sun is shining brightly and people are going about their day.',
+    'imageUrl':
+        'https://firebasestorage.googleapis.com/v0/b/chaperonegame.firebasestorage.app/o/placeholder_images%2Fimage12.png?alt=media&token=b761023d-6840-4495-9cc7-731c17206f2f',
     'options': {
       'a': {
         'text': 'You encounter a stranger who compliments your unique style.',
@@ -220,6 +228,8 @@ final Map<String, dynamic> mirrorStoryBranches = {
         'You post your selfie online, hoping for positive feedback. What happens next?',
     'imagePrompt':
         'A person looking at their phone, scrolling through comments on a social media post, with a hopeful expression. The phone screen is glowing brightly in the dark room.',
+    'imageUrl':
+        'https://firebasestorage.googleapis.com/v0/b/chaperonegame.firebasestorage.app/o/placeholder_images%2Fimage12.png?alt=media&token=b761023d-6840-4495-9cc7-731c17206f2f',
     'options': {
       'a': {
         'text':
@@ -238,6 +248,8 @@ final Map<String, dynamic> mirrorStoryBranches = {
         'You spend hours trying to change your appearance, but feel unsatisfied. What happens next?',
     'imagePrompt':
         'A person surrounded by makeup and beauty products, looking frustrated and overwhelmed. The room is cluttered and messy, with a dim light.',
+    'imageUrl':
+        'https://firebasestorage.googleapis.com/v0/b/chaperonegame.firebasestorage.app/o/placeholder_images%2Fimage12.png?alt=media&token=b761023d-6840-4495-9cc7-731c17206f2f',
     'options': {
       'a': {
         'text':
@@ -256,6 +268,8 @@ final Map<String, dynamic> mirrorStoryBranches = {
         'You seek validation from friends and family, but their responses don\'t satisfy you. What happens next?',
     'imagePrompt':
         'A person sitting alone in a room, surrounded by empty chairs, looking lost and sad. The room is dimly lit, with a single lamp casting a warm glow.',
+    'imageUrl':
+        'https://firebasestorage.googleapis.com/v0/b/chaperonegame.firebasestorage.app/o/placeholder_images%2Fimage12.png?alt=media&token=b761023d-6840-4495-9cc7-731c17206f2f',
     'options': {
       'a': {
         'text':
@@ -274,6 +288,8 @@ final Map<String, dynamic> mirrorStoryBranches = {
         'The stranger\'s compliment makes you feel even more confident. What happens next?',
     'imagePrompt':
         'A person smiling brightly, surrounded by people of different backgrounds and appearances. The background is a vibrant city scene, full of life.',
+    'imageUrl':
+        'https://firebasestorage.googleapis.com/v0/b/chaperonegame.firebasestorage.app/o/placeholder_images%2Fimage12.png?alt=media&token=b761023d-6840-4495-9cc7-731c17206f2f',
     'options': {
       'a': {
         'text':
@@ -292,6 +308,8 @@ final Map<String, dynamic> mirrorStoryBranches = {
         'You learn to ignore the stares and focus on your own happiness. What happens next?',
     'imagePrompt':
         'A person standing tall and proud, radiating confidence. The background is a scenic view of a majestic mountain range.',
+    'imageUrl':
+        'https://firebasestorage.googleapis.com/v0/b/chaperonegame.firebasestorage.app/o/placeholder_images%2Fimage12.png?alt=media&token=b761023d-6840-4495-9cc7-731c17206f2f',
     'options': {
       'a': {
         'text': 'You discover that confidence is the key to true beauty.',
@@ -309,6 +327,8 @@ final Map<String, dynamic> mirrorStoryBranches = {
         'You feel overwhelmed by the positive feedback and realize the power of social media. What happens next?',
     'imagePrompt':
         'A person speaking at a podium, addressing a crowd with passion and conviction. The background is a lively and diverse audience.',
+    'imageUrl':
+        'https://firebasestorage.googleapis.com/v0/b/chaperonegame.firebasestorage.app/o/placeholder_images%2Fimage12.png?alt=media&token=b761023d-6840-4495-9cc7-731c17206f2f',
     'options': {
       'a': {
         'text':
@@ -327,6 +347,8 @@ final Map<String, dynamic> mirrorStoryBranches = {
         'The negative comments hurt you deeply, but you decide to fight back. What happens next?',
     'imagePrompt':
         'A person standing up to a group of people, with a determined expression. The background is a tense and confrontational scene.',
+    'imageUrl':
+        'https://firebasestorage.googleapis.com/v0/b/chaperonegame.firebasestorage.app/o/placeholder_images%2Fimage12.png?alt=media&token=b761023d-6840-4495-9cc7-731c17206f2f',
     'options': {
       'a': {
         'text':
@@ -344,6 +366,8 @@ final Map<String, dynamic> mirrorStoryBranches = {
         'You understand that true beauty comes from within, not from appearances. What happens next?',
     'imagePrompt':
         'A person meditating in a peaceful forest setting, surrounded by nature. The light is soft and warm, creating a tranquil atmosphere.',
+    'imageUrl':
+        'https://firebasestorage.googleapis.com/v0/b/chaperonegame.firebasestorage.app/o/placeholder_images%2Fimage12.png?alt=media&token=b761023d-6840-4495-9cc7-731c17206f2f',
     'options': {
       'a': {
         'text':
@@ -362,6 +386,8 @@ final Map<String, dynamic> mirrorStoryBranches = {
         'You realize that your obsession with appearances is damaging your mental health. What happens next?',
     'imagePrompt':
         'A person sitting in a therapist\'s office, speaking openly about their struggles. The background is a comfortable and supportive environment.',
+    'imageUrl':
+        'https://firebasestorage.googleapis.com/v0/b/chaperonegame.firebasestorage.app/o/placeholder_images%2Fimage12.png?alt=media&token=b761023d-6840-4495-9cc7-731c17206f2f',
     'options': {
       'a': {
         'text':
@@ -380,6 +406,8 @@ final Map<String, dynamic> mirrorStoryBranches = {
         'You learn that your worth is not defined by others\' opinions. What happens next?',
     'imagePrompt':
         'A person walking away from a crowd, with a determined expression. The background is a blurry image of a group of people, representing the pressures of society.',
+    'imageUrl':
+        'https://firebasestorage.googleapis.com/v0/b/chaperonegame.firebasestorage.app/o/placeholder_images%2Fimage12.png?alt=media&token=b761023d-6840-4495-9cc7-731c17206f2f',
     'options': {
       'a': {
         'text':
@@ -398,6 +426,8 @@ final Map<String, dynamic> mirrorStoryBranches = {
         'You feel more isolated and alone, struggling to find your place in the world. What happens next?',
     'imagePrompt':
         'A person sitting alone in a dark room, with a sad and defeated expression. The background is a gloomy cityscape, representing the feeling of loneliness.',
+    'imageUrl':
+        'https://firebasestorage.googleapis.com/v0/b/chaperonegame.firebasestorage.app/o/placeholder_images%2Fimage12.png?alt=media&token=b761023d-6840-4495-9cc7-731c17206f2f',
     'options': {
       'a': {
         'text':
@@ -419,6 +449,8 @@ final Map<String, dynamic> vampireStoryBranches = {
         'You find yourself alone with him under the full moon. His crimson eyes glow faintly, filled with both love and torment. He says, \n"I can no longer deny it—I thirst for you, in every possible way. Tell me, do you trust me enough to resist my darkest instincts?"',
     'imagePrompt':
         'A moonlit garden with two figures standing close together. One with glowing red eyes gazes intensely at the other, while shadows dance around them.',
+    'imageUrl':
+        'https://firebasestorage.googleapis.com/v0/b/chaperonegame.firebasestorage.app/o/placeholder_images%2Fimage12.png?alt=media&token=b761023d-6840-4495-9cc7-731c17206f2f',
     'options': {
       'a': {
         'text':
@@ -437,6 +469,8 @@ final Map<String, dynamic> vampireStoryBranches = {
         'He pulls you closer, his cold touch sending shivers down your spine. "Then let me show you who I truly am," he whispers. "Would you accept immortality to be with me forever?"',
     'imagePrompt':
         'A intimate moment between two figures, one pale and ethereal, the other warm and human, surrounded by moonlit roses. The vampire\'s hand gently cups their lover\'s face.',
+    'imageUrl':
+        'https://firebasestorage.googleapis.com/v0/b/chaperonegame.firebasestorage.app/o/placeholder_images%2Fimage12.png?alt=media&token=b761023d-6840-4495-9cc7-731c17206f2f',
     'options': {
       'a': {
         'text':
@@ -455,6 +489,8 @@ final Map<String, dynamic> vampireStoryBranches = {
         'His expression softens with understanding, but pain flickers in his eyes. "Then let me prove my love to you. Should I leave to protect you, or stay and fight against my nature?"',
     'imagePrompt':
         'A tortured vampire standing at a crossroads, torn between leaving and staying, while their loved one watches with concern in the background.',
+    'imageUrl':
+        'https://firebasestorage.googleapis.com/v0/b/chaperonegame.firebasestorage.app/o/placeholder_images%2Fimage12.png?alt=media&token=b761023d-6840-4495-9cc7-731c17206f2f',
     'options': {
       'a': {
         'text':
@@ -473,6 +509,8 @@ final Map<String, dynamic> vampireStoryBranches = {
         'The transformation is complete. You awaken to a world of heightened senses and immortal power. But your first hunger is overwhelming. How do you handle your new vampire nature?',
     'imagePrompt':
         'A newly turned vampire with glowing eyes, experiencing their first moments of immortality, surrounded by a swirling darkness and brilliant moonlight.',
+    'imageUrl':
+        'https://firebasestorage.googleapis.com/v0/b/chaperonegame.firebasestorage.app/o/placeholder_images%2Fimage12.png?alt=media&token=b761023d-6840-4495-9cc7-731c17206f2f',
     'options': {
       'a': {
         'text':
@@ -491,6 +529,8 @@ final Map<String, dynamic> vampireStoryBranches = {
         'Your mortality becomes both a blessing and a curse. Your blood calls to him more strongly each day, yet your human heart keeps him grounded. How do you navigate this delicate balance?',
     'imagePrompt':
         'A tender moment between mortal and vampire, as he gently holds their wrist, fighting his instincts while drawing strength from their love.',
+    'imageUrl':
+        'https://firebasestorage.googleapis.com/v0/b/chaperonegame.firebasestorage.app/o/placeholder_images%2Fimage12.png?alt=media&token=b761023d-6840-4495-9cc7-731c17206f2f',
     'options': {
       'a': {
         'text':
@@ -509,6 +549,8 @@ final Map<String, dynamic> vampireStoryBranches = {
         'As days pass, his control wavers despite his best efforts. During an intimate moment, his fangs extend involuntarily. What do you do?',
     'imagePrompt':
         'A tense scene where the vampire struggles with his control, his fangs visible, while his lover must make a crucial decision.',
+    'imageUrl':
+        'https://firebasestorage.googleapis.com/v0/b/chaperonegame.firebasestorage.app/o/placeholder_images%2Fimage12.png?alt=media&token=b761023d-6840-4495-9cc7-731c17206f2f',
     'options': {
       'a': {
         'text':
@@ -527,6 +569,8 @@ final Map<String, dynamic> vampireStoryBranches = {
         'Months pass in separation. He returns, claiming to have found a way to control his thirst. But something about him seems different. How do you proceed?',
     'imagePrompt':
         'A reunion scene in a moonlit garden, where the vampire appears changed, his aura different, while his lover searches his eyes for truth.',
+    'imageUrl':
+        'https://firebasestorage.googleapis.com/v0/b/chaperonegame.firebasestorage.app/o/placeholder_images%2Fimage12.png?alt=media&token=b761023d-6840-4495-9cc7-731c17206f2f',
     'options': {
       'a': {
         'text':
@@ -545,6 +589,8 @@ final Map<String, dynamic> vampireStoryBranches = {
         'Together, you\'ve become legendary among vampires - lovers who hunt the wicked. But now, a group of vampire hunters threatens your existence. What\'s your final choice?',
     'imagePrompt':
         'Two powerful vampires standing together against approaching hunters, their love evident in their protective stance.',
+    'imageUrl':
+        'https://firebasestorage.googleapis.com/v0/b/chaperonegame.firebasestorage.app/o/placeholder_images%2Fimage12.png?alt=media&token=b761023d-6840-4495-9cc7-731c17206f2f',
     'options': {
       'a': {
         'text':
@@ -563,6 +609,8 @@ final Map<String, dynamic> vampireStoryBranches = {
         'Your unique path has inspired other vampires to seek alternatives. Will you become leaders in this revolutionary movement?',
     'imagePrompt':
         'A gathering of vampires looking to you and your love for guidance, while you stand together as pioneers of a new way.',
+    'imageUrl':
+        'https://firebasestorage.googleapis.com/v0/b/chaperonegame.firebasestorage.app/o/placeholder_images%2Fimage12.png?alt=media&token=b761023d-6840-4495-9cc7-731c17206f2f',
     'options': {
       'a': {
         'text':
@@ -581,6 +629,8 @@ final Map<String, dynamic> vampireStoryBranches = {
         'Your blood bond has grown stronger, but also more dangerous. He warns that continued sharing might trigger an irreversible transformation. What now?',
     'imagePrompt':
         'An intimate scene where the vampire warns his lover about the consequences of their blood bond, their future hanging in the balance.',
+    'imageUrl':
+        'https://firebasestorage.googleapis.com/v0/b/chaperonegame.firebasestorage.app/o/placeholder_images%2Fimage12.png?alt=media&token=b761023d-6840-4495-9cc7-731c17206f2f',
     'options': {
       'a': {
         'text':
@@ -599,6 +649,8 @@ final Map<String, dynamic> vampireStoryBranches = {
         'Your emotional bond has reached new depths, transcending physical limitations. But time moves forward, and mortality looms. What is your heart\'s final choice?',
     'imagePrompt':
         'An aging mortal and their eternally young vampire lover sharing a profound moment of decision under a starlit sky.',
+    'imageUrl':
+        'https://firebasestorage.googleapis.com/v0/b/chaperonegame.firebasestorage.app/o/placeholder_images%2Fimage12.png?alt=media&token=b761023d-6840-4495-9cc7-731c17206f2f',
     'options': {
       'a': {
         'text':
@@ -617,6 +669,8 @@ final Map<String, dynamic> vampireStoryBranches = {
         'Your trust helps him break through his struggle. He reveals an ancient ritual that could bind your souls, balancing his vampire nature. Do you take this final step?',
     'imagePrompt':
         'A mystical scene with ancient symbols glowing around the couple as they consider a soul-binding ritual.',
+    'imageUrl':
+        'https://firebasestorage.googleapis.com/v0/b/chaperonegame.firebasestorage.app/o/placeholder_images%2Fimage12.png?alt=media&token=b761023d-6840-4495-9cc7-731c17206f2f',
     'options': {
       'a': {
         'text':
@@ -635,6 +689,8 @@ final Map<String, dynamic> vampireStoryBranches = {
         'Your cautious approach has given him strength, but other vampires mock his restraint. How do you face this challenge together?',
     'imagePrompt':
         'A confrontation scene where other vampires challenge your lover\'s choices, while you stand united against their criticism.',
+    'imageUrl':
+        'https://firebasestorage.googleapis.com/v0/b/chaperonegame.firebasestorage.app/o/placeholder_images%2Fimage12.png?alt=media&token=b761023d-6840-4495-9cc7-731c17206f2f',
     'options': {
       'a': {
         'text':
@@ -653,6 +709,8 @@ final Map<String, dynamic> vampireStoryBranches = {
         'His control comes from drinking powerful vampire blood. Now he offers you protection through the same means. What is your choice?',
     'imagePrompt':
         'A tense moment as the vampire reveals the dark source of his control, offering a vial of mysterious blood.',
+    'imageUrl':
+        'https://firebasestorage.googleapis.com/v0/b/chaperonegame.firebasestorage.app/o/placeholder_images%2Fimage12.png?alt=media&token=b761023d-6840-4495-9cc7-731c17206f2f',
     'options': {
       'a': {
         'text':
@@ -671,6 +729,8 @@ final Map<String, dynamic> vampireStoryBranches = {
         'Your caution reveals he\'s now bound to a dangerous vampire coven. He begs you to flee together before they claim you too. What do you choose?',
     'imagePrompt':
         'A dramatic scene of the vampire warning his love about the approaching danger, offering an escape.',
+    'imageUrl':
+        'https://firebasestorage.googleapis.com/v0/b/chaperonegame.firebasestorage.app/o/placeholder_images%2Fimage12.png?alt=media&token=b761023d-6840-4495-9cc7-731c17206f2f',
     'options': {
       'a': {
         'text':

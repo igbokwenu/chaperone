@@ -60,7 +60,7 @@ class _StoryGameScreenState extends State<StoryGameScreen> {
               // Question text
               Text(
                 currentQuestion['question'],
-                style: Theme.of(context).textTheme.titleLarge,
+                style: Theme.of(context).textTheme.titleMedium,
                 textAlign: TextAlign.center,
               ),
               const SizedBox(height: 20),

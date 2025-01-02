@@ -37,7 +37,7 @@ class _HomeViewState extends State<HomeView> {
                       ),
                     );
                   },
-                  child: const Text('Play Story Game'),
+                  child: const Text('Play Mirror Mirror (Beta)'),
                 ),
                 const SizedBox(height: 16),
                 ElevatedButton(
@@ -51,7 +51,7 @@ class _HomeViewState extends State<HomeView> {
                       ),
                     );
                   },
-                  child: const Text('Start New Game'),
+                  child: const Text('Play Bloodlines (Beta)'),
                 ),
               ],
             )
