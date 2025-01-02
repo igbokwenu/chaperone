@@ -1,6 +1,8 @@
+import 'package:chaperone/models/story_model.dart';
 import 'package:chaperone/test.dart';
 import 'package:chaperone/views/create_game_view.dart';
 import 'package:chaperone/views/discovery_view.dart';
+import 'package:chaperone/views/test_view.dart';
 import 'package:flutter/material.dart';
 
 class HomeView extends StatefulWidget {
@@ -13,15 +15,53 @@ class HomeView extends StatefulWidget {
 class _HomeViewState extends State<HomeView> {
   int _selectedIndex = 0;
 
-  final List<Widget> _screens = [
-    const DiscoverScreen(),
-    const CreateGameView(),
-    const TestGeminiScreen(), // Placeholder for Message screen
-    const Scaffold(), // Placeholder for Profile screen
-  ];
-
   @override
   Widget build(BuildContext context) {
+    final List<Widget> _screens = [
+      const DiscoverScreen(),
+      const CreateGameView(),
+      SafeArea(
+        child: Column(
+          children: [
+            Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                ElevatedButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => StoryGameScreen(
+                          story: mockScenarios[2],
+                        ),
+                      ),
+                    );
+                  },
+                  child: const Text('Play Story Game'),
+                ),
+                const SizedBox(height: 16),
+                ElevatedButton(
+                  onPressed: () {
+                    Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => StoryGameScreen(
+                          story: mockScenarios[3],
+                        ),
+                      ),
+                    );
+                  },
+                  child: const Text('Start New Game'),
+                ),
+              ],
+            )
+          ],
+        ),
+      ),
+      StoryGameScreen(
+        story: mockScenarios[3],
+      ), // Placeholder for Profile screen
+    ];
     return Scaffold(
       body: _screens[_selectedIndex],
       bottomNavigationBar: Container(

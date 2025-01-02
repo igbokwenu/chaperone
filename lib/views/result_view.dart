@@ -88,9 +88,12 @@ class _ResultViewState extends State<ResultView> with TickerProviderStateMixin {
                       IconButton(
                         icon: const Icon(Icons.arrow_back, color: Colors.white),
                         onPressed: () {
-                          Navigator.pop(context);
-                          Navigator.pop(context);
-                          Navigator.pop(context);
+                          Navigator.of(context).pushAndRemoveUntil(
+                            MaterialPageRoute(
+                              builder: (context) => const HomeView(),
+                            ),
+                            (route) => false,
+                          );
                         },
                       ),
                       Expanded(
