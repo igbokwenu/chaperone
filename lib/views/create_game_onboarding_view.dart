@@ -1,5 +1,7 @@
+import 'package:chaperone/services/auth_service.dart';
 import 'package:chaperone/test.dart';
 import 'package:chaperone/utils/constants/constants.dart';
+import 'package:chaperone/utils/reusable_functions.dart';
 import 'package:chaperone/views/create_game_view.dart';
 import 'package:chaperone/views/home_view.dart';
 import 'package:flutter/material.dart';
@@ -9,6 +11,7 @@ class CreateGameOnboardingView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final authService = AuthService();
     return Scaffold(
       backgroundColor: Colors.white,
       body: SafeArea(
@@ -104,7 +107,13 @@ class CreateGameOnboardingView extends StatelessWidget {
                               right: 0,
                               child: Center(
                                 child: TextButton(
-                                  onPressed: () {
+                                  onPressed: () async {
+                                    if (!authService.isUserLoggedIn()) {
+                                      MyReusableFunctions.showCustomToast(
+                                          description:
+                                              "Setting up your account");
+                                      await authService.signInAnonymously();
+                                    }
                                     Navigator.push(
                                       context,
                                       MaterialPageRoute(
@@ -168,7 +177,12 @@ class CreateGameOnboardingView extends StatelessWidget {
                       ),
                     ),
                     ElevatedButton(
-                      onPressed: () {
+                      onPressed: () async {
+                        if (!authService.isUserLoggedIn()) {
+                          MyReusableFunctions.showCustomToast(
+                              description: "Setting up your account");
+                          await authService.signInAnonymously();
+                        }
                         Navigator.push(
                           context,
                           MaterialPageRoute(

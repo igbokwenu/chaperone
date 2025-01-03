@@ -24,7 +24,7 @@ class CreateGameViewState extends State<CreateGameView> {
 
   Future<void> _sendPrompt() async {
     final firebaseUser = FirebaseAuth.instance.currentUser;
-    final databaseService = DatabaseService(uid: firebaseUser!.uid);
+    final databaseService = DatabaseService(uid: firebaseUser?.uid ?? '');
     setState(() {
       _isLoading = true;
       _response = '';
@@ -47,7 +47,7 @@ class CreateGameViewState extends State<CreateGameView> {
       await databaseService.updateAnyStoriesData(
           fieldName: storyDataKey,
           newValue: result,
-          docId: "${firebaseUser.uid}game1");
+          docId: "${firebaseUser?.uid}game1");
 
       setState(() {
         _response = result != null

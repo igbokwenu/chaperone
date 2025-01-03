@@ -18,7 +18,7 @@ class _HomeViewState extends State<HomeView> {
     const DiscoverScreen(),
     const CreateGameOnboardingView(),
     StoryDisplay(
-      uid: FirebaseAuth.instance.currentUser!.uid,
+      uid: FirebaseAuth.instance.currentUser?.uid ?? '',
     ),
     const Scaffold(),
   ];
