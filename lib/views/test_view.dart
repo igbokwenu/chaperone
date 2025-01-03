@@ -22,7 +22,10 @@ class _StoryGameScreenState extends State<StoryGameScreen> {
     final currentQuestion = storyData?[currentNode];
 
     if (currentQuestion == null) {
-      return ResultView(scenario: widget.story);
+      return ResultView(
+        scenario: widget.story,
+        pathTaken: [],
+      );
     }
 
     return Scaffold(

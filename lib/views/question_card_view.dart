@@ -1,16 +1,19 @@
 import 'dart:async';
-
-import 'package:chaperone/models/story_model.dart';
 import 'package:flutter/material.dart';
+import 'package:chaperone/models/story_model.dart';
 
 class QuestionCard extends StatefulWidget {
   final StoryModel scenario;
   final VoidCallback onTimeUp;
+  final String currentNode;
+  final Function(String) onOptionSelected;
 
   const QuestionCard({
     super.key,
     required this.scenario,
     required this.onTimeUp,
+    required this.currentNode,
+    required this.onOptionSelected,
   });
 
   @override
@@ -24,6 +27,9 @@ class _QuestionCardState extends State<QuestionCard>
   final int _totalSeconds = 12;
   late AnimationController _animationController;
   late Animation<double> _scaleAnimation;
+
+  Map<String, dynamic> get currentQuestion =>
+      widget.scenario.storyData?[widget.currentNode] ?? {};
 
   @override
   void initState() {
@@ -47,9 +53,8 @@ class _QuestionCardState extends State<QuestionCard>
     const duration = Duration(milliseconds: 50);
     _timer = Timer.periodic(duration, (Timer timer) {
       setState(() {
-        _progress -= 1 / (_totalSeconds * 20); // Update 20 times per second
+        _progress -= 1 / (_totalSeconds * 20);
         if (_progress <= 0) {
-          _progress -= 1 / (_totalSeconds * 20); // Update 20 times per second
           timer.cancel();
           widget.onTimeUp();
         }
@@ -64,26 +69,57 @@ class _QuestionCardState extends State<QuestionCard>
     super.dispose();
   }
 
+  Widget _buildOption(String optionKey, Map<String, dynamic> optionData) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 8.0),
+      child: ElevatedButton(
+        style: ElevatedButton.styleFrom(
+          backgroundColor: Colors.white.withOpacity(0.2),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10),
+          ),
+        ),
+        onPressed: () {
+          widget.onOptionSelected(optionData['nextNode']);
+        },
+        child: Padding(
+          padding: const EdgeInsets.all(12.0),
+          child: Text(
+            optionData['text'],
+            style: const TextStyle(
+              color: Colors.white,
+              fontSize: 14,
+            ),
+            textAlign: TextAlign.center,
+          ),
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
+    final String imageUrl =
+        currentQuestion['imageUrl'] ?? widget.scenario.thumbnailUrl;
+    final Map<String, dynamic> options = currentQuestion['options'] ?? {};
+
     return Scaffold(
       body: Stack(
         children: [
-          if (widget.scenario.questionOneImageUrl != null)
-            AnimatedBuilder(
-              animation: _scaleAnimation,
-              builder: (context, child) {
-                return Transform.scale(
-                  scale: _scaleAnimation.value,
-                  child: Image.network(
-                    widget.scenario.questionOneImageUrl!,
-                    width: double.infinity,
-                    height: double.infinity,
-                    fit: BoxFit.cover,
-                  ),
-                );
-              },
-            ),
+          AnimatedBuilder(
+            animation: _scaleAnimation,
+            builder: (context, child) {
+              return Transform.scale(
+                scale: _scaleAnimation.value,
+                child: Image.network(
+                  imageUrl,
+                  width: double.infinity,
+                  height: double.infinity,
+                  fit: BoxFit.cover,
+                ),
+              );
+            },
+          ),
           Column(
             children: [
               SafeArea(
@@ -113,8 +149,9 @@ class _QuestionCardState extends State<QuestionCard>
                               child: Center(
                                 child: Text(
                                   widget.scenario.title,
+                                  textAlign: TextAlign.center,
                                   style: const TextStyle(
-                                    fontSize: 20,
+                                    fontSize: 18,
                                     fontWeight: FontWeight.bold,
                                     color: Colors.white,
                                   ),
@@ -165,34 +202,24 @@ class _QuestionCardState extends State<QuestionCard>
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        Padding(
-                          padding: EdgeInsets.symmetric(
-                            horizontal: MediaQuery.of(context).size.width * 0.2,
+                        Container(
+                          padding: const EdgeInsets.all(12),
+                          decoration: BoxDecoration(
+                            color: Colors.black.withOpacity(0.3),
+                            borderRadius: BorderRadius.circular(10),
                           ),
-                          child: Divider(
-                            color: Colors.white.withOpacity(0.5),
-                            thickness: 1,
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 8.0),
                           child: Text(
-                            widget.scenario.question1 ?? '',
+                            currentQuestion['question'] ?? '',
                             style: const TextStyle(
                               color: Colors.white,
                               fontSize: 16,
                             ),
+                            textAlign: TextAlign.center,
                           ),
                         ),
-                        Padding(
-                          padding: EdgeInsets.symmetric(
-                            horizontal: MediaQuery.of(context).size.width * 0.2,
-                          ),
-                          child: Divider(
-                            color: Colors.white.withOpacity(0.5),
-                            thickness: 1,
-                          ),
-                        ),
+                        const SizedBox(height: 20),
+                        ...options.entries.map((entry) => _buildOption(
+                            entry.key, entry.value as Map<String, dynamic>)),
                       ],
                     ),
                   ),

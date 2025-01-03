@@ -12,6 +12,16 @@ class StoryPreviewCard extends StatelessWidget {
     required this.scenario,
   });
 
+  void _startGame(BuildContext context) {
+    // Start with the 'start' node of the story
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => _GameFlow(scenario: scenario),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -170,153 +180,7 @@ class StoryPreviewCard extends StatelessWidget {
                                 _formatNumber(scenario.comments)),
                             const Spacer(),
                             ElevatedButton(
-                              onPressed: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => QuestionCard(
-                                      scenario: scenario,
-                                      onTimeUp: () {
-                                        showModalBottomSheet(
-                                          context: context,
-                                          backgroundColor: Colors.transparent,
-                                          builder: (BuildContext context) {
-                                            return Container(
-                                              padding: const EdgeInsets.all(24),
-                                              decoration: BoxDecoration(
-                                                color: Colors.white
-                                                    .withOpacity(0.9),
-                                                borderRadius:
-                                                    const BorderRadius.only(
-                                                  topLeft: Radius.circular(32),
-                                                  topRight: Radius.circular(32),
-                                                ),
-                                                boxShadow: [
-                                                  BoxShadow(
-                                                    color: Colors.black
-                                                        .withOpacity(0.2),
-                                                    blurRadius: 10,
-                                                    spreadRadius: 2,
-                                                  )
-                                                ],
-                                                border: Border.all(
-                                                  color: Colors.white
-                                                      .withOpacity(0.3),
-                                                  width: 1.5,
-                                                ),
-                                              ),
-                                              child: Column(
-                                                mainAxisSize: MainAxisSize.min,
-                                                children: [
-                                                  Container(
-                                                    width: 40,
-                                                    height: 4,
-                                                    margin:
-                                                        const EdgeInsets.only(
-                                                            bottom: 20),
-                                                    decoration: BoxDecoration(
-                                                      color: Colors.grey
-                                                          .withOpacity(0.3),
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              2),
-                                                    ),
-                                                  ),
-                                                  ElevatedButton(
-                                                    onPressed: () {
-                                                      Navigator.push(
-                                                        context,
-                                                        MaterialPageRoute(
-                                                          builder: (context) =>
-                                                              ResultView(
-                                                            scenario: scenario,
-                                                          ),
-                                                        ),
-                                                      );
-                                                    },
-                                                    style: ElevatedButton
-                                                        .styleFrom(
-                                                      minimumSize: const Size(
-                                                          double.infinity, 56),
-                                                      backgroundColor: Colors
-                                                          .white
-                                                          .withOpacity(0.9),
-                                                      elevation: 8,
-                                                      shadowColor: Colors.blue
-                                                          .withOpacity(0.5),
-                                                      shape:
-                                                          RoundedRectangleBorder(
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(16),
-                                                      ),
-                                                      padding:
-                                                          const EdgeInsets.all(
-                                                              16),
-                                                    ),
-                                                    child: Text(
-                                                      scenario.answer1a ?? '',
-                                                      style: const TextStyle(
-                                                        color: Colors.black,
-                                                        fontSize: 16,
-                                                        fontWeight:
-                                                            FontWeight.w600,
-                                                      ),
-                                                    ),
-                                                  ),
-                                                  const SizedBox(height: 16),
-                                                  ElevatedButton(
-                                                    onPressed: () {
-                                                      Navigator.push(
-                                                        context,
-                                                        MaterialPageRoute(
-                                                          builder: (context) =>
-                                                              ResultView(
-                                                            scenario: scenario,
-                                                          ),
-                                                        ),
-                                                      );
-                                                    },
-                                                    style: ElevatedButton
-                                                        .styleFrom(
-                                                      minimumSize: const Size(
-                                                          double.infinity, 56),
-                                                      backgroundColor: Colors
-                                                          .white
-                                                          .withOpacity(0.9),
-                                                      elevation: 8,
-                                                      shadowColor: Colors.blue
-                                                          .withOpacity(0.5),
-                                                      shape:
-                                                          RoundedRectangleBorder(
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(16),
-                                                      ),
-                                                      padding:
-                                                          const EdgeInsets.all(
-                                                              16),
-                                                    ),
-                                                    child: Text(
-                                                      scenario.answer1b ?? '',
-                                                      style: const TextStyle(
-                                                        color: Colors.black,
-                                                        fontSize: 16,
-                                                        fontWeight:
-                                                            FontWeight.w600,
-                                                      ),
-                                                    ),
-                                                  ),
-                                                ],
-                                              ),
-                                            );
-                                          },
-                                        );
-                                      },
-                                    ),
-                                  ),
-                                );
-                              },
+                              onPressed: () => _startGame(context),
                               style: ElevatedButton.styleFrom(
                                 backgroundColor: Colors.blue,
                                 shape: RoundedRectangleBorder(
@@ -369,5 +233,119 @@ class StoryPreviewCard extends StatelessWidget {
       return '${(number / 1000).toStringAsFixed(1)}k';
     }
     return number.toString();
+  }
+}
+
+// New StatefulWidget to manage the game flow
+class _GameFlow extends StatefulWidget {
+  final StoryModel scenario;
+
+  const _GameFlow({required this.scenario});
+
+  @override
+  State<_GameFlow> createState() => _GameFlowState();
+}
+
+class _GameFlowState extends State<_GameFlow> {
+  String currentNode = 'start';
+  List<String> pathTaken = [];
+
+  void _handleOptionSelected(String nextNode) {
+    if (nextNode == 'end') {
+      // Game is complete, show the result
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+          builder: (context) => ResultView(
+            scenario: widget.scenario,
+            pathTaken: pathTaken,
+          ),
+        ),
+      );
+    } else {
+      setState(() {
+        pathTaken.add(currentNode);
+        currentNode = nextNode;
+      });
+    }
+  }
+
+  void _handleTimeUp() {
+    // showModalBottomSheet(
+    //   context: context,
+    //   backgroundColor: Colors.transparent,
+    //   builder: (BuildContext context) {
+    //     final currentQuestionData = widget.scenario.storyData?[currentNode] ?? {};
+    //     final options = currentQuestionData['options'] as Map<String, dynamic>? ?? {};
+
+    //     return Container(
+    //       padding: const EdgeInsets.all(24),
+    //       decoration: BoxDecoration(
+    //         color: Colors.white.withOpacity(0.9),
+    //         borderRadius: const BorderRadius.only(
+    //           topLeft: Radius.circular(32),
+    //           topRight: Radius.circular(32),
+    //         ),
+    //         boxShadow: [
+    //           BoxShadow(
+    //             color: Colors.black.withOpacity(0.2),
+    //             blurRadius: 10,
+    //             spreadRadius: 2,
+    //           )
+    //         ],
+    //       ),
+    //       child: Column(
+    //         mainAxisSize: MainAxisSize.min,
+    //         children: [
+    //           Container(
+    //             width: 40,
+    //             height: 4,
+    //             margin: const EdgeInsets.only(bottom: 20),
+    //             decoration: BoxDecoration(
+    //               color: Colors.grey.withOpacity(0.3),
+    //               borderRadius: BorderRadius.circular(2),
+    //             ),
+    //           ),
+    //           ...options.entries.map((entry) => Padding(
+    //             padding: const EdgeInsets.only(bottom: 16.0),
+    //             child: ElevatedButton(
+    //               onPressed: () {
+    //                 Navigator.pop(context);
+    //                 _handleOptionSelected(entry.value['nextNode']);
+    //               },
+    //               style: ElevatedButton.styleFrom(
+    //                 minimumSize: const Size(double.infinity, 56),
+    //                 backgroundColor: Colors.white.withOpacity(0.9),
+    //                 elevation: 8,
+    //                 shadowColor: Colors.blue.withOpacity(0.5),
+    //                 shape: RoundedRectangleBorder(
+    //                   borderRadius: BorderRadius.circular(16),
+    //                 ),
+    //               ),
+    //               child: Text(
+    //                 entry.value['text'],
+    //                 style: const TextStyle(
+    //                   color: Colors.black,
+    //                   fontSize: 16,
+    //                   fontWeight: FontWeight.w600,
+    //                 ),
+    //               ),
+    //             ),
+    //           )).toList(),
+    //         ],
+    //       ),
+    //     );
+    //   },
+    // );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return QuestionCard(
+      scenario: widget.scenario,
+      currentNode: currentNode,
+      onTimeUp: _handleTimeUp,
+      onOptionSelected: _handleOptionSelected,
+    );
   }
 }

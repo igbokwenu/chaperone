@@ -4,7 +4,8 @@ import 'package:flutter/material.dart';
 
 class ResultView extends StatefulWidget {
   final StoryModel scenario;
-  const ResultView({super.key, required this.scenario});
+  final List<String> pathTaken;
+  const ResultView({super.key, required this.scenario, required this.pathTaken});
 
   @override
   State<ResultView> createState() => _ResultViewState();
