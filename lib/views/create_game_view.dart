@@ -1,313 +1,195 @@
-import 'package:chaperone/test.dart';
-import 'package:chaperone/utils/constants/constants.dart';
-import 'package:chaperone/views/home_view.dart';
+import 'dart:convert';
+
+import 'package:chaperone/services/auth_service.dart';
+import 'package:chaperone/services/gemini_ai_service.dart';
+import 'package:chaperone/utils/reusable_functions.dart';
 import 'package:flutter/material.dart';
 
-class CreateGameView extends StatelessWidget {
+class CreateGameView extends StatefulWidget {
   const CreateGameView({super.key});
 
   @override
+  CreateGameViewState createState() => CreateGameViewState();
+}
+
+class CreateGameViewState extends State<CreateGameView> {
+  final TextEditingController _promptController = TextEditingController();
+  final authService = AuthService();
+  String _response = '';
+  String _rawResponse = '';
+  bool _isLoading = false;
+
+  Future<void> _sendPrompt() async {
+    setState(() {
+      _isLoading = true;
+      _response = '';
+      _rawResponse = '';
+    });
+
+    try {
+      if (!authService.isUserLoggedIn()) {
+        MyReusableFunctions.showCustomToast(
+            description: "Setting up your account");
+        await authService.signInAnonymously();
+      }
+
+      final result = await GeminiService.sendTextPrompt(
+        message: _promptController.text,
+      );
+
+      setState(() {
+        _response = result != null
+            ? const JsonEncoder.withIndent('  ').convert(result)
+            : 'No response received';
+        _rawResponse = 'Raw response available in debug console';
+      });
+    } catch (e) {
+      setState(() {
+        _response = 'Error: $e';
+      });
+    } finally {
+      setState(() {
+        _isLoading = false;
+      });
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.white,
-      body: SafeArea(
-        child: Column(
-          children: [
-            Expanded(
-              child: SingleChildScrollView(
-                child: Column(
-                  children: [
-                    // Top Navigation Bar
-                    Padding(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 16.0,
-                        vertical: 8.0,
+    return GestureDetector(
+      onTap: () => FocusScope.of(context).unfocus(),
+      child: Scaffold(
+        appBar: AppBar(
+          title: const Text('Story Creator Beta'),
+          elevation: 0,
+          backgroundColor: Theme.of(context).primaryColor,
+          foregroundColor: Colors.white,
+        ),
+        body: Container(
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+              colors: [
+                Theme.of(context).primaryColor.withOpacity(0.1),
+                Colors.white,
+              ],
+            ),
+          ),
+          child: Padding(
+            padding: const EdgeInsets.all(24.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Card(
+                  elevation: 4,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(16),
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: TextField(
+                      controller: _promptController,
+                      decoration: InputDecoration(
+                        labelText: 'Enter your story prompt',
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12),
+                          borderSide: BorderSide.none,
+                        ),
+                        filled: true,
+                        fillColor: Colors.grey[50],
                       ),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          IconButton(
-                            icon: const Icon(Icons.arrow_back),
-                            onPressed: () {
-                              Navigator.of(context).pushAndRemoveUntil(
-                                MaterialPageRoute(
-                                  builder: (context) => const HomeView(),
-                                ),
-                                (route) => false,
-                              );
-                            },
-                          ),
-                          const Spacer(),
-                          const Text(
-                            'The World Awaits',
-                            style: TextStyle(
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          const Spacer(),
-                          IconButton(
-                            icon: const Icon(Icons.more_horiz),
-                            onPressed: () {},
-                          ),
-                        ],
-                      ),
+                      maxLines: 3,
+                      style: const TextStyle(fontSize: 16),
                     ),
-
-                    // Game Card
-                    Container(
-                      margin: const EdgeInsets.all(16.0),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(20),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.black.withOpacity(0.1),
-                            blurRadius: 10,
-                            spreadRadius: 2,
+                  ),
+                ),
+                const SizedBox(height: 24),
+                ElevatedButton(
+                  onPressed: _isLoading ? null : _sendPrompt,
+                  style: ElevatedButton.styleFrom(
+                    padding: const EdgeInsets.symmetric(vertical: 16),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    elevation: 2,
+                  ),
+                  child: _isLoading
+                      ? const SizedBox(
+                          height: 24,
+                          width: 24,
+                          child: CircularProgressIndicator(
+                            strokeWidth: 2,
+                            valueColor:
+                                AlwaysStoppedAnimation<Color>(Colors.white),
                           ),
-                        ],
-                      ),
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(20),
-                        child: Stack(
-                          children: [
-                            // Background Image with Animation
-                            const SizedBox(
-                              height: 400,
-                              width: double.infinity,
-                              child: _AnimatedBackgroundImage(
-                                imageUrl:
-                                    'https://firebasestorage.googleapis.com/v0/b/chaperonegame.firebasestorage.app/o/placeholder_images%2Fimage11.png?alt=media&token=971206dc-72f9-4d68-840c-eeffee94da73',
-                              ),
+                        )
+                      : const Text(
+                          'Create Story',
+                          style: TextStyle(
+                              fontSize: 16, fontWeight: FontWeight.bold),
+                        ),
+                ),
+                const SizedBox(height: 24),
+                Expanded(
+                  child: Card(
+                    elevation: 4,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(16),
+                    ),
+                    child: SingleChildScrollView(
+                      padding: const EdgeInsets.all(16),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            'Generated Story (Raw Template)',
+                            style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                              color: Theme.of(context).primaryColor,
                             ),
-
-                            // Gradient Overlay
-                            Container(
-                              height: 400,
-                              decoration: BoxDecoration(
-                                gradient: LinearGradient(
-                                  begin: Alignment.topCenter,
-                                  end: Alignment.bottomCenter,
-                                  colors: [
-                                    Colors.transparent,
-                                    Colors.black.withOpacity(0.7),
-                                  ],
-                                ),
-                              ),
+                          ),
+                          const SizedBox(height: 16),
+                          Container(
+                            width: double.infinity,
+                            padding: const EdgeInsets.all(16),
+                            decoration: BoxDecoration(
+                              color: Colors.grey[50],
+                              borderRadius: BorderRadius.circular(12),
                             ),
-
-                            // Create Game Button
-                            Positioned(
-                              bottom: 60,
-                              left: 0,
-                              right: 0,
-                              child: Center(
-                                child: TextButton(
-                                  onPressed: () {
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) =>
-                                              const TestGeminiScreen()),
-                                    );
-                                  },
-                                  child: Container(
-                                    padding: const EdgeInsets.symmetric(
-                                      horizontal: 24,
-                                      vertical: 12,
-                                    ),
-                                    decoration: BoxDecoration(
-                                      color: Colors.white,
-                                      borderRadius: BorderRadius.circular(25),
-                                    ),
-                                    child: _AnimatedButtonText(),
-                                  ),
-                                ),
-                              ),
+                            child: SelectableText(
+                              _response,
+                              style: const TextStyle(fontSize: 15, height: 1.5),
                             ),
-
-                            // Author Info
-                            Positioned(
-                              bottom: 16,
-                              left: 16,
-                              child: Row(
-                                children: [
-                                  const CircleAvatar(
-                                    radius: 12,
-                                    backgroundColor: Colors.white,
-                                  ),
-                                  const SizedBox(width: 8),
-                                  Text(
-                                    'Author',
-                                    style: TextStyle(
-                                      color: Colors.white.withOpacity(0.9),
-                                      fontSize: 14,
-                                    ),
-                                  ),
-                                ],
+                          ),
+                          if (_rawResponse.isNotEmpty) ...[
+                            const SizedBox(height: 16),
+                            Text(
+                              _rawResponse,
+                              style: TextStyle(
+                                color: Colors.grey[600],
+                                fontSize: 14,
+                                fontStyle: FontStyle.italic,
                               ),
                             ),
                           ],
-                        ),
+                        ],
                       ),
                     ),
-
-                    const Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 16.0),
-                      child: Align(
-                        alignment: Alignment.centerLeft,
-                        child: Text(
-                          createGamePitchText,
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            color: Colors.black54,
-                            fontSize: 14,
-                          ),
-                        ),
-                      ),
-                    ),
-                    ElevatedButton(
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const TestGeminiScreen()),
-                        );
-                      },
-                      child: _AnimatedButtonText(),
-                    ),
-                    SizedBox(
-                      height: MediaQuery.of(context).size.height * 0.05,
-                    )
-                  ],
+                  ),
                 ),
-              ),
+              ],
             ),
-          ],
+          ),
         ),
       ),
     );
-  }
-}
-
-class _AnimatedBackgroundImage extends StatefulWidget {
-  final String imageUrl;
-
-  const _AnimatedBackgroundImage({required this.imageUrl});
-
-  @override
-  _AnimatedBackgroundImageState createState() =>
-      _AnimatedBackgroundImageState();
-}
-
-class _AnimatedBackgroundImageState extends State<_AnimatedBackgroundImage>
-    with TickerProviderStateMixin {
-  late AnimationController _scaleController;
-  late AnimationController _positionController;
-  late Animation<double> _scaleAnimation;
-  late Animation<double> _positionAnimation;
-
-  @override
-  void initState() {
-    super.initState();
-
-    _scaleController = AnimationController(
-      duration: const Duration(seconds: 25), // Reduced from 40 to 25 seconds
-      vsync: this,
-    )..repeat(reverse: true);
-
-    _positionController = AnimationController(
-      duration: const Duration(seconds: 25), // Reduced from 40 to 25 seconds
-      vsync: this,
-    )..repeat(reverse: true);
-
-    _scaleAnimation = Tween<double>(
-      begin: 1.0,
-      end: 1.2,
-    ).animate(_scaleController);
-
-    _positionAnimation = Tween<double>(
-      begin: 0.0,
-      end: 30.0,
-    ).animate(_positionController);
   }
 
   @override
   void dispose() {
-    _scaleController.dispose();
-    _positionController.dispose();
+    _promptController.dispose();
     super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return AnimatedBuilder(
-      animation: Listenable.merge([_scaleController, _positionController]),
-      builder: (context, child) {
-        return Transform.scale(
-          scale: _scaleAnimation.value,
-          child: Transform.translate(
-            offset: Offset(0, -_positionAnimation.value),
-            child: Image.network(
-              widget.imageUrl,
-              fit: BoxFit.cover,
-              height: 400,
-              width: double.infinity,
-            ),
-          ),
-        );
-      },
-    );
-  }
-}
-
-class _AnimatedButtonText extends StatefulWidget {
-  @override
-  _AnimatedButtonTextState createState() => _AnimatedButtonTextState();
-}
-
-class _AnimatedButtonTextState extends State<_AnimatedButtonText> {
-  bool _showFirstText = true;
-
-  @override
-  void initState() {
-    super.initState();
-    _startAnimation();
-  }
-
-  void _startAnimation() {
-    Future.delayed(const Duration(seconds: 5), () {
-      if (mounted) {
-        setState(() {
-          _showFirstText = !_showFirstText;
-        });
-        _startAnimation();
-      }
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return AnimatedCrossFade(
-      firstChild: const Text(
-        'Create A Game',
-        style: TextStyle(
-          color: Colors.black87,
-          fontSize: 16,
-          fontWeight: FontWeight.w500,
-        ),
-      ),
-      secondChild: const Text(
-        'Tell Your Story',
-        style: TextStyle(
-          color: Colors.black87,
-          fontSize: 16,
-          fontWeight: FontWeight.w500,
-        ),
-      ),
-      crossFadeState:
-          _showFirstText ? CrossFadeState.showFirst : CrossFadeState.showSecond,
-      duration: const Duration(milliseconds: 500),
-    );
   }
 }

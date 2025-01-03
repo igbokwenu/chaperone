@@ -59,6 +59,46 @@ const String userDevice = 'device';
 const String userTimeStamp = 'timeStamp';
 const String usersMessagingToken = 'messagingToken';
 
+//
+const String storyUidKey = 'storyUid';
+const String storyTitleKey = 'title';
+const String storyAuthorKey = 'author';
+const String storyThumbnailUrlKey = 'thumbnailUrl';
+const String storyIsVerifiedKey = 'isVerified';
+const String storyViewsKey = 'views';
+const String storyLikesKey = 'likes';
+const String storyCommentsKey = 'comments';
+const String storyIsBookmarkedKey = 'isBookmarked';
+const String storySynopsisKey = 'synopsis';
+const String storyQuestion1Key = 'question1';
+const String storyQuestionOneImageUrlKey = 'questionOneImageUrl';
+const String storyAnswer1aKey = 'answer1a';
+const String storyAnswer1bKey = 'answer1b';
+const String storyLikeCountKey = 'likeCount';
+const String storyCommentCountKey = 'commentCount';
+const String storyPlayCountKey = 'playCount';
+const String storyLikesUidKey = 'likesUid';
+const String storyShareCountKey = 'shareCount';
+const String storyIsPublishedKey = 'isPublished';
+const String storyIsApprovedKey = 'isApproved';
+const String storyIsRejectedKey = 'isRejected';
+const String storyIsTrendingKey = 'isTrending';
+const String storyIsBasedOnTrueStoryKey = 'isBasedOnTrueStory';
+const String storyIsInspiredByTrueEventKey = 'isInspiredByTrueEvent';
+const String storyIsForAdultKey = 'isForAdult';
+const String storyGameUidKey = 'gameUid';
+const String storyDescriptionKey = 'description';
+const String storyAuthorNameKey = 'authorName';
+const String storyAuthorUidKey = 'authorUid';
+const String storyAuthorUsernameKey = 'authorUsername';
+const String storyAuthorDisplayNameKey = 'authorDisplayname';
+const String storyForMaleKey = 'forMale';
+const String storyForFemaleKey = 'forFemale';
+const String storyFollowersKey = 'followers';
+const String storyBookmarksListKey = 'bookmarksList';
+const String storyFavouritesListKey = 'favouritesList';
+const String storyDataKey = 'storyData';
+
 const String placeholderImageUrl = 'https://firebasestorage.googleapis.com/v0/b/chaperonegame.firebasestorage.app/o/placeholder_images%2Fimage12.png?alt=media&token=b761023d-6840-4495-9cc7-731c17206f2f';
 
 const String createGamePitchText = """

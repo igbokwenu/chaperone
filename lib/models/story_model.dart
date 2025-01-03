@@ -1,3 +1,5 @@
+import 'package:chaperone/utils/constants/constants.dart';
+
 class StoryModel {
   final String storyUid;
   final String title;
@@ -29,46 +31,95 @@ class StoryModel {
   final String? description;
   final String? authorName;
   final String? authorUid;
+  final String? authorUsername;
   final bool? forMale;
   final bool? forFemale;
   final List<String>? followers;
+  final List<String>? bookmarksList;
+  final List<String>? favouritesList;
   final Map<String, dynamic>? storyData;
 
-  StoryModel(
-      {required this.storyUid,
-      required this.title,
-      required this.author,
-      required this.thumbnailUrl,
-      required this.isVerified,
-      required this.views,
-      required this.likes,
-      required this.comments,
-      this.isBookmarked = false,
-      this.synopsis,
-      this.question1,
-      this.questionOneImageUrl,
-      this.answer1a,
-      this.answer1b,
-      this.likeCount,
-      this.commentCount,
-      this.playCount,
-      this.likesUid,
-      this.shareCount,
-      this.isPublished,
-      this.isApproved,
-      this.isRejected,
-      this.isTrending,
-      this.isBasedOnTrueStory,
-      this.isInspiredByTrueEvent,
-      this.isForAdult,
-      this.gameUid,
-      this.description,
-      this.authorName,
-      this.authorUid,
-      this.forMale,
-      this.forFemale,
-      this.followers,
-      this.storyData});
+  StoryModel({
+    required this.storyUid,
+    required this.title,
+    required this.author,
+    required this.thumbnailUrl,
+    required this.isVerified,
+    required this.views,
+    required this.likes,
+    required this.comments,
+    this.isBookmarked = false,
+    this.synopsis,
+    this.question1,
+    this.questionOneImageUrl,
+    this.answer1a,
+    this.answer1b,
+    this.likeCount,
+    this.commentCount,
+    this.playCount,
+    this.likesUid,
+    this.shareCount,
+    this.isPublished,
+    this.isApproved,
+    this.isRejected,
+    this.isTrending,
+    this.isBasedOnTrueStory,
+    this.isInspiredByTrueEvent,
+    this.isForAdult,
+    this.gameUid,
+    this.description,
+    this.authorName,
+    this.authorUid,
+    this.forMale,
+    this.forFemale,
+    this.followers,
+    this.storyData,
+    this.bookmarksList,
+    this.favouritesList,
+    this.authorUsername,
+  });
+
+  factory StoryModel.fromMap(Map<String, dynamic>? data) {
+    return StoryModel(
+      storyUid: data?[storyUidKey] ?? '',
+      title: data?[storyTitleKey] ?? '',
+      author: data?[storyAuthorKey] ?? '',
+      thumbnailUrl: data?[storyThumbnailUrlKey] ?? '',
+      isVerified: data?[storyIsVerifiedKey] ?? false,
+      views: data?[storyViewsKey] ?? 0,
+      likes: data?[storyLikesKey] ?? 0,
+      comments: data?[storyCommentsKey] ?? 0,
+      isBookmarked: data?[storyIsBookmarkedKey] ?? false,
+      synopsis: data?[storySynopsisKey],
+      question1: data?[storyQuestion1Key],
+      questionOneImageUrl: data?[storyQuestionOneImageUrlKey],
+      answer1a: data?[storyAnswer1aKey],
+      answer1b: data?[storyAnswer1bKey],
+      likeCount: data?[storyLikeCountKey],
+      commentCount: data?[storyCommentCountKey],
+      playCount: data?[storyPlayCountKey],
+      likesUid: List<String>.from(data?[storyLikesUidKey] ?? []),
+      shareCount: data?[storyShareCountKey],
+      isPublished: data?[storyIsPublishedKey],
+      isApproved: data?[storyIsApprovedKey],
+      isRejected: data?[storyIsRejectedKey],
+      isTrending: data?[storyIsTrendingKey],
+      isBasedOnTrueStory: data?[storyIsBasedOnTrueStoryKey],
+      isInspiredByTrueEvent: data?[storyIsInspiredByTrueEventKey],
+      isForAdult: data?[storyIsForAdultKey],
+      gameUid: data?[storyGameUidKey],
+      description: data?[storyDescriptionKey],
+      authorName: data?[storyAuthorNameKey],
+      authorUid: data?[storyAuthorUidKey],
+      forMale: data?[storyForMaleKey],
+      forFemale: data?[storyForFemaleKey],
+      followers: List<String>.from(data?[storyFollowersKey] ?? []),
+      bookmarksList: List<String>.from(data?[storyBookmarksListKey] ?? []),
+      favouritesList: List<String>.from(data?[storyFavouritesListKey] ?? []),
+      storyData: data?[storyDataKey],
+      authorUsername: data?[storyAuthorUsernameKey],
+    );
+  }
 }
 
 List<StoryModel> mockScenarios = [

@@ -1,4 +1,3 @@
-
 import 'package:chaperone/services/database_service.dart';
 import 'package:chaperone/utils/constants/constants.dart';
 import 'package:chaperone/utils/reusable_functions.dart';
@@ -14,15 +13,15 @@ class AuthService {
       clientId:
           "996712058212-p9347k0u5mipoqc6176uc8k0f21d05eq.apps.googleusercontent.com");
 
-  Future<void> _createUserDocumentIfNeeded(User? user) async {
+  Future<void> _createUsersStoryDocumentIfNeeded(User? user) async {
     if (user != null) {
       final databaseService = DatabaseService(uid: user.uid);
       final docSnapshot =
-          await databaseService.userCollection.doc(user.uid).get();
+          await databaseService.storiesCollection.doc(user.uid).get();
 
       if (!docSnapshot.exists) {
-        await databaseService.createUserDocument();
-        await databaseService.updateAnyUserData(
+        await databaseService.createStoryDocument();
+        await databaseService.updateAnyStoriesData(
           fieldName: userEmail,
           newValue: _firebaseAuth.currentUser?.email ?? '',
         );
@@ -43,7 +42,7 @@ class AuthService {
       );
 
       // Create user document if it doesn't exist
-      await _createUserDocumentIfNeeded(userCredential.user);
+      await _createUsersStoryDocumentIfNeeded(userCredential.user);
 
       // Save email to shared preferences
       final prefs = await SharedPreferences.getInstance();
@@ -69,7 +68,7 @@ class AuthService {
       );
 
       // Create user document
-      await _createUserDocumentIfNeeded(userCredential.user);
+      await _createUsersStoryDocumentIfNeeded(userCredential.user);
 
       // Save email to shared preferences
       final prefs = await SharedPreferences.getInstance();
@@ -104,7 +103,7 @@ class AuthService {
           await _firebaseAuth.signInWithCredential(credential);
 
       // Create user document
-      await _createUserDocumentIfNeeded(userCredential.user);
+      await _createUsersStoryDocumentIfNeeded(userCredential.user);
 
       // MyReusableFunctions.showCustomToast(
       //   description: "Sign-in successful",
@@ -126,7 +125,7 @@ class AuthService {
       UserCredential userCredential = await _firebaseAuth.signInAnonymously();
 
       // Create user document
-      await _createUserDocumentIfNeeded(userCredential.user);
+      await _createUsersStoryDocumentIfNeeded(userCredential.user);
 
       return userCredential;
     } on FirebaseAuthException catch (e) {
@@ -157,9 +156,9 @@ class AuthService {
             await user.linkWithCredential(credential);
 
         // Update Firestore document if necessary (it should already exist)
-        await _createUserDocumentIfNeeded(userCredential.user);
+        await _createUsersStoryDocumentIfNeeded(userCredential.user);
 
-        await databaseService.updateAnyUserData(
+        await databaseService.updateAnyStoriesData(
           fieldName: userEmail,
           newValue: _firebaseAuth.currentUser?.email ?? '',
         );
@@ -210,8 +209,6 @@ class AuthService {
       User? user = _firebaseAuth.currentUser;
 
       if (user != null) {
-     
-
         // Delete the user's files from Firebase Storage
         final storageRef =
             FirebaseStorage.instance.ref().child('user_data/${user.uid}');
@@ -223,7 +220,7 @@ class AuthService {
 
         // Delete the user's document in Firestore
         final databaseService = DatabaseService(uid: user.uid);
-        await databaseService.userCollection.doc(user.uid).delete();
+        await databaseService.storiesCollection.doc(user.uid).delete();
 
         // Delete the user from Firebase Authentication
         await user.delete();
@@ -254,6 +251,12 @@ class AuthService {
     return false;
   }
 
+  bool isUserLoggedIn() {
+    User? user = _firebaseAuth.currentUser;
+    return user !=
+        null; // Returns true if the user is logged in, false otherwise
+  }
+
 // Method to link anonymous account with Google
   Future<UserCredential?> linkAnonymousAccountWithGoogle() async {
     MyReusableFunctions.showProcessingToast();
@@ -275,7 +278,7 @@ class AuthService {
 
         // Update Firestore document
         final databaseService = DatabaseService(uid: user.uid);
-        await databaseService.updateAnyUserData(
+        await databaseService.updateAnyStoriesData(
           fieldName: userEmail,
           newValue: userCredential.user?.email ?? '',
         );

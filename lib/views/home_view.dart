@@ -1,5 +1,5 @@
 import 'package:chaperone/test.dart';
-import 'package:chaperone/views/create_game_view.dart';
+import 'package:chaperone/views/create_game_onboarding_view.dart';
 import 'package:chaperone/views/discovery_view.dart';
 import 'package:flutter/material.dart';
 
@@ -15,7 +15,7 @@ class _HomeViewState extends State<HomeView> {
 
   final List<Widget> _screens = [
     const DiscoverScreen(),
-    const CreateGameView(),
+    const CreateGameOnboardingView(),
     const Scaffold(),
     const Scaffold(),
   ];

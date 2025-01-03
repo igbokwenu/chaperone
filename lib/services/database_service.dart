@@ -10,8 +10,8 @@ class DatabaseService {
   final String uid;
   DatabaseService({required this.uid});
 
-  final CollectionReference userCollection =
-      FirebaseFirestore.instance.collection('users');
+  final CollectionReference storiesCollection =
+      FirebaseFirestore.instance.collection('stories');
 
   Future<void> fetchUserCountryAndSaveToFirebase(
       {String? existingCountry}) async {
@@ -22,7 +22,7 @@ class DatabaseService {
       String state = data['regionName'];
 
       try {
-        await userCollection.doc(uid).update({
+        await storiesCollection.doc(uid).update({
           userCountry: country,
           userState: state,
           userIpCountry: country,
@@ -67,10 +67,9 @@ class DatabaseService {
     return false;
   }
 
-
-  Future<void> updateAnyUserData(
+  Future<void> updateAnyStoriesData(
       {required String fieldName, required dynamic newValue}) async {
-    final userRef = FirebaseFirestore.instance.collection('users').doc(uid);
+    final userRef = FirebaseFirestore.instance.collection('stories').doc(uid);
 
     // Get the current data
     final currentData = (await userRef.get()).data();
@@ -87,14 +86,49 @@ class DatabaseService {
     }
   }
 
-  Future<void> updateUserDocument(Map<String, dynamic> userData) async {
-    return await userCollection.doc(uid).set(userData);
+  Future<void> updateStoryDocument(Map<String, dynamic> storyData) async {
+    return await storiesCollection.doc("${uid}game1").set(storyData);
   }
 
-  Future<void> createUserDocument() async {
-    return await updateUserDocument({
-      userFirstName: MyReusableFunctions.generateRandomUsername(),
-      userLastName: '',
+  Future<void> createStoryDocument() async {
+    return await updateStoryDocument({
+      storyUidKey: uid,
+      storyTitleKey: 'Untitled Story',
+      storyAuthorKey: '',
+      storyThumbnailUrlKey: '',
+      storyIsVerifiedKey: false,
+      storyViewsKey: 0,
+      storyLikesKey: 0,
+      storyCommentsKey: 0,
+      storyIsBookmarkedKey: false,
+      storySynopsisKey: '',
+      storyQuestion1Key: '',
+      storyQuestionOneImageUrlKey: '',
+      storyAnswer1aKey: '',
+      storyAnswer1bKey: '',
+      storyLikeCountKey: 0,
+      storyCommentCountKey: 0,
+      storyPlayCountKey: 0,
+      storyLikesUidKey: [],
+      storyShareCountKey: 0,
+      storyIsPublishedKey: false,
+      storyIsApprovedKey: false,
+      storyIsRejectedKey: false,
+      storyIsTrendingKey: false,
+      storyIsBasedOnTrueStoryKey: false,
+      storyIsInspiredByTrueEventKey: false,
+      storyIsForAdultKey: false,
+      storyGameUidKey: '',
+      storyDescriptionKey: '',
+      storyAuthorNameKey: '',
+      storyAuthorUidKey: uid,
+      storyAuthorUsernameKey: MyReusableFunctions.generateRandomUsername(),
+      storyForMaleKey: false,
+      storyForFemaleKey: false,
+      storyFollowersKey: [],
+      storyBookmarksListKey: [],
+      storyFavouritesListKey: [],
+      storyDataKey: {},
       userCountry: '',
       userState: '',
       userEmail: '',
@@ -103,11 +137,14 @@ class DatabaseService {
       userIsBanned: false,
       userIsSuperAdmin: false,
       userIsPro: false,
-      userUid: uid,
       userAiTextUsageCount: 0,
       userAiGeneralMediaUsageCount: 0,
       userAiGeneralTextUsageCount: 0,
-      userDevice: Platform.isAndroid ? 'Android': Platform.isIOS ? 'iOS': 'Web',
+      userDevice: Platform.isAndroid
+          ? 'Android'
+          : Platform.isIOS
+              ? 'iOS'
+              : 'Web',
       userTimeStamp: FieldValue.serverTimestamp(),
       usersMessagingToken: [],
     });
