@@ -1,6 +1,7 @@
 import 'package:chaperone/test.dart';
 import 'package:chaperone/views/create_game_onboarding_view.dart';
 import 'package:chaperone/views/discovery_view.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class HomeView extends StatefulWidget {
@@ -16,7 +17,9 @@ class _HomeViewState extends State<HomeView> {
   final List<Widget> _screens = [
     const DiscoverScreen(),
     const CreateGameOnboardingView(),
-    const Scaffold(),
+    StoryDisplay(
+      uid: FirebaseAuth.instance.currentUser!.uid,
+    ),
     const Scaffold(),
   ];
 
