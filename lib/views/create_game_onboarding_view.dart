@@ -111,7 +111,7 @@ class CreateGameOnboardingView extends StatelessWidget {
                                     if (!authService.isUserLoggedIn()) {
                                       MyReusableFunctions.showCustomToast(
                                           description:
-                                              "Setting up your account");
+                                              "Setting up your Storybook 🥰");
                                       await authService.signInAnonymously();
                                     }
                                     Navigator.push(

@@ -17,7 +17,7 @@ class CreateGameView extends StatefulWidget {
 
 class CreateGameViewState extends State<CreateGameView> {
   final TextEditingController _promptController = TextEditingController();
-  final authService = AuthService();
+
   String _response = '';
   String _rawResponse = '';
   bool _isLoading = false;
@@ -32,12 +32,6 @@ class CreateGameViewState extends State<CreateGameView> {
     });
 
     try {
-      if (!authService.isUserLoggedIn()) {
-        MyReusableFunctions.showCustomToast(
-            description: "Setting up your account");
-        await authService.signInAnonymously();
-      }
-
       final result = await GeminiService.sendTextPrompt(
         message: _promptController.text,
       );
@@ -73,22 +67,6 @@ class CreateGameViewState extends State<CreateGameView> {
       child: Scaffold(
         appBar: AppBar(
           title: const Text('Story Creator Beta'),
-          actions: [
-            IconButton(
-              icon: const Icon(Icons.logout),
-              onPressed: () async {
-                if (authService.isUserLoggedIn()) {
-                  await authService.signOut();
-                  MyReusableFunctions.showCustomToast(
-                      description: "Signed out successfully");
-                } else {
-                  MyReusableFunctions.showCustomToast(
-                      description: "You are already signed out");
-                }
-              },
-              tooltip: 'Sign Out',
-            )
-          ],
           elevation: 0,
           backgroundColor: Theme.of(context).primaryColor,
           foregroundColor: Colors.white,

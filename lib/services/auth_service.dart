@@ -210,18 +210,11 @@ class AuthService {
       User? user = _firebaseAuth.currentUser;
 
       if (user != null) {
-        // Delete the user's files from Firebase Storage
-        final storageRef =
-            FirebaseStorage.instance.ref().child('user_data/${user.uid}');
-        await storageRef.listAll().then((listResult) async {
-          for (var item in listResult.items) {
-            await item.delete(); // Delete each file
-          }
-        });
-
         // Delete the user's document in Firestore
         final databaseService = DatabaseService(uid: user.uid);
-        await databaseService.storiesCollection.doc(user.uid).delete();
+        await databaseService.storiesCollection
+            .doc("${user.uid}game1")
+            .delete();
 
         // Delete the user from Firebase Authentication
         await user.delete();

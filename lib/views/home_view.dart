@@ -1,4 +1,5 @@
 import 'package:chaperone/test.dart';
+import 'package:chaperone/views/account_view.dart';
 import 'package:chaperone/views/create_game_onboarding_view.dart';
 import 'package:chaperone/views/discovery_view.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -20,7 +21,7 @@ class _HomeViewState extends State<HomeView> {
     StoryDisplay(
       uid: FirebaseAuth.instance.currentUser?.uid ?? '',
     ),
-    const Scaffold(),
+    AccountView(),
   ];
 
   @override
