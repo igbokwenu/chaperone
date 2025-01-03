@@ -41,7 +41,7 @@ class StoryPreviewCard extends StatelessWidget {
                     child: Text(
                       scenario.title,
                       style: const TextStyle(
-                        fontSize: 20,
+                        fontSize: 17,
                         fontWeight: FontWeight.bold,
                       ),
                     ),

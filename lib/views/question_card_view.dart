@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:chaperone/models/story_model.dart';
 
@@ -218,8 +219,11 @@ class _QuestionCardState extends State<QuestionCard>
                           ),
                         ),
                         const SizedBox(height: 20),
-                        ...options.entries.map((entry) => _buildOption(
-                            entry.key, entry.value as Map<String, dynamic>)),
+                        ...options.entries.map((entry) => FadeInUpBig(
+                              delay: const Duration(seconds: 10),
+                              child: _buildOption(entry.key,
+                                  entry.value as Map<String, dynamic>),
+                            )),
                       ],
                     ),
                   ),
