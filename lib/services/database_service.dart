@@ -14,7 +14,7 @@ class DatabaseService {
       FirebaseFirestore.instance.collection('stories');
 
   Future<void> fetchUserCountryAndSaveToFirebase(
-      {String? existingCountry}) async {
+      {String? existingCountry, String? docId,}) async {
     final response = await http.get(Uri.parse('http://ip-api.com/json'));
     if (response.statusCode == 200) {
       Map<String, dynamic> data = json.decode(response.body);
@@ -22,7 +22,7 @@ class DatabaseService {
       String state = data['regionName'];
 
       try {
-        await storiesCollection.doc(uid).update({
+        await storiesCollection.doc(docId ?? uid).update({
           userCountry: country,
           userState: state,
           userIpCountry: country,
@@ -31,7 +31,7 @@ class DatabaseService {
       } on FirebaseException catch (e) {
         // Handle the error
         if (kDebugMode) {
-          print('Error updating fields: $e');
+          print('Error updating location fields: $e');
         }
       }
     }
@@ -68,8 +68,8 @@ class DatabaseService {
   }
 
   Future<void> updateAnyStoriesData(
-      {required String fieldName, required dynamic newValue}) async {
-    final userRef = FirebaseFirestore.instance.collection('stories').doc(uid);
+      {required String fieldName, required dynamic newValue, String? docId}) async {
+    final userRef = FirebaseFirestore.instance.collection('stories').doc(docId ?? uid);
 
     // Get the current data
     final currentData = (await userRef.get()).data();
@@ -122,7 +122,8 @@ class DatabaseService {
       storyDescriptionKey: '',
       storyAuthorNameKey: '',
       storyAuthorUidKey: uid,
-      storyAuthorUsernameKey: MyReusableFunctions.generateRandomUsername(),
+      storyAuthorUsernameKey: '',
+      storyAuthorDisplayNameKey: MyReusableFunctions.generateRandomUsername(),
       storyForMaleKey: false,
       storyForFemaleKey: false,
       storyFollowersKey: [],

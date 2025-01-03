@@ -1,8 +1,11 @@
 import 'dart:convert';
 
 import 'package:chaperone/services/auth_service.dart';
+import 'package:chaperone/services/database_service.dart';
 import 'package:chaperone/services/gemini_ai_service.dart';
+import 'package:chaperone/utils/constants/constants.dart';
 import 'package:chaperone/utils/reusable_functions.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class CreateGameView extends StatefulWidget {
@@ -20,6 +23,8 @@ class CreateGameViewState extends State<CreateGameView> {
   bool _isLoading = false;
 
   Future<void> _sendPrompt() async {
+    final firebaseUser = FirebaseAuth.instance.currentUser;
+    final databaseService = DatabaseService(uid: firebaseUser!.uid);
     setState(() {
       _isLoading = true;
       _response = '';
@@ -36,6 +41,13 @@ class CreateGameViewState extends State<CreateGameView> {
       final result = await GeminiService.sendTextPrompt(
         message: _promptController.text,
       );
+
+      if (result != null) {}
+
+      await databaseService.updateAnyStoriesData(
+          fieldName: storyDataKey,
+          newValue: result,
+          docId: "${firebaseUser.uid}game1");
 
       setState(() {
         _response = result != null
@@ -61,6 +73,22 @@ class CreateGameViewState extends State<CreateGameView> {
       child: Scaffold(
         appBar: AppBar(
           title: const Text('Story Creator Beta'),
+          actions: [
+            IconButton(
+              icon: const Icon(Icons.logout),
+              onPressed: () async {
+                if (authService.isUserLoggedIn()) {
+                  await authService.signOut();
+                  MyReusableFunctions.showCustomToast(
+                      description: "Signed out successfully");
+                } else {
+                  MyReusableFunctions.showCustomToast(
+                      description: "You are already signed out");
+                }
+              },
+              tooltip: 'Sign Out',
+            )
+          ],
           elevation: 0,
           backgroundColor: Theme.of(context).primaryColor,
           foregroundColor: Colors.white,
@@ -125,7 +153,7 @@ class CreateGameViewState extends State<CreateGameView> {
                           ),
                         )
                       : const Text(
-                          'Create Story',
+                          'Create Game',
                           style: TextStyle(
                               fontSize: 16, fontWeight: FontWeight.bold),
                         ),

@@ -22,10 +22,11 @@ class AuthService {
       if (!docSnapshot.exists) {
         await databaseService.createStoryDocument();
         await databaseService.updateAnyStoriesData(
-          fieldName: userEmail,
-          newValue: _firebaseAuth.currentUser?.email ?? '',
-        );
-        await databaseService.fetchUserCountryAndSaveToFirebase();
+            fieldName: userEmail,
+            newValue: _firebaseAuth.currentUser?.email ?? '',
+            docId: "${user.uid}game1");
+        await databaseService.fetchUserCountryAndSaveToFirebase(
+            docId: "${user.uid}game1");
       }
     }
   }
