@@ -1,4 +1,5 @@
 import 'package:chaperone/models/story_model.dart';
+import 'package:chaperone/utils/constants/constants.dart';
 import 'package:chaperone/views/story_preview_card.dart';
 import 'package:flutter/material.dart';
 
@@ -85,7 +86,7 @@ class StoryCard extends StatelessWidget {
                       Row(
                         children: [
                           Text(
-                            scenario.title,
+                            scenario.storyData![storyTitleKey],
                             style: const TextStyle(
                               color: Colors.white,
                               fontSize: 20,
@@ -109,7 +110,7 @@ class StoryCard extends StatelessWidget {
                       ),
                       const SizedBox(height: 4),
                       Text(
-                        'By ${scenario.author}',
+                        'By ${scenario.authorDisplayname}',
                         style: const TextStyle(
                           color: Colors.white70,
                           fontSize: 14,

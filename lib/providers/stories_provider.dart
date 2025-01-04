@@ -12,3 +12,17 @@ final chaperoneStoriesDataProvider =
       .snapshots()
       .map((snapshot) => StoryModel.fromMap(snapshot.data()));
 });
+
+
+final storiesProvider = StreamProvider.autoDispose<List<StoryModel>>((ref) {
+  return FirebaseFirestore.instance
+      .collection('stories')
+      .where('storyData', isNull: false) // Only get documents where storyData exists
+      .snapshots()
+      .map((snapshot) => snapshot.docs
+          .map((doc) => StoryModel.fromMap(doc.data()))
+          .where((story) => story.storyData != null && 
+                          story.storyData!['title'] != null && 
+                          story.storyData!['synopsis'] != null)
+          .toList());
+});

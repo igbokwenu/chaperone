@@ -32,6 +32,7 @@ class StoryModel {
   final String? authorName;
   final String? authorUid;
   final String? authorUsername;
+  final String? authorDisplayname;
   final bool? forMale;
   final bool? forFemale;
   final List<String>? followers;
@@ -77,6 +78,7 @@ class StoryModel {
     this.bookmarksList,
     this.favouritesList,
     this.authorUsername,
+    this.authorDisplayname,
   });
 
   factory StoryModel.fromMap(Map<String, dynamic>? data) {
@@ -118,6 +120,7 @@ class StoryModel {
       favouritesList: List<String>.from(data?[storyFavouritesListKey] ?? []),
       storyData: data?[storyDataKey],
       authorUsername: data?[storyAuthorUsernameKey],
+      authorDisplayname: data?[storyAuthorDisplayNameKey],
     );
   }
 }
