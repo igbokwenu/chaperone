@@ -1,4 +1,5 @@
 import 'package:chaperone/models/story_model.dart';
+import 'package:chaperone/utils/constants/constants.dart';
 import 'package:chaperone/views/question_card_view.dart';
 import 'package:chaperone/views/result_view.dart';
 import 'package:flutter/material.dart';
@@ -39,9 +40,9 @@ class StoryPreviewCard extends StatelessWidget {
                   const Spacer(),
                   Center(
                     child: Text(
-                      scenario.title,
+                      scenario.storyData![storyTitleKey],
                       style: const TextStyle(
-                        fontSize: 17,
+                        fontSize: 15,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
@@ -125,7 +126,7 @@ class StoryPreviewCard extends StatelessWidget {
                           ),
                           const SizedBox(width: 8),
                           Text(
-                            scenario.author,
+                            scenario.authorDisplayname!,
                             style: const TextStyle(
                               color: Colors.white70,
                               fontSize: 14,
@@ -150,7 +151,7 @@ class StoryPreviewCard extends StatelessWidget {
                       ),
                       const SizedBox(height: 16),
                       Text(
-                        scenario.synopsis ?? '',
+                        scenario.storyData![storySynopsisKey],
                         style: const TextStyle(
                           color: Colors.white,
                           fontSize: 14,

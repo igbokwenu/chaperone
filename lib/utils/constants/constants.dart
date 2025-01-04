@@ -110,6 +110,7 @@ Here, you are doing more than just creating a game—it's a chance to connect. U
 
 const String whyCreateGameText = """
 Why create a game?  
+
 - A Creative Outlet: Channel your ideas, emotions, and imagination into an interactive masterpiece.  
 - Deeper Connections: Share your experiences and perspectives in a way that words alone can't express.  
 - A Safe Space: Explore sensitive or difficult topics in a non-confrontational, immersive way.  
@@ -118,3 +119,5 @@ Why create a game?
 
 Whether you're looking to heal, entertain, or simply explore your creativity, Chaperone offers a unique and rewarding way to do it. Create, share, and game on—your story deserves to be told ❤️
 """;
+
+const String chaperoneLogoUrl512 = 'https://firebasestorage.googleapis.com/v0/b/chaperonegame.firebasestorage.app/o/branding%2Flogo_only_4x_black_bg_512.png?alt=media&token=38a70e8a-a1fb-494f-81de-22f7fa013453';

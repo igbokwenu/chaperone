@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:animate_do/animate_do.dart';
+import 'package:chaperone/utils/constants/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:chaperone/models/story_model.dart';
 
@@ -149,7 +150,7 @@ class _QuestionCardState extends State<QuestionCard>
                             Expanded(
                               child: Center(
                                 child: Text(
-                                  widget.scenario.title,
+                                  widget.scenario.storyData![storyTitleKey],
                                   textAlign: TextAlign.center,
                                   style: const TextStyle(
                                     fontSize: 18,

@@ -113,7 +113,7 @@ class DatabaseService {
         storyUidKey: newDocRef.id,
         storyTitleKey: 'Untitled Story',
         storyAuthorKey: '',
-        storyThumbnailUrlKey: '',
+        storyThumbnailUrlKey: chaperoneLogoUrl512,
         storyIsVerifiedKey: false,
         storyViewsKey: 0,
         storyLikesKey: 0,

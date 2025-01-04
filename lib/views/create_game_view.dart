@@ -39,7 +39,7 @@ class CreateGameViewState extends State<CreateGameView> {
       await databaseService.updateAnyStoriesData(
           fieldName: storyDataKey,
           newValue: result,
-          docId: "${firebaseUser?.uid}game1");
+          docId: "GZeA2mdHhkiqsWr0icNd");
 
       setState(() {
         _response = result != null

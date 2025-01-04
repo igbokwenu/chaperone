@@ -1,4 +1,5 @@
 import 'package:chaperone/models/story_model.dart';
+import 'package:chaperone/utils/constants/constants.dart';
 import 'package:chaperone/views/home_view.dart';
 import 'package:flutter/material.dart';
 
@@ -213,7 +214,7 @@ class _ResultViewState extends State<ResultView> with TickerProviderStateMixin {
                       ),
                       Expanded(
                         child: Text(
-                          widget.scenario.title,
+                          widget.scenario.storyData![storyTitleKey],
                           style: const TextStyle(
                             color: Colors.white,
                             fontSize: 20,
@@ -350,7 +351,7 @@ class _ResultViewState extends State<ResultView> with TickerProviderStateMixin {
                         ),
                         onPressed: () {},
                         child: Text(
-                          'Stay tuned for more games by ${widget.scenario.author}',
+                          'Stay tuned for more games by ${widget.scenario.authorDisplayname}',
                           textAlign: TextAlign.center,
                           style: const TextStyle(
                             color: Colors.white,
