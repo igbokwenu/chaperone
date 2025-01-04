@@ -1,5 +1,4 @@
 import 'package:chaperone/services/auth_service.dart';
-import 'package:chaperone/test.dart';
 import 'package:chaperone/utils/constants/constants.dart';
 import 'package:chaperone/utils/reusable_functions.dart';
 import 'package:chaperone/views/create_game_view.dart';
@@ -111,15 +110,17 @@ class CreateGameOnboardingView extends StatelessWidget {
                                     if (!authService.isUserLoggedIn()) {
                                       MyReusableFunctions.showCustomToast(
                                           description:
-                                              "Setting up your Storybook 🥰");
+                                              "Setting up your stage 🥰");
                                       await authService.signInAnonymously();
                                     }
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) =>
-                                              const CreateGameView()),
-                                    );
+                                    if (context.mounted) {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                const CreateGameView()),
+                                      );
+                                    }
                                   },
                                   child: Container(
                                     padding: const EdgeInsets.symmetric(
@@ -176,21 +177,46 @@ class CreateGameOnboardingView extends StatelessWidget {
                         ),
                       ),
                     ),
+
                     ElevatedButton(
-                      onPressed: () async {
-                        if (!authService.isUserLoggedIn()) {
-                          MyReusableFunctions.showCustomToast(
-                              description: "Setting up your account");
-                          await authService.signInAnonymously();
-                        }
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const CreateGameView()),
-                        );
-                      },
-                      child: _AnimatedButtonText(),
-                    ),
+                        onPressed: () {
+                          MyReusableFunctions.showCustomDialog(
+                              context: context,
+                              message: whyCreateGameText,
+                              actions: [
+                                ElevatedButton(
+                                  onPressed: () async {
+                                    if (!authService.isUserLoggedIn()) {
+                                      MyReusableFunctions.showCustomToast(
+                                          description:
+                                              "Setting up your account");
+                                      await authService.signInAnonymously();
+                                    }
+                                    await Future.delayed(
+                                        const Duration(seconds: 2));
+                                    if (context.mounted) {
+                                      Navigator.of(context).pop();
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                const CreateGameView()),
+                                      );
+                                    }
+                                  },
+                                  child: _AnimatedButtonText(),
+                                ),
+                              ]);
+                        },
+                        child: const Text(
+                          'Why Create A Game?',
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            color: Colors.black54,
+                            fontSize: 14,
+                          ),
+                        )),
+
                     SizedBox(
                       height: MediaQuery.of(context).size.height * 0.05,
                     )

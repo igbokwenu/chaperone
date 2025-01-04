@@ -19,122 +19,142 @@ class AccountView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final authService = AuthService();
-    return Scaffold(
-      backgroundColor: Colors.grey[100],
-      appBar: AppBar(
-        title: const Text('Account'),
-        backgroundColor: Colors.white,
-        elevation: 0,
-      ),
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            const SizedBox(height: 16),
-            Container(
-              padding: const EdgeInsets.all(16),
-              color: Colors.white,
+    return !authService.isUserLoggedIn()
+        ? Center(
+            child: ElevatedButton(
+              onPressed: () async {
+                if (!authService.isUserLoggedIn()) {
+                  MyReusableFunctions.showCustomToast(
+                      description: "Setting up your account");
+                  await authService.signInAnonymously();
+                }
+              },
+              child: const Text("Sign In"),
+            ),
+          )
+        : Scaffold(
+            backgroundColor: Colors.grey[100],
+            appBar: AppBar(
+              title: const Text('Account'),
+              backgroundColor: Colors.white,
+              elevation: 0,
+            ),
+            body: SingleChildScrollView(
               child: Column(
                 children: [
-                  // Profile Picture
-                  Stack(
-                    alignment: Alignment.bottomRight,
-                    children: [
-                      CircleAvatar(
-                        radius: 50,
-                        backgroundImage: NetworkImage(user['profilePicture']),
-                      ),
-                      Container(
-                        padding: const EdgeInsets.all(4),
-                        decoration: BoxDecoration(
-                          color: Colors.blue,
-                          shape: BoxShape.circle,
+                  const SizedBox(height: 16),
+                  Container(
+                    padding: const EdgeInsets.all(16),
+                    color: Colors.white,
+                    child: Column(
+                      children: [
+                        // Profile Picture
+                        Stack(
+                          alignment: Alignment.bottomRight,
+                          children: [
+                            CircleAvatar(
+                              radius: 50,
+                              backgroundImage:
+                                  NetworkImage(user['profilePicture']),
+                            ),
+                            Container(
+                              padding: const EdgeInsets.all(4),
+                              decoration: const BoxDecoration(
+                                color: Colors.blue,
+                                shape: BoxShape.circle,
+                              ),
+                              child: const Icon(
+                                Icons.edit,
+                                color: Colors.white,
+                                size: 20,
+                              ),
+                            ),
+                          ],
                         ),
-                        child: Icon(
-                          Icons.edit,
-                          color: Colors.white,
-                          size: 20,
+                        const SizedBox(height: 16),
+                        // Name
+                        Text(
+                          user['name'],
+                          style: Theme.of(context)
+                              .textTheme
+                              .headlineSmall
+                              ?.copyWith(
+                                fontWeight: FontWeight.bold,
+                              ),
                         ),
-                      ),
-                    ],
+                        const SizedBox(height: 8),
+                        // Email
+                        Text(
+                          user['email'],
+                          style:
+                              Theme.of(context).textTheme.bodyLarge?.copyWith(
+                                    color: Colors.grey[600],
+                                  ),
+                        ),
+                      ],
+                    ),
                   ),
                   const SizedBox(height: 16),
-                  // Name
-                  Text(
-                    user['name'],
-                    style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+                  // Account Details Section
+                  Container(
+                    padding: const EdgeInsets.all(16),
+                    color: Colors.white,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          'Account Details',
+                          style:
+                              Theme.of(context).textTheme.titleMedium?.copyWith(
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                        ),
+                        const SizedBox(height: 16),
+                        _buildDetailRow(
+                            Icons.phone, 'Phone', user['phoneNumber']),
+                        _buildDetailRow(
+                            Icons.location_on, 'Location', user['location']),
+                        _buildDetailRow(Icons.calendar_today, 'Member Since',
+                            user['joinDate']),
+                      ],
+                    ),
+                  ),
+                  const SizedBox(height: 24),
+                  // Sign Out Button
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 16),
+                    child: ElevatedButton(
+                      onPressed: () async {
+                        if (authService.isUserLoggedIn()) {
+                          await authService.deleteUser();
+                          await authService.signOut();
+                          MyReusableFunctions.showCustomToast(
+                              description: "Signed out successfully");
+                        } else {
+                          MyReusableFunctions.showCustomToast(
+                              description: "You are already signed out");
+                        }
+                      },
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.red,
+                        minimumSize: const Size.fromHeight(50),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                      ),
+                      child: const Text(
+                        'Sign Out',
+                        style: TextStyle(
+                          fontSize: 16,
                           fontWeight: FontWeight.bold,
                         ),
-                  ),
-                  const SizedBox(height: 8),
-                  // Email
-                  Text(
-                    user['email'],
-                    style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                          color: Colors.grey[600],
-                        ),
+                      ),
+                    ),
                   ),
                 ],
               ),
             ),
-            const SizedBox(height: 16),
-            // Account Details Section
-            Container(
-              padding: const EdgeInsets.all(16),
-              color: Colors.white,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    'Account Details',
-                    style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                          fontWeight: FontWeight.bold,
-                        ),
-                  ),
-                  const SizedBox(height: 16),
-                  _buildDetailRow(Icons.phone, 'Phone', user['phoneNumber']),
-                  _buildDetailRow(
-                      Icons.location_on, 'Location', user['location']),
-                  _buildDetailRow(
-                      Icons.calendar_today, 'Member Since', user['joinDate']),
-                ],
-              ),
-            ),
-            const SizedBox(height: 24),
-            // Sign Out Button
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16),
-              child: ElevatedButton(
-                onPressed: () async {
-                  if (authService.isUserLoggedIn()) {
-                    await authService.deleteUser();
-                    await authService.signOut();
-                    MyReusableFunctions.showCustomToast(
-                        description: "Signed out successfully");
-                  } else {
-                    MyReusableFunctions.showCustomToast(
-                        description: "You are already signed out");
-                  }
-                },
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.red,
-                  minimumSize: const Size.fromHeight(50),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                ),
-                child: const Text(
-                  'Sign Out',
-                  style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
+          );
   }
 
   Widget _buildDetailRow(IconData icon, String label, String value) {

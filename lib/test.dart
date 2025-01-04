@@ -17,8 +17,8 @@ class StoryDisplay extends ConsumerWidget {
           return const Center(child: Text('No story data available'));
         }
 
-        final title = story.storyData!['title'] as String;
-        final synopsis = story.storyData!['synopsis'] as String;
+        final title = story.storyData?['title'] as String;
+        final synopsis = story.storyData?['synopsis'] as String;
 
         return Scaffold(
           body: Padding(

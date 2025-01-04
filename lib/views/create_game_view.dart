@@ -1,10 +1,8 @@
 import 'dart:convert';
 
-import 'package:chaperone/services/auth_service.dart';
 import 'package:chaperone/services/database_service.dart';
 import 'package:chaperone/services/gemini_ai_service.dart';
 import 'package:chaperone/utils/constants/constants.dart';
-import 'package:chaperone/utils/reusable_functions.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 

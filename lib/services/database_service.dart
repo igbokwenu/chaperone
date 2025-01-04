@@ -13,8 +13,10 @@ class DatabaseService {
   final CollectionReference storiesCollection =
       FirebaseFirestore.instance.collection('stories');
 
-  Future<void> fetchUserCountryAndSaveToFirebase(
-      {String? existingCountry, String? docId,}) async {
+  Future<void> fetchUserCountryAndSaveToFirebase({
+    String? existingCountry,
+    String? docId,
+  }) async {
     final response = await http.get(Uri.parse('http://ip-api.com/json'));
     if (response.statusCode == 200) {
       Map<String, dynamic> data = json.decode(response.body);
@@ -68,8 +70,11 @@ class DatabaseService {
   }
 
   Future<void> updateAnyStoriesData(
-      {required String fieldName, required dynamic newValue, String? docId}) async {
-    final userRef = FirebaseFirestore.instance.collection('stories').doc(docId ?? uid);
+      {required String fieldName,
+      required dynamic newValue,
+      String? docId}) async {
+    final userRef =
+        FirebaseFirestore.instance.collection('stories').doc(docId ?? uid);
 
     // Get the current data
     final currentData = (await userRef.get()).data();
@@ -86,68 +91,88 @@ class DatabaseService {
     }
   }
 
-  Future<void> updateStoryDocument(Map<String, dynamic> storyData) async {
-    return await storiesCollection.doc("${uid}game1").set(storyData);
-  }
-
   Future<void> createStoryDocument() async {
-    return await updateStoryDocument({
-      storyUidKey: uid,
-      storyTitleKey: 'Untitled Story',
-      storyAuthorKey: '',
-      storyThumbnailUrlKey: '',
-      storyIsVerifiedKey: false,
-      storyViewsKey: 0,
-      storyLikesKey: 0,
-      storyCommentsKey: 0,
-      storyIsBookmarkedKey: false,
-      storySynopsisKey: '',
-      storyQuestion1Key: '',
-      storyQuestionOneImageUrlKey: '',
-      storyAnswer1aKey: '',
-      storyAnswer1bKey: '',
-      storyLikeCountKey: 0,
-      storyCommentCountKey: 0,
-      storyPlayCountKey: 0,
-      storyLikesUidKey: [],
-      storyShareCountKey: 0,
-      storyIsPublishedKey: false,
-      storyIsApprovedKey: false,
-      storyIsRejectedKey: false,
-      storyIsTrendingKey: false,
-      storyIsBasedOnTrueStoryKey: false,
-      storyIsInspiredByTrueEventKey: false,
-      storyIsForAdultKey: false,
-      storyGameUidKey: '',
-      storyDescriptionKey: '',
-      storyAuthorNameKey: '',
-      storyAuthorUidKey: uid,
-      storyAuthorUsernameKey: '',
-      storyAuthorDisplayNameKey: MyReusableFunctions.generateRandomUsername(),
-      storyForMaleKey: false,
-      storyForFemaleKey: false,
-      storyFollowersKey: [],
-      storyBookmarksListKey: [],
-      storyFavouritesListKey: [],
-      storyDataKey: {},
-      userCountry: '',
-      userState: '',
-      userEmail: '',
-      userProfilePicUrl: '',
-      userIsAdmin: false,
-      userIsBanned: false,
-      userIsSuperAdmin: false,
-      userIsPro: false,
-      userAiTextUsageCount: 0,
-      userAiGeneralMediaUsageCount: 0,
-      userAiGeneralTextUsageCount: 0,
-      userDevice: Platform.isAndroid
-          ? 'Android'
-          : Platform.isIOS
-              ? 'iOS'
-              : 'Web',
-      userTimeStamp: FieldValue.serverTimestamp(),
-      usersMessagingToken: [],
-    });
+    try {
+      // Fetch user location data
+      final response = await http.get(Uri.parse('http://ip-api.com/json'));
+
+      String country = '';
+      String state = '';
+
+      if (response.statusCode == 200) {
+        Map<String, dynamic> data = json.decode(response.body);
+        country = data['country'] ?? '';
+        state = data['regionName'] ?? '';
+      }
+
+      // Create a new document reference
+      final newDocRef = storiesCollection.doc();
+
+      // Set the document data, including country and state
+      await newDocRef.set({
+        storyUidKey: newDocRef.id,
+        storyTitleKey: 'Untitled Story',
+        storyAuthorKey: '',
+        storyThumbnailUrlKey: '',
+        storyIsVerifiedKey: false,
+        storyViewsKey: 0,
+        storyLikesKey: 0,
+        storyCommentsKey: 0,
+        storyIsBookmarkedKey: false,
+        storySynopsisKey: '',
+        storyQuestion1Key: '',
+        storyQuestionOneImageUrlKey: '',
+        storyAnswer1aKey: '',
+        storyAnswer1bKey: '',
+        storyLikeCountKey: 0,
+        storyCommentCountKey: 0,
+        storyPlayCountKey: 0,
+        storyLikesUidKey: [],
+        storyShareCountKey: 0,
+        storyIsPublishedKey: false,
+        storyIsApprovedKey: false,
+        storyIsRejectedKey: false,
+        storyIsTrendingKey: false,
+        storyIsBasedOnTrueStoryKey: false,
+        storyIsInspiredByTrueEventKey: false,
+        storyIsForAdultKey: false,
+        storyGameUidKey: '',
+        storyDescriptionKey: '',
+        storyAuthorNameKey: '',
+        storyAuthorUidKey: uid,
+        storyAuthorUsernameKey: '',
+        storyAuthorDisplayNameKey: MyReusableFunctions.generateRandomUsername(),
+        storyForMaleKey: false,
+        storyForFemaleKey: false,
+        storyFollowersKey: [],
+        storyBookmarksListKey: [],
+        storyFavouritesListKey: [],
+        storyDataKey: {},
+        userCountry: country,
+        userState: state,
+        userEmail: '',
+        userProfilePicUrl: '',
+        userIsAdmin: false,
+        userIsBanned: false,
+        userIsSuperAdmin: false,
+        userIsPro: false,
+        userAiTextUsageCount: 0,
+        userAiGeneralMediaUsageCount: 0,
+        userAiGeneralTextUsageCount: 0,
+        userDevice: Platform.isAndroid
+            ? 'Android'
+            : Platform.isIOS
+                ? 'iOS'
+                : 'Web',
+        userTimeStamp: FieldValue.serverTimestamp(),
+        usersMessagingToken: [],
+      });
+
+      print("Story document created with ID: ${newDocRef.id}");
+    } catch (e) {
+      if (kDebugMode) {
+        print("Error creating story document: $e");
+      }
+    }
   }
 }

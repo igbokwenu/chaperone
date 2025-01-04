@@ -2,7 +2,6 @@ import 'package:chaperone/services/database_service.dart';
 import 'package:chaperone/utils/constants/constants.dart';
 import 'package:chaperone/utils/reusable_functions.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:toastification/toastification.dart';
@@ -21,12 +20,12 @@ class AuthService {
 
       if (!docSnapshot.exists) {
         await databaseService.createStoryDocument();
-        await databaseService.updateAnyStoriesData(
-            fieldName: userEmail,
-            newValue: _firebaseAuth.currentUser?.email ?? '',
-            docId: "${user.uid}game1");
-        await databaseService.fetchUserCountryAndSaveToFirebase(
-            docId: "${user.uid}game1");
+        // await databaseService.updateAnyStoriesData(
+        //     fieldName: userEmail,
+        //     newValue: _firebaseAuth.currentUser?.email ?? '',
+        //     docId: "${user.uid}game1");
+        // await databaseService.fetchUserCountryAndSaveToFirebase(
+        //     docId: "${user.uid}game1");
       }
     }
   }

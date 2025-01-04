@@ -99,13 +99,16 @@ const String storyBookmarksListKey = 'bookmarksList';
 const String storyFavouritesListKey = 'favouritesList';
 const String storyDataKey = 'storyData';
 
-const String placeholderImageUrl = 'https://firebasestorage.googleapis.com/v0/b/chaperonegame.firebasestorage.app/o/placeholder_images%2Fimage12.png?alt=media&token=b761023d-6840-4495-9cc7-731c17206f2f';
+const String placeholderImageUrl =
+    'https://firebasestorage.googleapis.com/v0/b/chaperonegame.firebasestorage.app/o/placeholder_images%2Fimage12.png?alt=media&token=b761023d-6840-4495-9cc7-731c17206f2f';
 
 const String createGamePitchText = """
 Step into the exciting world of interactive storytelling! Create your own game about anything! Whether it's a story inspired by true events, an emotional journey from your life, a fantastical fiction, or a topic you're passionate about, the possibilities are endless!
 
 Here, you are doing more than just creating a game—it's a chance to connect. Use your creation to spark meaningful conversations, process emotions in a creative way, or share a unique perspective with those you care about. Invite your friends and family to play, making your stories come alive in a fun, engaging way!  
+""";
 
+const String whyCreateGameText = """
 Why create a game?  
 - A Creative Outlet: Channel your ideas, emotions, and imagination into an interactive masterpiece.  
 - Deeper Connections: Share your experiences and perspectives in a way that words alone can't express.  
