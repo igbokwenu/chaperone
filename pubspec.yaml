@@ -23,6 +23,7 @@ dependencies:
   amplify_flutter: ^2.5.0
   font_awesome_flutter: ^10.8.0
   animate_do: ^3.3.4
+  cached_network_image: ^3.4.1
 
 dev_dependencies:
   flutter_test:

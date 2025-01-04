@@ -34,12 +34,9 @@ class CreateGameViewState extends State<CreateGameView> {
         message: _promptController.text,
       );
 
-      if (result != null) {}
-
-      await databaseService.updateAnyStoriesData(
-          fieldName: storyDataKey,
-          newValue: result,
-          docId: "GZeA2mdHhkiqsWr0icNd");
+      if (result != null) {
+        await databaseService.createStoryDocument(storyData: result);
+      }
 
       setState(() {
         _response = result != null

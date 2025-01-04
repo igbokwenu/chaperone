@@ -91,7 +91,8 @@ class DatabaseService {
     }
   }
 
-  Future<void> createStoryDocument() async {
+  Future<void> createStoryDocument(
+      {required Map<String, dynamic>? storyData}) async {
     try {
       // Fetch user location data
       final response = await http.get(Uri.parse('http://ip-api.com/json'));
@@ -111,7 +112,7 @@ class DatabaseService {
       // Set the document data, including country and state
       await newDocRef.set({
         storyUidKey: newDocRef.id,
-        storyTitleKey: 'Untitled Story',
+        storyTitleKey: 'New Untitled Story',
         storyAuthorKey: '',
         storyThumbnailUrlKey: chaperoneLogoUrl512,
         storyIsVerifiedKey: false,
@@ -147,7 +148,7 @@ class DatabaseService {
         storyFollowersKey: [],
         storyBookmarksListKey: [],
         storyFavouritesListKey: [],
-        storyDataKey: {},
+        storyDataKey: storyData,
         userCountry: country,
         userState: state,
         userEmail: '',

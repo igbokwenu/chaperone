@@ -19,7 +19,7 @@ class AuthService {
           await databaseService.storiesCollection.doc(user.uid).get();
 
       if (!docSnapshot.exists) {
-        await databaseService.createStoryDocument();
+        // await databaseService.createStoryDocument();
         // await databaseService.updateAnyStoriesData(
         //     fieldName: userEmail,
         //     newValue: _firebaseAuth.currentUser?.email ?? '',
@@ -125,7 +125,7 @@ class AuthService {
       UserCredential userCredential = await _firebaseAuth.signInAnonymously();
 
       // Create user document
-      await _createUsersStoryDocumentIfNeeded(userCredential.user);
+      // await _createUsersStoryDocumentIfNeeded(userCredential.user);
 
       return userCredential;
     } on FirebaseAuthException catch (e) {
