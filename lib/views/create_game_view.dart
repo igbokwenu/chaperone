@@ -1,8 +1,9 @@
 import 'dart:convert';
 
+import 'package:chaperone/services/auth_wrapper.dart';
 import 'package:chaperone/services/database_service.dart';
 import 'package:chaperone/services/gemini_ai_service.dart';
-import 'package:chaperone/utils/constants/constants.dart';
+import 'package:chaperone/utils/reusable_functions.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
@@ -19,8 +20,17 @@ class CreateGameViewState extends State<CreateGameView> {
   String _response = '';
   String _rawResponse = '';
   bool _isLoading = false;
+  int minCharacter = 20;
 
   Future<void> _sendPrompt() async {
+    if (_promptController.text.isEmpty ||
+        _promptController.text.length < minCharacter) {
+      MyReusableFunctions.showCustomToast(
+          description:
+              'Please enter at least $minCharacter characters for your story prompt');
+      return;
+    }
+
     final firebaseUser = FirebaseAuth.instance.currentUser;
     final databaseService = DatabaseService(uid: firebaseUser?.uid ?? '');
     setState(() {
@@ -34,9 +44,9 @@ class CreateGameViewState extends State<CreateGameView> {
         message: _promptController.text,
       );
 
-      if (result != null) {
-        await databaseService.createStoryDocument(storyData: result);
-      }
+      if (result != null) {}
+
+      await databaseService.createStoryDocument(storyData: result);
 
       setState(() {
         _response = result != null
@@ -51,6 +61,14 @@ class CreateGameViewState extends State<CreateGameView> {
     } finally {
       setState(() {
         _isLoading = false;
+
+        // Add navigation after setting loading state to false
+        setState(() {
+          _isLoading = false;
+          Navigator.of(context).pushAndRemoveUntil(
+              MaterialPageRoute(builder: (context) => const AuthWrapper()),
+              (route) => false);
+        });
       });
     }
   }
@@ -92,7 +110,8 @@ class CreateGameViewState extends State<CreateGameView> {
                     child: TextField(
                       controller: _promptController,
                       decoration: InputDecoration(
-                        labelText: 'Enter your story prompt',
+                        labelText:
+                            'Enter your story prompt (min $minCharacter characters)',
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(12),
                           borderSide: BorderSide.none,
