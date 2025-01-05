@@ -13,6 +13,73 @@ class DatabaseService {
   final CollectionReference storiesCollection =
       FirebaseFirestore.instance.collection('stories');
 
+
+  final CollectionReference usersCollection =
+      FirebaseFirestore.instance.collection('users');
+
+  Future<void> createUserDocument({required String uid}) async {
+    try {
+      // Fetch user location data
+      final response = await http.get(Uri.parse('http://ip-api.com/json'));
+
+      String country = '';
+      String state = '';
+
+      if (response.statusCode == 200) {
+        Map<String, dynamic> data = json.decode(response.body);
+        country = data['country'] ?? '';
+        state = data['regionName'] ?? '';
+      }
+
+      // Set default user data
+      await usersCollection.doc(uid).set({
+        userUid: uid,
+        userFirstName: '',
+        userLastName: '',
+        userCountry: country,
+        userState: state,
+        userEmail: '',
+        userProfilePicUrl: '',
+        userProgressAnalysis: '',
+        userProgressList: [],
+        userStoryList: [],
+        userIsAdmin: false,
+        userIsBanned: false,
+        userIsSuperAdmin: false,
+        userIsPro: false,
+        userAiMediaUsageCount: 0,
+        userAiTextUsageCount: 0,
+        userAiGeneralMediaUsageCount: 0,
+        userAiGeneralTextUsageCount: 0,
+        userHighestScore: 0,
+        userUserName: '',
+        userGameScores: [],
+        userBookmarkedStoryUid: '',
+        userNoOfGamesCreated: 0,
+        userMyGameIds: [],
+        userCreationTokens: 0,
+        userAllowSoundEffects: true,
+        userAllowGameMusic: true,
+        userFollowersList: [],
+        userFollowingList: [],
+        userDisplayName: '',
+        userGameBeingBuilt: '',
+        userDevice: Platform.isAndroid
+            ? 'Android'
+            : Platform.isIOS
+                ? 'iOS'
+                : 'Web',
+        userTimeStamp: FieldValue.serverTimestamp(),
+      });
+
+      print("User document created with ID: $uid");
+    } catch (e) {
+      if (kDebugMode) {
+        print("Error creating user document: $e");
+      }
+    }
+  }
+
   Future<void> fetchUserCountryAndSaveToFirebase({
     String? existingCountry,
     String? docId,

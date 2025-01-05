@@ -1,6 +1,7 @@
 import 'package:chaperone/services/database_service.dart';
 import 'package:chaperone/utils/constants/constants.dart';
 import 'package:chaperone/utils/reusable_functions.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -12,21 +13,36 @@ class AuthService {
       clientId:
           "996712058212-p9347k0u5mipoqc6176uc8k0f21d05eq.apps.googleusercontent.com");
 
-  Future<void> _createUsersStoryDocumentIfNeeded(User? user) async {
+  Future<void> _createUsersDocumentIfNeeded(User? user) async {
     if (user != null) {
       final databaseService = DatabaseService(uid: user.uid);
-      final docSnapshot =
-          await databaseService.storiesCollection.doc(user.uid).get();
+      final docSnapshot = await FirebaseFirestore.instance
+          .collection('users')
+          .doc(user.uid)
+          .get();
 
       if (!docSnapshot.exists) {
-        // await databaseService.createStoryDocument();
-        // await databaseService.updateAnyStoriesData(
-        //     fieldName: userEmail,
-        //     newValue: _firebaseAuth.currentUser?.email ?? '',
-        //     docId: "${user.uid}game1");
-        // await databaseService.fetchUserCountryAndSaveToFirebase(
-        //     docId: "${user.uid}game1");
+        // Call the createUserDocument method from DatabaseService
+        await databaseService.createUserDocument(uid: user.uid);
       }
+    }
+  }
+
+  // Sign in anonymously
+  Future<UserCredential?> signInAnonymously() async {
+    try {
+      UserCredential userCredential = await _firebaseAuth.signInAnonymously();
+
+      // Create a user document if it doesn't already exist
+      await _createUsersDocumentIfNeeded(userCredential.user);
+
+      return userCredential;
+    } on FirebaseAuthException catch (e) {
+      MyReusableFunctions.showCustomToast(
+        description: "Error: $e",
+        type: ToastificationType.error,
+      );
+      return null;
     }
   }
 
@@ -42,7 +58,7 @@ class AuthService {
       );
 
       // Create user document if it doesn't exist
-      await _createUsersStoryDocumentIfNeeded(userCredential.user);
+      await _createUsersDocumentIfNeeded(userCredential.user);
 
       // Save email to shared preferences
       final prefs = await SharedPreferences.getInstance();
@@ -68,7 +84,7 @@ class AuthService {
       );
 
       // Create user document
-      await _createUsersStoryDocumentIfNeeded(userCredential.user);
+      await _createUsersDocumentIfNeeded(userCredential.user);
 
       // Save email to shared preferences
       final prefs = await SharedPreferences.getInstance();
@@ -103,7 +119,7 @@ class AuthService {
           await _firebaseAuth.signInWithCredential(credential);
 
       // Create user document
-      await _createUsersStoryDocumentIfNeeded(userCredential.user);
+      await _createUsersDocumentIfNeeded(userCredential.user);
 
       // MyReusableFunctions.showCustomToast(
       //   description: "Sign-in successful",
@@ -114,25 +130,6 @@ class AuthService {
     } on FirebaseAuthException catch (e) {
       MyReusableFunctions.showCustomToast(
           description: "Error: $e", type: ToastificationType.error);
-      return null;
-    }
-  }
-
-  // Sign in anonymously
-  Future<UserCredential?> signInAnonymously() async {
-    // MyReusableFunctions.showProcessingToast();
-    try {
-      UserCredential userCredential = await _firebaseAuth.signInAnonymously();
-
-      // Create user document
-      // await _createUsersStoryDocumentIfNeeded(userCredential.user);
-
-      return userCredential;
-    } on FirebaseAuthException catch (e) {
-      MyReusableFunctions.showCustomToast(
-        description: "Error: $e",
-        type: ToastificationType.error,
-      );
       return null;
     }
   }
@@ -156,7 +153,7 @@ class AuthService {
             await user.linkWithCredential(credential);
 
         // Update Firestore document if necessary (it should already exist)
-        await _createUsersStoryDocumentIfNeeded(userCredential.user);
+        await _createUsersDocumentIfNeeded(userCredential.user);
 
         await databaseService.updateAnyStoriesData(
           fieldName: userEmail,

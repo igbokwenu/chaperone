@@ -59,6 +59,24 @@ const String userDevice = 'device';
 const String userTimeStamp = 'timeStamp';
 const String usersMessagingToken = 'messagingToken';
 
+const String userHighestScore = 'highestScore';
+const String userUserName = 'userName';
+const String userGameScores = 'gameScores';
+const String userBookmarkedStoryUid = 'bookmarkedStoryUid';
+const String userNoOfGamesCreated = 'noOfGamesCreated';
+const String userMyGameIds = 'myGameIds';
+const String userCreationTokens = 'creationTokens';
+const String userAllowSoundEffects = 'allowSoundEffects';
+const String userAllowGameMusic = 'allowGameMusic';
+const String userFollowersList = 'followersList';
+const String userFollowingList = 'followingList';
+const String userDisplayName = 'displayName';
+const String userStoryList = 'storyList';
+const String userProgressList = 'progressList';
+const String userProgressAnalysis = 'progressAnalysis';
+const String userGameBeingBuilt = 'gameBeingBuilt';
+
+
 //
 const String storyUidKey = 'storyUid';
 const String storyTitleKey = 'title';
@@ -120,4 +138,10 @@ Why create a game?
 Whether you're looking to heal, entertain, or simply explore your creativity, Chaperone offers a unique and rewarding way to do it. Create, share, and game on—your story deserves to be told ❤️
 """;
 
-const String chaperoneLogoUrl512 = 'https://firebasestorage.googleapis.com/v0/b/chaperonegame.firebasestorage.app/o/branding%2Flogo_only_4x_black_bg_512.png?alt=media&token=38a70e8a-a1fb-494f-81de-22f7fa013453';
+const String chaperoneLogoUrl512 =
+    'https://firebasestorage.googleapis.com/v0/b/chaperonegame.firebasestorage.app/o/branding%2Flogo_only_4x_black_bg_512.png?alt=media&token=38a70e8a-a1fb-494f-81de-22f7fa013453';
+
+const String guyImageUrl = 'https://firebasestorage.googleapis.com/v0/b/chaperonegame.firebasestorage.app/o/placeholder_images%2Fimage10.png?alt=media&token=73ff6db0-8a45-421f-8774-a73e3ac37749';
+const String blackLadyImageUrl = 'https://firebasestorage.googleapis.com/v0/b/chaperonegame.firebasestorage.app/o/placeholder_images%2Fimage9.png?alt=media&token=3325b642-0ccf-419f-b6f7-2453a3844359';
+const String whiteLadyImageUrl = 'https://firebasestorage.googleapis.com/v0/b/chaperonegame.firebasestorage.app/o/placeholder_images%2Fimage2.png?alt=media&token=4b8b52c0-34fe-40cb-b6fb-374c717d89c0';
+const String dramaticImageUrl = 'https://firebasestorage.googleapis.com/v0/b/chaperonegame.firebasestorage.app/o/placeholder_images%2Fimage8.png?alt=media&token=3aa283e1-1199-423f-933a-0d90e179154d';
