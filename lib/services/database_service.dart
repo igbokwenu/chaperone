@@ -13,7 +13,6 @@ class DatabaseService {
   final CollectionReference storiesCollection =
       FirebaseFirestore.instance.collection('stories');
 
-
   final CollectionReference usersCollection =
       FirebaseFirestore.instance.collection('users');
 
@@ -173,6 +172,24 @@ class DatabaseService {
         state = data['regionName'] ?? '';
       }
 
+      // Determine user device
+      String userDevice;
+      if (kIsWeb) {
+        userDevice = 'Web';
+      } else {
+        // Use defaultTargetPlatform to determine the platform in non-web environments
+        switch (defaultTargetPlatform) {
+          case TargetPlatform.android:
+            userDevice = 'Android';
+            break;
+          case TargetPlatform.iOS:
+            userDevice = 'iOS';
+            break;
+          default:
+            userDevice = 'Unknown';
+        }
+      }
+
       // Create a new document reference
       final newDocRef = storiesCollection.doc();
 
@@ -227,11 +244,7 @@ class DatabaseService {
         userAiTextUsageCount: 0,
         userAiGeneralMediaUsageCount: 0,
         userAiGeneralTextUsageCount: 0,
-        userDevice: Platform.isAndroid
-            ? 'Android'
-            : Platform.isIOS
-                ? 'iOS'
-                : 'Web',
+        userDevice: userDevice,
         userTimeStamp: FieldValue.serverTimestamp(),
         usersMessagingToken: [],
       });
