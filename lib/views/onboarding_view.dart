@@ -67,33 +67,43 @@ class _OnboardingViewState extends State<OnboardingView>
           // Background images with crossfade
           Stack(
             children: [
-              CachedNetworkImage(
-                imageUrl: backgroundImages[currentImageIndex],
+              Image.network(
+                backgroundImages[currentImageIndex],
                 fit: BoxFit.cover,
                 width: double.infinity,
                 height: double.infinity,
-                placeholder: (context, url) => Container(
-                  color: Colors.black,
-                ),
-                errorWidget: (context, url, error) => Container(
-                  color: Colors.black,
-                  child: const Icon(Icons.error),
-                ),
+                loadingBuilder: (context, child, loadingProgress) {
+                  if (loadingProgress == null) return child;
+                  return Container(
+                    color: Colors.black,
+                  );
+                },
+                errorBuilder: (context, error, stackTrace) {
+                  return Container(
+                    color: Colors.black,
+                    child: const Icon(Icons.error),
+                  );
+                },
               ),
               Opacity(
                 opacity: _animation.value,
-                child: CachedNetworkImage(
-                  imageUrl: backgroundImages[nextImageIndex],
+                child: Image.network(
+                  backgroundImages[nextImageIndex],
                   fit: BoxFit.cover,
                   width: double.infinity,
                   height: double.infinity,
-                  placeholder: (context, url) => Container(
-                    color: Colors.black,
-                  ),
-                  errorWidget: (context, url, error) => Container(
-                    color: Colors.black,
-                    child: const Icon(Icons.error),
-                  ),
+                  loadingBuilder: (context, child, loadingProgress) {
+                    if (loadingProgress == null) return child;
+                    return Container(
+                      color: Colors.black,
+                    );
+                  },
+                  errorBuilder: (context, error, stackTrace) {
+                    return Container(
+                      color: Colors.black,
+                      child: const Icon(Icons.error),
+                    );
+                  },
                 ),
               ),
               // Dark overlay for better text readability
