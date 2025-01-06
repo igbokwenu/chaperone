@@ -102,7 +102,7 @@ class _QuestionCardState extends State<QuestionCard>
   @override
   Widget build(BuildContext context) {
     final String imageUrl =
-        currentQuestion['imageUrl'] ?? widget.scenario.thumbnailUrl;
+        currentQuestion['imageUrl'] ?? widget.scenario.questionOneImageUrl;
     final Map<String, dynamic> options = currentQuestion['options'] ?? {};
 
     return Scaffold(
