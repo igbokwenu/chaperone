@@ -1,6 +1,10 @@
 import 'package:chaperone/models/story_model.dart';
+import 'package:chaperone/services/auth_service.dart';
+import 'package:chaperone/services/database_service.dart';
 import 'package:chaperone/utils/constants/constants.dart';
 import 'package:chaperone/views/story_preview_card.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 class StoryCard extends StatelessWidget {
@@ -14,6 +18,7 @@ class StoryCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     const double kDefaultPadding = 12;
+    final authService = AuthService();
     return Container(
       margin: const EdgeInsets.all(6.0),
       decoration: BoxDecoration(
@@ -148,6 +153,17 @@ class StoryCard extends StatelessWidget {
                         _buildGlossyStat(Icons.chat_bubble_outline,
                             _formatNumber(scenario.comments)),
                         const Spacer(),
+                        if (kDebugMode)
+                          IconButton(
+                            onPressed: () async {
+                              await authService
+                                  .deleteStoryDoc(scenario.storyUid);
+                            },
+                            icon: const Icon(
+                              Icons.delete,
+                              color: Colors.red,
+                            ),
+                          ),
                         ElevatedButton(
                           onPressed: () {
                             Navigator.push(

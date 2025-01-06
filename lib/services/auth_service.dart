@@ -198,6 +198,35 @@ class AuthService {
     await _googleSignIn.signOut();
   }
 
+  // Delete story document
+  Future<void> deleteStoryDoc(String docId) async {
+    // MyReusableFunctions.showProcessingToast();
+    try {
+      // Get the currently signed-in user
+      User? user = _firebaseAuth.currentUser;
+
+      if (user != null) {
+        // Delete the user's document in Firestore
+        final databaseService = DatabaseService(uid: user.uid);
+        await databaseService.storiesCollection.doc(docId).delete();
+
+        MyReusableFunctions.showCustomToast(
+          description: "Story was deleted successfully: $docId",
+          type: ToastificationType.success,
+        );
+      } else {
+        MyReusableFunctions.showCustomToast(
+          description: "No user is currently signed in",
+          type: ToastificationType.warning,
+        );
+      }
+    } on FirebaseAuthException catch (e) {
+      MyReusableFunctions.showCustomToast(
+          description: "Error deleting story: $e",
+          type: ToastificationType.error);
+    }
+  }
+
   // Delete user and their corresponding document
   Future<void> deleteUser() async {
     // MyReusableFunctions.showProcessingToast();
