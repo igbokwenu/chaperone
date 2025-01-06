@@ -2,6 +2,7 @@ import 'package:chaperone/test.dart';
 import 'package:chaperone/views/account_view.dart';
 import 'package:chaperone/views/create_game_onboarding_view.dart';
 import 'package:chaperone/views/discovery_view.dart';
+import 'package:chaperone/views/dynamic_stories_view.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
@@ -18,10 +19,11 @@ class _HomeViewState extends State<HomeView> {
   final List<Widget> _screens = [
     const DiscoverView(),
     const CreateGameOnboardingView(),
-    StoryDisplay(
-      uid: FirebaseAuth.instance.currentUser?.uid ?? '',
+    DynamicStoriesView(
+      favoriteUserId: FirebaseAuth.instance.currentUser?.uid,
+      viewTitle: "Favorite Stories",
     ),
-    AccountView(),
+    const AccountView(),
   ];
 
   @override
@@ -66,7 +68,7 @@ class _HomeViewState extends State<HomeView> {
                 label: 'Add',
               ),
               BottomNavigationBarItem(
-                icon: Icon(Icons.bookmark),
+                icon: Icon(Icons.favorite),
                 label: 'Message',
               ),
               BottomNavigationBarItem(
