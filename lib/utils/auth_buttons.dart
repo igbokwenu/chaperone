@@ -31,7 +31,7 @@ class AuthButtons extends StatelessWidget {
                 ),
               );
             },
-            child: Text(
+            child: const Text(
               'New player? Sign Up',
               style: TextStyle(color: Colors.white),
             ),
@@ -52,7 +52,7 @@ class AuthButtons extends StatelessWidget {
                 ),
               );
             },
-            child: Text(
+            child: const Text(
               'Existing? Sign In',
               style: TextStyle(color: Colors.white),
             ),

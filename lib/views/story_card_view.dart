@@ -3,7 +3,7 @@ import 'package:chaperone/services/auth_service.dart';
 import 'package:chaperone/services/database_service.dart';
 import 'package:chaperone/utils/constants/constants.dart';
 import 'package:chaperone/views/story_preview_card.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
@@ -19,6 +19,7 @@ class StoryCard extends StatelessWidget {
   Widget build(BuildContext context) {
     const double kDefaultPadding = 12;
     final authService = AuthService();
+    final databaseService = DatabaseService(uid: scenario.storyUid!);
     return Container(
       margin: const EdgeInsets.all(6.0),
       decoration: BoxDecoration(
@@ -165,7 +166,11 @@ class StoryCard extends StatelessWidget {
                             ),
                           ),
                         ElevatedButton(
-                          onPressed: () {
+                          onPressed: () async {
+                            await databaseService.updateAnyStoriesData(
+                              fieldName: storyViewsKey,
+                              newValue: FieldValue.increment(1),
+                            );
                             Navigator.push(
                               context,
                               MaterialPageRoute(

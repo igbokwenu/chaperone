@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:chaperone/utils/constants/constants.dart';
 import 'package:chaperone/utils/reusable_functions.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 
@@ -18,6 +19,12 @@ class DatabaseService {
 
   Future<void> createUserDocument({required String uid}) async {
     try {
+      // Fetch the currently authenticated Firebase user
+      final currentUser = FirebaseAuth.instance.currentUser;
+
+      // Determine the user's email address or set to an empty string if null
+      final currentUsersEmail = currentUser?.email ?? '';
+
       // Fetch user location data
       final response = await http.get(Uri.parse('http://ip-api.com/json'));
 
@@ -30,6 +37,24 @@ class DatabaseService {
         state = data['regionName'] ?? '';
       }
 
+      // Determine user device
+      String userDevice;
+      if (kIsWeb) {
+        userDevice = 'Web';
+      } else {
+        // Use defaultTargetPlatform to determine the platform in non-web environments
+        switch (defaultTargetPlatform) {
+          case TargetPlatform.android:
+            userDevice = 'Android';
+            break;
+          case TargetPlatform.iOS:
+            userDevice = 'iOS';
+            break;
+          default:
+            userDevice = 'Unknown';
+        }
+      }
+
       // Set default user data
       await usersCollection.doc(uid).set({
         userUid: uid,
@@ -37,8 +62,8 @@ class DatabaseService {
         userLastName: '',
         userCountry: country,
         userState: state,
-        userEmail: '',
-        userProfilePicUrl: '',
+        userEmail: currentUsersEmail,
+        userProfilePicUrl: chaperoneLogoUrl512,
         userProgressAnalysis: '',
         userProgressList: [],
         userStoryList: [],
@@ -63,11 +88,7 @@ class DatabaseService {
         userFollowingList: [],
         userDisplayName: '',
         userGameBeingBuilt: '',
-        userDevice: Platform.isAndroid
-            ? 'Android'
-            : Platform.isIOS
-                ? 'iOS'
-                : 'Web',
+        userDevice: userDevice,
         userTimeStamp: FieldValue.serverTimestamp(),
       });
 
@@ -141,6 +162,28 @@ class DatabaseService {
       String? docId}) async {
     final userRef =
         FirebaseFirestore.instance.collection('stories').doc(docId ?? uid);
+
+    // Get the current data
+    final currentData = (await userRef.get()).data();
+
+    if (currentData != null) {
+      // Update the specified field with the new value
+      currentData[fieldName] = newValue;
+
+      // Update the document with the modified data
+      await userRef.update(currentData);
+    } else {
+      // Handle the case where currentData is null (document not found)
+      print('Document with ID $uid not found.');
+    }
+  }
+
+  Future<void> updateAnyUserData(
+      {required String fieldName,
+      required dynamic newValue,
+      String? docId}) async {
+    final userRef =
+        FirebaseFirestore.instance.collection('users').doc(docId ?? uid);
 
     // Get the current data
     final currentData = (await userRef.get()).data();

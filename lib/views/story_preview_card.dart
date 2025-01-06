@@ -1,7 +1,9 @@
 import 'package:chaperone/models/story_model.dart';
+import 'package:chaperone/services/database_service.dart';
 import 'package:chaperone/utils/constants/constants.dart';
 import 'package:chaperone/views/question_card_view.dart';
 import 'package:chaperone/views/result_view.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
@@ -13,18 +15,23 @@ class StoryPreviewCard extends StatelessWidget {
     required this.scenario,
   });
 
-  void _startGame(BuildContext context) {
-    // Start with the 'start' node of the story
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) => _GameFlow(scenario: scenario),
-      ),
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
+    final databaseService = DatabaseService(uid: scenario.storyUid!);
+    void startGame(BuildContext context) async {
+      await databaseService.updateAnyStoriesData(
+        fieldName: storyPlayCountKey,
+        newValue: FieldValue.increment(1),
+      );
+      // Start with the 'start' node of the story
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => _GameFlow(scenario: scenario),
+        ),
+      );
+    }
+
     return Scaffold(
       body: Column(
         children: [
@@ -177,11 +184,11 @@ class StoryPreviewCard extends StatelessWidget {
                             _buildStat(Icons.favorite_border,
                                 _formatNumber(scenario.likes)),
                             const SizedBox(width: 16),
-                            _buildStat(Icons.chat_bubble_outline,
-                                _formatNumber(scenario.comments)),
+                            _buildStat(Icons.play_circle,
+                                _formatNumber(scenario.playCount!)),
                             const Spacer(),
                             ElevatedButton(
-                              onPressed: () => _startGame(context),
+                              onPressed: () => startGame(context),
                               style: ElevatedButton.styleFrom(
                                 backgroundColor: Colors.blue,
                                 shape: RoundedRectangleBorder(

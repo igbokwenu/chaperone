@@ -3,6 +3,7 @@ import 'package:chaperone/utils/constants/constants.dart';
 import 'package:chaperone/utils/reusable_functions.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/foundation.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:toastification/toastification.dart';
@@ -157,7 +158,12 @@ class AuthService {
 
         await databaseService.updateAnyStoriesData(
           fieldName: userEmail,
-          newValue: _firebaseAuth.currentUser?.email ?? '',
+          newValue: email,
+        );
+
+        await databaseService.updateAnyUserData(
+          fieldName: userEmail,
+          newValue: email,
         );
         await databaseService.fetchUserCountryAndSaveToFirebase();
 
@@ -227,6 +233,38 @@ class AuthService {
     }
   }
 
+  // Delete user document
+  Future<void> deleteUserDoc(String docId) async {
+    // MyReusableFunctions.showProcessingToast();
+    try {
+      // Get the currently signed-in user
+      User? user = _firebaseAuth.currentUser;
+
+      if (user != null) {
+        // Delete the user's document in Firestore
+        final databaseService = DatabaseService(uid: user.uid);
+        await databaseService.usersCollection.doc(user.uid).delete();
+
+        MyReusableFunctions.showCustomToast(
+          description: "Account data was deleted successfully",
+          type: ToastificationType.success,
+        );
+        if (kDebugMode) {
+          print("Account data was deleted successfully for user: ${user.uid}");
+        }
+      } else {
+        MyReusableFunctions.showCustomToast(
+          description: "No user is currently signed in",
+          type: ToastificationType.warning,
+        );
+      }
+    } on FirebaseAuthException catch (e) {
+      MyReusableFunctions.showCustomToast(
+          description: "Error deleting user: $e",
+          type: ToastificationType.error);
+    }
+  }
+
   // Delete user and their corresponding document
   Future<void> deleteUser() async {
     // MyReusableFunctions.showProcessingToast();
@@ -240,6 +278,8 @@ class AuthService {
         await databaseService.storiesCollection
             .doc("${user.uid}game1")
             .delete();
+
+        await deleteUserDoc(user.uid);
 
         // Delete the user from Firebase Authentication
         await user.delete();

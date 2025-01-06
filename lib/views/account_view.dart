@@ -1,25 +1,20 @@
+import 'package:chaperone/providers/user_data_provider.dart';
 import 'package:chaperone/services/auth_service.dart';
 import 'package:chaperone/utils/reusable_functions.dart';
 import 'package:chaperone/views/auth_views/signup_view.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class AccountView extends StatelessWidget {
-  // Sample user data - in a real app, this would come from your user service
-  final Map<String, dynamic> user = {
-    'name': 'Jane Cooper',
-    'email': 'jane.cooper@example.com',
-    'profilePicture':
-        'https://firebasestorage.googleapis.com/v0/b/chaperonegame.firebasestorage.app/o/placeholder_images%2Fimage3.png?alt=media&token=d6ec32e1-175f-4fda-b096-7efad4567f1c',
-    'phoneNumber': '+1 (555) 123-4567',
-    'location': 'San Francisco, CA',
-    'joinDate': 'March 2024',
-  };
-
-  AccountView({super.key});
+class AccountView extends ConsumerWidget {
+  const AccountView({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final authService = AuthService();
+    final currentUser = FirebaseAuth.instance.currentUser;
+    final chaperoneUser =
+        ref.watch(chaperoneUserDataProvider(currentUser?.uid)).value;
     return authService.isUserAnonymous()
         ? Center(
             child: Column(
@@ -43,8 +38,12 @@ class AccountView extends StatelessWidget {
                 ),
                 ElevatedButton(
                   onPressed: () async {
+                    if (context.mounted) {
+                      Navigator.pop(context);
+                    }
                     await authService.deleteUser();
                     await authService.signOut();
+
                     MyReusableFunctions.showCustomToast(
                         description: "Signed out successfully");
                   },
@@ -79,7 +78,7 @@ class AccountView extends StatelessWidget {
                             CircleAvatar(
                               radius: 50,
                               backgroundImage:
-                                  NetworkImage(user['profilePicture']),
+                                  NetworkImage(chaperoneUser!.profilePicUrl!),
                             ),
                             Container(
                               padding: const EdgeInsets.all(4),
@@ -98,7 +97,7 @@ class AccountView extends StatelessWidget {
                         const SizedBox(height: 16),
                         // Name
                         Text(
-                          user['name'],
+                          "${chaperoneUser.firstName} ${chaperoneUser.lastName}",
                           style: Theme.of(context)
                               .textTheme
                               .headlineSmall
@@ -109,7 +108,7 @@ class AccountView extends StatelessWidget {
                         const SizedBox(height: 8),
                         // Email
                         Text(
-                          user['email'],
+                          chaperoneUser.email!,
                           style:
                               Theme.of(context).textTheme.bodyLarge?.copyWith(
                                     color: Colors.grey[600],
@@ -135,11 +134,13 @@ class AccountView extends StatelessWidget {
                         ),
                         const SizedBox(height: 16),
                         _buildDetailRow(
-                            Icons.phone, 'Phone', user['phoneNumber']),
-                        _buildDetailRow(
-                            Icons.location_on, 'Location', user['location']),
-                        _buildDetailRow(Icons.calendar_today, 'Member Since',
-                            user['joinDate']),
+                            Icons.person, 'Username', chaperoneUser.userName!),
+                        _buildDetailRow(Icons.visibility, 'Display Name',
+                            chaperoneUser.displayName!),
+                        _buildDetailRow(Icons.location_on, 'Location',
+                            chaperoneUser.country!),
+                        // _buildDetailRow(Icons.calendar_today, 'Member Since',
+                        //     chaperoneUser.timeStamp!.toString()),
                       ],
                     ),
                   ),
@@ -178,8 +179,10 @@ class AccountView extends StatelessWidget {
                           actions: [
                             ElevatedButton(
                               onPressed: () async {
+                                Navigator.pop(context);
                                 await authService.deleteUser();
                                 await authService.signOut();
+
                                 MyReusableFunctions.showCustomToast(
                                     description:
                                         "Account Deleted Successfully");

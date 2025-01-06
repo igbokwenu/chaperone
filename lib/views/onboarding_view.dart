@@ -1,4 +1,3 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:chaperone/services/auth_service.dart';
 import 'package:chaperone/utils/auth_buttons.dart';
 import 'package:chaperone/utils/constants/constants.dart';
