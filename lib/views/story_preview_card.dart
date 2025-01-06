@@ -1,9 +1,11 @@
 import 'package:chaperone/models/story_model.dart';
 import 'package:chaperone/services/database_service.dart';
 import 'package:chaperone/utils/constants/constants.dart';
+import 'package:chaperone/utils/reusable_functions.dart';
 import 'package:chaperone/views/question_card_view.dart';
 import 'package:chaperone/views/result_view.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
@@ -18,6 +20,7 @@ class StoryPreviewCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final databaseService = DatabaseService(uid: scenario.storyUid!);
+    final firebaseUser = FirebaseAuth.instance.currentUser;
     void startGame(BuildContext context) async {
       await databaseService.updateAnyStoriesData(
         fieldName: storyPlayCountKey,
@@ -87,7 +90,7 @@ class StoryPreviewCard extends StatelessWidget {
                   top: 16,
                   right: 16,
                   child: Container(
-                    padding: const EdgeInsets.all(8),
+                    padding: const EdgeInsets.all(2),
                     decoration: BoxDecoration(
                       color: Colors.black.withOpacity(0.3),
                       borderRadius: BorderRadius.circular(8),
@@ -96,12 +99,37 @@ class StoryPreviewCard extends StatelessWidget {
                         width: 1,
                       ),
                     ),
-                    child: Icon(
-                      scenario.isBookmarked
-                          ? Icons.bookmark
-                          : Icons.bookmark_outline,
+                    child: IconButton(
+                      onPressed: () async {
+                        if (scenario.favouritesList!
+                            .contains(firebaseUser!.uid)) {
+                          await databaseService.updateAnyStoriesData(
+                            fieldName: storyFavouritesListKey,
+                            newValue:
+                                FieldValue.arrayRemove([firebaseUser.uid]),
+                          );
+
+                          MyReusableFunctions.showCustomToast(
+                            description:
+                                "${scenario.storyData![storyTitleKey]} has been removed from your favorites list",
+                          );
+                        } else {
+                          await databaseService.updateAnyStoriesData(
+                            fieldName: storyFavouritesListKey,
+                            newValue: FieldValue.arrayUnion([firebaseUser.uid]),
+                          );
+                          MyReusableFunctions.showCustomToast(
+                            description:
+                                "${scenario.storyData![storyTitleKey]} has been added to your favorites list",
+                          );
+                        }
+                      },
+                      icon: Icon(
+                        scenario.favouritesList!.contains(firebaseUser!.uid)
+                            ? Icons.favorite
+                            : Icons.favorite_outline,
+                      ),
                       color: Colors.white,
-                      size: 24,
                     ),
                   ),
                 ),

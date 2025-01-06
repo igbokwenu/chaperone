@@ -239,20 +239,8 @@ We may update these terms with notice to users.
 }
 
 
-const String kDynamicStoriesParamCurrentGame = 'currentGame';
-const String kDynamicStoriesParamAuthorUid = 'authorUid';
-const String kDynamicStoriesParamStoryUid = 'storyUid';
-const String kDynamicStoriesParamIsFavorite = 'isFavorite';
-const String kDynamicStoriesParamByAuthor = 'byAuthor';
-const String kDynamicStoriesFieldStoryData = 'storyData';
-const String kDynamicStoriesFieldFavoritesList = 'favouritesList';
-const String kDynamicStoriesDefaultEmptyMessage = 'No stories found';
-const String kDynamicStoriesCollectionName = 'stories';
+const String kCurrentGame = 'currentGame';
+const String kIsFavorite = 'isFavorite';
+const String kByAuthor = 'byAuthor';
+const String kStoriesDefaultEmptyMessage = 'No stories found';
 
-// String constants for filtering parameters
-const String filterParam_currentGame = 'currentGame';
-const String filterParam_authorUid = 'authorUid';
-const String filterParam_storyUid = 'storyUid';
-const String filterParam_isFavorite = 'isFavorite';
-const String filterParam_uid = 'uid';
-const String filterParam_byAuthor = 'byAuthor';

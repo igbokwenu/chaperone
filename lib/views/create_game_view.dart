@@ -1,20 +1,25 @@
 import 'dart:convert';
 
+import 'package:chaperone/providers/user_data_provider.dart';
 import 'package:chaperone/services/auth_wrapper.dart';
 import 'package:chaperone/services/database_service.dart';
 import 'package:chaperone/services/gemini_ai_service.dart';
+import 'package:chaperone/utils/constants/constants.dart';
 import 'package:chaperone/utils/reusable_functions.dart';
+import 'package:chaperone/views/dynamic_stories_view.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class CreateGameView extends StatefulWidget {
+class CreateGameView extends ConsumerStatefulWidget {
   const CreateGameView({super.key});
 
   @override
   CreateGameViewState createState() => CreateGameViewState();
 }
 
-class CreateGameViewState extends State<CreateGameView> {
+class CreateGameViewState extends ConsumerState<CreateGameView> {
   final TextEditingController _promptController = TextEditingController();
 
   String _response = '';
@@ -22,70 +27,85 @@ class CreateGameViewState extends State<CreateGameView> {
   bool _isLoading = false;
   int minCharacter = 20;
 
-  Future<void> _sendPrompt() async {
-    if (_promptController.text.isEmpty ||
-        _promptController.text.length < minCharacter) {
-      MyReusableFunctions.showCustomToast(
-          description:
-              'Please enter at least $minCharacter characters for your story prompt');
-      return;
-    }
-
-    final firebaseUser = FirebaseAuth.instance.currentUser;
-    final databaseService = DatabaseService(uid: firebaseUser?.uid ?? '');
-    setState(() {
-      _isLoading = true;
-      _response = '';
-      _rawResponse = '';
-    });
-
-    try {
-      final result = await GeminiService.sendTextPrompt(
-        message: _promptController.text,
-      );
-
-      if (result != null) {}
-
-      await databaseService.createStoryDocument(storyData: result);
-
-      setState(() {
-        _response = result != null
-            ? const JsonEncoder.withIndent('  ').convert(result)
-            : 'No response received';
-        _rawResponse = 'Raw response available in debug console';
-      });
-    } catch (e) {
-      setState(() {
-        _response = 'Error: $e';
-      });
-    } finally {
-      setState(() {
-        _isLoading = false;
-
-        // Add navigation after setting loading state to false
-        setState(() {
-          _isLoading = false;
-          MyReusableFunctions.showCustomDialog(
-              context: context,
-              message:
-                  'Your game has been created successfully. Go to the home page to play the game.',
-              actions: [
-                TextButton(
-                    onPressed: () {
-                      Navigator.of(context).pushAndRemoveUntil(
-                          MaterialPageRoute(
-                              builder: (context) => const AuthWrapper()),
-                          (route) => false);
-                    },
-                    child: const Text("Go to home"))
-              ]);
-        });
-      });
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
+    final currentUser = FirebaseAuth.instance.currentUser;
+    final chaperoneUser =
+        ref.watch(chaperoneUserDataProvider(currentUser?.uid)).value;
+    Future<void> sendPrompt() async {
+      if (_promptController.text.isEmpty ||
+          _promptController.text.length < minCharacter) {
+        MyReusableFunctions.showCustomToast(
+            description:
+                'Please enter at least $minCharacter characters for your story prompt');
+        return;
+      }
+
+      final firebaseUser = FirebaseAuth.instance.currentUser;
+      final databaseService = DatabaseService(uid: firebaseUser?.uid ?? '');
+      setState(() {
+        _isLoading = true;
+        _response = '';
+        _rawResponse = '';
+      });
+
+      try {
+        final result = await GeminiService.sendTextPrompt(
+          message: _promptController.text,
+        );
+
+        if (result != null) {}
+
+        await databaseService.createStoryDocument(storyData: result);
+
+        setState(() {
+          _response = result != null
+              ? const JsonEncoder.withIndent('  ').convert(result)
+              : 'No response received';
+          _rawResponse = 'Raw response available in debug console';
+        });
+      } catch (e) {
+        setState(() {
+          _response = 'Error: $e';
+        });
+      } finally {
+        setState(() {
+          _isLoading = false;
+
+          // Add navigation after setting loading state to false
+          setState(() {
+            _isLoading = false;
+
+            MyReusableFunctions.showCustomDialog(
+                context: context,
+                message:
+                    'Your game has been created successfully. Go to the home page to play the game.',
+                actions: [
+                  TextButton(
+                      onPressed: () {
+                        if (kDebugMode) {
+                          print(
+                              "Uid of game being built: ${chaperoneUser!.gameBeingBuilt}");
+                        }
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => Consumer(
+                                    builder: (context, ref, child) =>
+                                        DynamicStoriesView(
+                                      providerKey: kCurrentGame,
+                                      storyUid: chaperoneUser!.gameBeingBuilt!,
+                                    ),
+                                  )),
+                        );
+                      },
+                      child: const Text("Go to home"))
+                ]);
+          });
+        });
+      }
+    }
+
     return GestureDetector(
       onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(
@@ -137,7 +157,7 @@ class CreateGameViewState extends State<CreateGameView> {
                 ),
                 const SizedBox(height: 24),
                 ElevatedButton(
-                  onPressed: _isLoading ? null : _sendPrompt,
+                  onPressed: _isLoading ? null : sendPrompt,
                   style: ElevatedButton.styleFrom(
                     padding: const EdgeInsets.symmetric(vertical: 16),
                     shape: RoundedRectangleBorder(
@@ -162,54 +182,56 @@ class CreateGameViewState extends State<CreateGameView> {
                         ),
                 ),
                 const SizedBox(height: 24),
-                Expanded(
-                  child: Card(
-                    elevation: 4,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(16),
-                    ),
-                    child: SingleChildScrollView(
-                      padding: const EdgeInsets.all(16),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            'Generated Story (Raw Template)',
-                            style: TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.bold,
-                              color: Theme.of(context).primaryColor,
-                            ),
-                          ),
-                          const SizedBox(height: 16),
-                          Container(
-                            width: double.infinity,
-                            padding: const EdgeInsets.all(16),
-                            decoration: BoxDecoration(
-                              color: Colors.grey[50],
-                              borderRadius: BorderRadius.circular(12),
-                            ),
-                            child: SelectableText(
-                              _response,
-                              style: const TextStyle(fontSize: 15, height: 1.5),
-                            ),
-                          ),
-                          if (_rawResponse.isNotEmpty) ...[
-                            const SizedBox(height: 16),
+                if (kDebugMode)
+                  Expanded(
+                    child: Card(
+                      elevation: 4,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(16),
+                      ),
+                      child: SingleChildScrollView(
+                        padding: const EdgeInsets.all(16),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
                             Text(
-                              _rawResponse,
+                              'Generated Story (Raw Template)',
                               style: TextStyle(
-                                color: Colors.grey[600],
-                                fontSize: 14,
-                                fontStyle: FontStyle.italic,
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                                color: Theme.of(context).primaryColor,
                               ),
                             ),
+                            const SizedBox(height: 16),
+                            Container(
+                              width: double.infinity,
+                              padding: const EdgeInsets.all(16),
+                              decoration: BoxDecoration(
+                                color: Colors.grey[50],
+                                borderRadius: BorderRadius.circular(12),
+                              ),
+                              child: SelectableText(
+                                _response,
+                                style:
+                                    const TextStyle(fontSize: 15, height: 1.5),
+                              ),
+                            ),
+                            if (_rawResponse.isNotEmpty) ...[
+                              const SizedBox(height: 16),
+                              Text(
+                                _rawResponse,
+                                style: TextStyle(
+                                  color: Colors.grey[600],
+                                  fontSize: 14,
+                                  fontStyle: FontStyle.italic,
+                                ),
+                              ),
+                            ],
                           ],
-                        ],
+                        ),
                       ),
                     ),
                   ),
-                ),
               ],
             ),
           ),

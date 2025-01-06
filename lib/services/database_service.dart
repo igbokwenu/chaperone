@@ -236,6 +236,9 @@ class DatabaseService {
       // Create a new document reference
       final newDocRef = storiesCollection.doc();
 
+      await updateAnyUserData(
+          fieldName: userGameBeingBuilt, newValue: newDocRef.id);
+
       // Set the document data, including country and state
       await newDocRef.set({
         storyUidKey: newDocRef.id,

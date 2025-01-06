@@ -1,107 +1,136 @@
+import 'package:chaperone/models/story_model.dart';
 import 'package:chaperone/providers/dynamic_stories_provider.dart';
+import 'package:chaperone/providers/stories_provider.dart';
 import 'package:chaperone/utils/constants/constants.dart';
+import 'package:chaperone/views/create_game_onboarding_view.dart';
 import 'package:chaperone/views/story_card_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:chaperone/models/story_model.dart';
 
+class DynamicStoriesView extends StatelessWidget {
+  final String providerKey;
+  final String? storyUid;
 
-
-  class DynamicStoriesView extends ConsumerWidget {
-  final String? currentGameAuthorUid;
-  final String? currentGameStoryUid;
-  final String? favoriteUserId;
-  final String? authorId;
-  final String viewTitle;
-
-  const DynamicStoriesView({
-    Key? key,
-    this.currentGameAuthorUid,
-    this.currentGameStoryUid,
-    this.favoriteUserId,
-    this.authorId,
-    required this.viewTitle,
-  }) : super(key: key);
-
-  Map<String, dynamic> _buildParams() {
-    final params = <String, dynamic>{};
-    
-    if (currentGameAuthorUid != null && currentGameStoryUid != null) {
-      params[kDynamicStoriesParamCurrentGame] = {
-        kDynamicStoriesParamAuthorUid: currentGameAuthorUid,
-        kDynamicStoriesParamStoryUid: currentGameStoryUid,
-      };
-    }
-    
-    if (favoriteUserId != null) {
-      params[kDynamicStoriesParamIsFavorite] = favoriteUserId;
-    }
-    
-    if (authorId != null) {
-      params[kDynamicStoriesParamByAuthor] = authorId;
-    }
-    
-    return params;
-  }
+  const DynamicStoriesView(
+      {super.key, required this.providerKey, this.storyUid});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final storiesAsyncValue = ref.watch(dynamicStoriesProvider(_buildParams()));
+  Widget build(BuildContext context) {
+    // Function to get the correct provider based on the providerKey
+    AutoDisposeStreamProvider<List<StoryModel>> getFruit(String providerKey) {
+      switch (providerKey) {
+        case kIsFavorite:
+          return storiesFavoriteProvider;
+        case kByAuthor:
+          return storiesByAuthorProvider;
+        case kCurrentGame:
+          //This is an unsafe implementation but I'm in a hurry to finish this 🤓
+          return storiesCurrentGameProvider(storyUid!);
+        default:
+          return storiesProvider;
+      }
+    }
+
+    String dynamicTitle(String providerKey) {
+      switch (providerKey) {
+        case kIsFavorite:
+          return 'Favorites';
+        case kByAuthor:
+          return 'Stories By You';
+        case kCurrentGame:
+          return 'Preview Your Game';
+        default:
+          return 'Chaperone';
+      }
+    }
+
+    String dynamicNoStoryText(String providerKey) {
+      switch (providerKey) {
+        case kIsFavorite:
+          return 'You have not yet added any stories to your favorites';
+        case kByAuthor:
+          return 'You have not yet created any stories';
+        case kCurrentGame:
+          return 'Something went wrong when creating your game. Perharps your story was too dark for our AI 💀';
+        default:
+          return 'Chaperone';
+      }
+    }
 
     return SafeArea(
-      child: Column(
-        children: [
-          Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Row(
-              children: [
-                Text(
-                  viewTitle,
-                  style: const TextStyle(
-                    fontSize: 24,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                const Spacer(),
-                IconButton(
-                  icon: const Icon(Icons.filter_list),
-                  onPressed: () {
-                    // Implement filter dialog if needed
-                  },
-                ),
-              ],
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text(
+            dynamicTitle(providerKey),
+            style: const TextStyle(
+              fontSize: 24,
+              fontWeight: FontWeight.bold,
             ),
           ),
-          Expanded(
-            child: storiesAsyncValue.when(
-              data: (stories) {
-                if (stories.isEmpty) {
-                  return const Center(
-                    child: Text(kDynamicStoriesDefaultEmptyMessage),
-                  );
-                }
+        ),
+        body: Column(
+          children: [
+            Expanded(
+              child: Consumer(
+                builder: (context, ref, child) {
+                  // Use the selected provider based on providerKey
+                  final storiesAsyncValue = ref.watch(getFruit(providerKey));
 
-                return ListView.builder(
-                  padding: const EdgeInsets.symmetric(horizontal: 16),
-                  itemCount: stories.length,
-                  itemBuilder: (context, index) {
-                    final story = stories[index];
-                    return StoryCard(
-                      scenario: story,
-                    );
-                  },
-                );
-              },
-              loading: () => const Center(
-                child: CircularProgressIndicator(),
-              ),
-              error: (error, stack) => Center(
-                child: Text('Error: $error'),
+                  return storiesAsyncValue.when(
+                    data: (stories) {
+                      if (stories.isEmpty) {
+                        return Center(
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Column(
+                              spacing: 15,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text(
+                                  dynamicNoStoryText(providerKey),
+                                  textAlign: TextAlign.center,
+                                ),
+                                if (providerKey == kByAuthor)
+                                  ElevatedButton(
+                                    onPressed: () {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                const CreateGameOnboardingView()),
+                                      );
+                                    },
+                                    child: const Text('Create a Story'),
+                                  ),
+                              ],
+                            ),
+                          ),
+                        );
+                      }
+
+                      return ListView.builder(
+                        padding: const EdgeInsets.symmetric(horizontal: 16),
+                        itemCount: stories.length,
+                        itemBuilder: (context, index) {
+                          final story = stories[index];
+                          return StoryCard(
+                            scenario: story,
+                          );
+                        },
+                      );
+                    },
+                    loading: () => const Center(
+                      child: CircularProgressIndicator(),
+                    ),
+                    error: (error, stack) => Center(
+                      child: Text('Error: $error'),
+                    ),
+                  );
+                },
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

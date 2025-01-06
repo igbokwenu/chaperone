@@ -85,7 +85,7 @@ class StoryCard extends StatelessWidget {
 
                         MyReusableFunctions.showCustomToast(
                           description:
-                              "${scenario.storyData![storyTitleKey]} has been removed from favorites list",
+                              "${scenario.storyData![storyTitleKey]} has been removed from your favorites list",
                         );
                       } else {
                         await databaseService.updateAnyStoriesData(
@@ -178,8 +178,8 @@ class StoryCard extends StatelessWidget {
                         _buildGlossyStat(Icons.favorite_border,
                             _formatNumber(scenario.favouritesList!.length)),
                         const SizedBox(width: 12),
-                        _buildGlossyStat(Icons.chat_bubble_outline,
-                            _formatNumber(scenario.comments)),
+                        _buildGlossyStat(Icons.play_arrow_rounded,
+                            _formatNumber(scenario.playCount!)),
                         const Spacer(),
                         if (kDebugMode)
                           IconButton(

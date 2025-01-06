@@ -1,7 +1,9 @@
 import 'package:chaperone/providers/user_data_provider.dart';
 import 'package:chaperone/services/auth_service.dart';
+import 'package:chaperone/utils/constants/constants.dart';
 import 'package:chaperone/utils/reusable_functions.dart';
 import 'package:chaperone/views/auth_views/signup_view.dart';
+import 'package:chaperone/views/dynamic_stories_view.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -21,7 +23,10 @@ class AccountView extends ConsumerWidget {
               spacing: 20,
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                const Text("Your progress is not being saved."),
+                const Text(
+                  "Your progress is not being saved. Sign in to save your progress and manage your stories.",
+                  textAlign: TextAlign.center,
+                ),
                 ElevatedButton(
                   onPressed: () async {
                     Navigator.push(
@@ -38,9 +43,6 @@ class AccountView extends ConsumerWidget {
                 ),
                 ElevatedButton(
                   onPressed: () async {
-                    if (context.mounted) {
-                      Navigator.pop(context);
-                    }
                     await authService.deleteUser();
                     await authService.signOut();
 
@@ -145,7 +147,44 @@ class AccountView extends ConsumerWidget {
                     ),
                   ),
                   const SizedBox(height: 24),
-                  // Sign Out Button
+
+                  ElevatedButton.icon(
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) =>
+                              const DynamicStoriesView(providerKey: kByAuthor),
+                        ),
+                      );
+                    },
+                    icon: const Icon(
+                      Icons.book,
+                      size: 24,
+                      color: Colors.white,
+                    ),
+                    label: const Text(
+                      'View Stories You Created',
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    style: ElevatedButton.styleFrom(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 24, vertical: 12),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      elevation: 4,
+                      shadowColor: Colors.blue.withOpacity(0.5),
+                      backgroundColor: Colors.blue,
+                      foregroundColor: Colors.white,
+                    ),
+                  ),
+
+                  const SizedBox(height: 14),
+
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 16),
                     child: ElevatedButton(

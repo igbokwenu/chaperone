@@ -1,4 +1,5 @@
 import 'package:chaperone/test.dart';
+import 'package:chaperone/utils/constants/constants.dart';
 import 'package:chaperone/views/account_view.dart';
 import 'package:chaperone/views/create_game_onboarding_view.dart';
 import 'package:chaperone/views/discovery_view.dart';
@@ -19,9 +20,8 @@ class _HomeViewState extends State<HomeView> {
   final List<Widget> _screens = [
     const DiscoverView(),
     const CreateGameOnboardingView(),
-    DynamicStoriesView(
-      favoriteUserId: FirebaseAuth.instance.currentUser?.uid,
-      viewTitle: "Favorite Stories",
+    const DynamicStoriesView(
+      providerKey: kIsFavorite,
     ),
     const AccountView(),
   ];
@@ -69,7 +69,7 @@ class _HomeViewState extends State<HomeView> {
               ),
               BottomNavigationBarItem(
                 icon: Icon(Icons.favorite),
-                label: 'Message',
+                label: 'Favorites',
               ),
               BottomNavigationBarItem(
                 icon: Icon(Icons.person),

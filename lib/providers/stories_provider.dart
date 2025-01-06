@@ -1,17 +1,9 @@
 import 'package:chaperone/models/story_model.dart';
+import 'package:chaperone/utils/constants/constants.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-final chaperoneStoriesDataProvider =
-    StreamProvider.autoDispose.family<StoryModel?, String?>((ref, uid) {
-  if (uid == null) return Stream.value(null);
-
-  return FirebaseFirestore.instance
-      .collection('stories')
-      .doc("${uid}game1")
-      .snapshots()
-      .map((snapshot) => StoryModel.fromMap(snapshot.data()));
-});
 
 
 final storiesProvider = StreamProvider.autoDispose<List<StoryModel>>((ref) {
@@ -26,3 +18,4 @@ final storiesProvider = StreamProvider.autoDispose<List<StoryModel>>((ref) {
                           story.storyData!['synopsis'] != null)
           .toList());
 });
+
