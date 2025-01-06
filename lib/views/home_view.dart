@@ -16,7 +16,7 @@ class _HomeViewState extends State<HomeView> {
   int _selectedIndex = 0;
 
   final List<Widget> _screens = [
-    const DiscoverScreen(),
+    const DiscoverView(),
     const CreateGameOnboardingView(),
     StoryDisplay(
       uid: FirebaseAuth.instance.currentUser?.uid ?? '',

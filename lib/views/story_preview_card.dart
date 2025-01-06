@@ -182,7 +182,7 @@ class StoryPreviewCard extends StatelessWidget {
                                 _formatNumber(scenario.views)),
                             const SizedBox(width: 16),
                             _buildStat(Icons.favorite_border,
-                                _formatNumber(scenario.likes)),
+                                _formatNumber(scenario.favouritesList!.length)),
                             const SizedBox(width: 16),
                             _buildStat(Icons.play_circle,
                                 _formatNumber(scenario.playCount!)),

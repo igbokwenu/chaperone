@@ -2,8 +2,10 @@ import 'package:chaperone/models/story_model.dart';
 import 'package:chaperone/services/auth_service.dart';
 import 'package:chaperone/services/database_service.dart';
 import 'package:chaperone/utils/constants/constants.dart';
+import 'package:chaperone/utils/reusable_functions.dart';
 import 'package:chaperone/views/story_preview_card.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
@@ -19,6 +21,7 @@ class StoryCard extends StatelessWidget {
   Widget build(BuildContext context) {
     const double kDefaultPadding = 12;
     final authService = AuthService();
+    final firebaseUser = FirebaseAuth.instance.currentUser;
     final databaseService = DatabaseService(uid: scenario.storyUid!);
     return Container(
       margin: const EdgeInsets.all(6.0),
@@ -62,7 +65,7 @@ class StoryCard extends StatelessWidget {
                 top: 8,
                 right: 8,
                 child: Container(
-                  padding: const EdgeInsets.all(8),
+                  padding: const EdgeInsets.all(2),
                   decoration: BoxDecoration(
                     color: Colors.black.withOpacity(0.3),
                     borderRadius: BorderRadius.circular(8),
@@ -71,12 +74,36 @@ class StoryCard extends StatelessWidget {
                       width: 1,
                     ),
                   ),
-                  child: Icon(
-                    scenario.isBookmarked
-                        ? Icons.bookmark
-                        : Icons.bookmark_outline,
+                  child: IconButton(
+                    onPressed: () async {
+                      if (scenario.favouritesList!
+                          .contains(firebaseUser!.uid)) {
+                        await databaseService.updateAnyStoriesData(
+                          fieldName: storyFavouritesListKey,
+                          newValue: FieldValue.arrayRemove([firebaseUser.uid]),
+                        );
+
+                        MyReusableFunctions.showCustomToast(
+                          description:
+                              "${scenario.storyData![storyTitleKey]} has been removed from favorites list",
+                        );
+                      } else {
+                        await databaseService.updateAnyStoriesData(
+                          fieldName: storyFavouritesListKey,
+                          newValue: FieldValue.arrayUnion([firebaseUser.uid]),
+                        );
+                        MyReusableFunctions.showCustomToast(
+                          description:
+                              "${scenario.storyData![storyTitleKey]} has been added to your favorites list",
+                        );
+                      }
+                    },
+                    icon: Icon(
+                      scenario.favouritesList!.contains(firebaseUser!.uid)
+                          ? Icons.favorite
+                          : Icons.favorite_outline,
+                    ),
                     color: Colors.white,
-                    size: 24,
                   ),
                 ),
               ),
@@ -149,7 +176,7 @@ class StoryCard extends StatelessWidget {
                             _formatNumber(scenario.views)),
                         const SizedBox(width: 12),
                         _buildGlossyStat(Icons.favorite_border,
-                            _formatNumber(scenario.likes)),
+                            _formatNumber(scenario.favouritesList!.length)),
                         const SizedBox(width: 12),
                         _buildGlossyStat(Icons.chat_bubble_outline,
                             _formatNumber(scenario.comments)),
