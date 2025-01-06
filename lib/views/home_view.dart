@@ -66,7 +66,7 @@ class _HomeViewState extends State<HomeView> {
                 label: 'Add',
               ),
               BottomNavigationBarItem(
-                icon: Icon(Icons.message),
+                icon: Icon(Icons.bookmark),
                 label: 'Message',
               ),
               BottomNavigationBarItem(

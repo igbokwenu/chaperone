@@ -1,5 +1,6 @@
 import 'package:chaperone/services/auth_service.dart';
 import 'package:chaperone/utils/reusable_functions.dart';
+import 'package:chaperone/views/auth_views/signup_view.dart';
 import 'package:flutter/material.dart';
 
 class AccountView extends StatelessWidget {
@@ -19,17 +20,40 @@ class AccountView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final authService = AuthService();
-    return !authService.isUserLoggedIn()
+    return authService.isUserAnonymous()
         ? Center(
-            child: ElevatedButton(
-              onPressed: () async {
-                if (!authService.isUserLoggedIn()) {
-                  MyReusableFunctions.showCustomToast(
-                      description: "Setting up your account");
-                  await authService.signInAnonymously();
-                }
-              },
-              child: const Text("Sign In"),
+            child: Column(
+              spacing: 20,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                const Text("Your progress is not being saved."),
+                ElevatedButton(
+                  onPressed: () async {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => SignUpView(
+                          authService: authService,
+                          isAnonymous: authService.isUserAnonymous(),
+                        ),
+                      ),
+                    );
+                  },
+                  child: const Text("Sign In To Save Your Progress"),
+                ),
+                ElevatedButton(
+                  onPressed: () async {
+                    await authService.deleteUser();
+                    await authService.signOut();
+                    MyReusableFunctions.showCustomToast(
+                        description: "Signed out successfully");
+                  },
+                  child: const Text(
+                    "Sign Out & Delete Game Data",
+                    style: TextStyle(color: Colors.red),
+                  ),
+                ),
+              ],
             ),
           )
         : Scaffold(
@@ -125,29 +149,58 @@ class AccountView extends StatelessWidget {
                     padding: const EdgeInsets.symmetric(horizontal: 16),
                     child: ElevatedButton(
                       onPressed: () async {
-                        if (authService.isUserLoggedIn()) {
+                        if (authService.isUserAnonymous()) {
                           await authService.deleteUser();
                           await authService.signOut();
                           MyReusableFunctions.showCustomToast(
                               description: "Signed out successfully");
                         } else {
-                          MyReusableFunctions.showCustomToast(
-                              description: "You are already signed out");
+                          await authService.signOut();
                         }
                       },
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.red,
-                        minimumSize: const Size.fromHeight(50),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                      ),
                       child: const Text(
                         'Sign Out',
                         style: TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.bold,
                         ),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 15),
+                  ElevatedButton(
+                    onPressed: () async {
+                      MyReusableFunctions.showCustomDialog(
+                          context: context,
+                          message:
+                              'Are you sure you want to delete your account? This cannot be reversed!',
+                          textColor: Colors.red,
+                          actions: [
+                            ElevatedButton(
+                              onPressed: () async {
+                                await authService.deleteUser();
+                                await authService.signOut();
+                                MyReusableFunctions.showCustomToast(
+                                    description:
+                                        "Account Deleted Successfully");
+                              },
+                              child: const Text(
+                                'Delete Account',
+                                style: TextStyle(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.red,
+                                ),
+                              ),
+                            ),
+                          ]);
+                    },
+                    child: const Text(
+                      'Delete Account',
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.red,
                       ),
                     ),
                   ),

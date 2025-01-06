@@ -65,9 +65,20 @@ class CreateGameViewState extends State<CreateGameView> {
         // Add navigation after setting loading state to false
         setState(() {
           _isLoading = false;
-          Navigator.of(context).pushAndRemoveUntil(
-              MaterialPageRoute(builder: (context) => const AuthWrapper()),
-              (route) => false);
+          MyReusableFunctions.showCustomDialog(
+              context: context,
+              message:
+                  'Your game has been created successfully. Go to the home page to play the game.',
+              actions: [
+                TextButton(
+                    onPressed: () {
+                      Navigator.of(context).pushAndRemoveUntil(
+                          MaterialPageRoute(
+                              builder: (context) => const AuthWrapper()),
+                          (route) => false);
+                    },
+                    child: const Text("Go to home"))
+              ]);
         });
       });
     }

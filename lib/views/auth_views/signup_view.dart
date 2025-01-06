@@ -1,14 +1,14 @@
 import 'package:chaperone/services/auth_service.dart';
+import 'package:chaperone/utils/reusable_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:email_validator/email_validator.dart';
-
 
 class SignUpView extends StatefulWidget {
   final AuthService authService;
   final bool isAnonymous;
 
   const SignUpView({
-    super.key, 
+    super.key,
     required this.authService,
     required this.isAnonymous,
   });
@@ -28,7 +28,8 @@ class _SignUpViewState extends State<SignUpView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.isAnonymous ? 'Save Your Progress' : 'Create Account'),
+        title:
+            Text(widget.isAnonymous ? 'Save Your Progress' : 'Create Account'),
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16.0),
@@ -128,6 +129,7 @@ class _SignUpViewState extends State<SignUpView> {
                         style: const TextStyle(fontSize: 16),
                       ),
               ),
+              const AgreementTextWidget()
             ],
           ),
         ),

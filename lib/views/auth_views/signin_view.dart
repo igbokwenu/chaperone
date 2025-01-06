@@ -1,4 +1,5 @@
 import 'package:chaperone/services/auth_service.dart';
+import 'package:chaperone/utils/reusable_widgets.dart';
 import 'package:chaperone/views/auth_views/forgot_password_view.dart';
 import 'package:flutter/material.dart';
 import 'package:email_validator/email_validator.dart';
@@ -129,6 +130,7 @@ class _SignInViewState extends State<SignInView> {
                         style: TextStyle(fontSize: 16),
                       ),
               ),
+              const AgreementTextWidget(),
             ],
           ),
         ),

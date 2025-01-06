@@ -149,4 +149,91 @@ const String whiteLadyImageUrl =
 const String dramaticImageUrl =
     'https://firebasestorage.googleapis.com/v0/b/chaperonegame.firebasestorage.app/o/placeholder_images%2Fimage8.png?alt=media&token=3aa283e1-1199-423f-933a-0d90e179154d';
 
-const String bg3Gif = 'https://firebasestorage.googleapis.com/v0/b/chaperonegame.firebasestorage.app/o/branding%2Fbg3.gif?alt=media&token=027065fa-e3df-466d-93cb-8743dee47799';
+const String bg3Gif =
+    'https://firebasestorage.googleapis.com/v0/b/chaperonegame.firebasestorage.app/o/branding%2Fbg3.gif?alt=media&token=027065fa-e3df-466d-93cb-8743dee47799';
+
+class AppStrings {
+  static const String privacyPolicyText = """
+Welcome to Chaperone's Privacy Policy
+
+Last Updated: January 6, 2025
+
+At Chaperone, we value your privacy and are committed to protecting your personal information. This Privacy Policy explains how we collect, use, and safeguard your data when you use our interactive storytelling platform.
+
+1. Information We Collect
+- Account Information: Username, email address, and password
+- Story Content: Stories you create and interact with
+- Usage Data: Interaction patterns, preferences, and gameplay statistics
+- Device Information: Device type, operating system, and app version
+
+2. How We Use Your Information
+- To provide and maintain the storytelling platform
+- To improve user experience and game features
+- To communicate important updates and announcements
+- To protect against misuse and ensure community safety
+
+3. Data Storage and Security
+- We implement industry-standard security measures
+- Your story data is encrypted and securely stored
+- We regularly backup data to prevent loss
+
+4. User Rights
+- You can access and export your data
+- You have the right to delete your account and all associated data
+- You can opt-out of non-essential communications
+
+5. Data Deletion
+You can permanently delete your account and all associated data through the Account Settings section. This process is irreversible and will remove:
+- All stories you've created
+- Your profile information
+- Interaction history and preferences
+
+6. Children's Privacy
+Chaperone is not intended for children under 13 years of age.
+
+7. Contact Us
+For privacy-related questions, please contact us through okechukwu@habilisfusion.co.
+""";
+
+  static const String termsOfServiceText = """
+Chaperone Terms of Service
+
+Last Updated: January 6, 2025
+
+1. Acceptance of Terms
+By accessing or using Chaperone, you agree to be bound by these Terms of Service.
+
+2. User Content
+- You retain ownership of your stories
+- You grant us license to display and distribute your content
+- You are responsible for the content you create
+- Content must not violate our community guidelines
+
+3. Prohibited Content
+- Harmful or hateful content
+- Copyright-infringing material
+- Misleading information
+- Content that violates others' privacy
+
+4. Account Responsibilities
+- Maintain accurate account information
+- Keep login credentials secure
+- Report unauthorized access
+- One account per user
+
+5. Service Modifications
+We reserve the right to modify or discontinue services with reasonable notice.
+
+6. Termination
+We may terminate accounts that violate these terms or our community guidelines.
+
+7. Liability Limitations
+We provide the service "as is" without warranties of any kind.
+
+8. Governing Law
+These terms are governed by applicable laws.
+
+9. Changes to Terms
+We may update these terms with notice to users.
+""";
+}
