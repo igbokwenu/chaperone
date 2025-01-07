@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'package:animate_do/animate_do.dart';
 import 'package:chaperone/services/audio_manager.dart';
 import 'package:chaperone/utils/constants/constants.dart';
 import 'package:chaperone/views/settings_view.dart';
@@ -26,12 +25,19 @@ class QuestionCard extends ConsumerStatefulWidget {
 }
 
 class _QuestionCardState extends ConsumerState<QuestionCard>
-    with SingleTickerProviderStateMixin {
+    with TickerProviderStateMixin {
   late Timer _timer;
   double _progress = 1.0;
   final int _totalSeconds = 12;
-  late AnimationController _animationController;
+  bool _showOptions = false;
+
+  // Animation controllers
+  late AnimationController _scaleController;
+  late AnimationController _optionsController;
+
+  // Animations
   late Animation<double> _scaleAnimation;
+  late Animation<double> _optionsAnimation;
 
   Map<String, dynamic> get currentQuestion =>
       widget.scenario.storyData?[widget.currentNode] ?? {};
@@ -43,9 +49,8 @@ class _QuestionCardState extends ConsumerState<QuestionCard>
   }
 
   void _initializeAnimations() {
-    startTimer();
-
-    _animationController = AnimationController(
+    // Scale animation for the image
+    _scaleController = AnimationController(
       duration: Duration(seconds: _totalSeconds),
       vsync: this,
     );
@@ -53,24 +58,37 @@ class _QuestionCardState extends ConsumerState<QuestionCard>
     _scaleAnimation = Tween<double>(
       begin: 1.0,
       end: 1.2,
-    ).animate(_animationController);
+    ).animate(_scaleController);
 
-    _animationController.forward();
+    // Options animation
+    _optionsController = AnimationController(
+      duration: const Duration(milliseconds: 500),
+      vsync: this,
+    );
+
+    _optionsAnimation = CurvedAnimation(
+      parent: _optionsController,
+      curve: Curves.easeInOut,
+    );
+
+    // Start initial animations
+    _scaleController.forward();
+    startTimer();
   }
 
   void _resetAnimations() {
-    // Reset progress bar
     setState(() {
       _progress = 1.0;
+      _showOptions = false;
     });
 
-    // Cancel existing timer and start a new one
     _timer.cancel();
     startTimer();
 
-    // Reset and restart scale animation
-    _animationController.reset();
-    _animationController.forward();
+    _scaleController.reset();
+    _scaleController.forward();
+
+    _optionsController.reset();
   }
 
   void startTimer() {
@@ -78,8 +96,12 @@ class _QuestionCardState extends ConsumerState<QuestionCard>
     _timer = Timer.periodic(duration, (Timer timer) {
       setState(() {
         _progress -= 1 / (_totalSeconds * 20);
+
+        // Show options when progress bar completes
         if (_progress <= 0) {
           timer.cancel();
+          _showOptions = true;
+          _optionsController.forward();
           widget.onTimeUp();
         }
       });
@@ -89,34 +111,44 @@ class _QuestionCardState extends ConsumerState<QuestionCard>
   @override
   void dispose() {
     _timer.cancel();
-    _animationController.dispose();
+    _scaleController.dispose();
+    _optionsController.dispose();
     super.dispose();
   }
 
   Widget _buildOption(String optionKey, Map<String, dynamic> optionData) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 8.0),
-      child: ElevatedButton(
-        style: ElevatedButton.styleFrom(
-          backgroundColor: Colors.white.withOpacity(0.2),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(10),
-          ),
-        ),
-        onPressed: () {
-          ref.read(audioControllerProvider.notifier).playSoundEffect();
-          _resetAnimations(); // Reset animations before transitioning
-          widget.onOptionSelected(optionData['nextNode']);
-        },
+    return SlideTransition(
+      position: Tween<Offset>(
+        begin: const Offset(0, 0.5),
+        end: Offset.zero,
+      ).animate(_optionsAnimation),
+      child: FadeTransition(
+        opacity: _optionsAnimation,
         child: Padding(
-          padding: const EdgeInsets.all(12.0),
-          child: Text(
-            optionData['text'],
-            style: const TextStyle(
-              color: Colors.white,
-              fontSize: 14,
+          padding: const EdgeInsets.symmetric(vertical: 8.0),
+          child: ElevatedButton(
+            style: ElevatedButton.styleFrom(
+              backgroundColor: Colors.white.withOpacity(0.2),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10),
+              ),
             ),
-            textAlign: TextAlign.center,
+            onPressed: () {
+              ref.read(audioControllerProvider.notifier).playSoundEffect();
+              _resetAnimations();
+              widget.onOptionSelected(optionData['nextNode']);
+            },
+            child: Padding(
+              padding: const EdgeInsets.all(12.0),
+              child: Text(
+                optionData['text'],
+                style: const TextStyle(
+                  color: Colors.white,
+                  fontSize: 14,
+                ),
+                textAlign: TextAlign.center,
+              ),
+            ),
           ),
         ),
       ),
@@ -249,11 +281,9 @@ class _QuestionCardState extends ConsumerState<QuestionCard>
                           ),
                         ),
                         const SizedBox(height: 20),
-                        ...options.entries.map((entry) => FadeInUpBig(
-                              delay: const Duration(seconds: 10),
-                              child: _buildOption(entry.key,
-                                  entry.value as Map<String, dynamic>),
-                            )),
+                        if (_showOptions)
+                          ...options.entries.map((entry) => _buildOption(
+                              entry.key, entry.value as Map<String, dynamic>)),
                       ],
                     ),
                   ),
