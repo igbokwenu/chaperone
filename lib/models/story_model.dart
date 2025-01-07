@@ -39,6 +39,7 @@ class StoryModel {
   final List<String>? bookmarksList;
   final List<String>? favouritesList;
   final Map<String, dynamic>? storyData;
+  final String? storyCreationPrompt;
 
   StoryModel({
     required this.storyUid,
@@ -78,7 +79,7 @@ class StoryModel {
     this.bookmarksList,
     this.favouritesList,
     this.authorUsername,
-    this.authorDisplayname,
+    this.authorDisplayname, this.storyCreationPrompt,
   });
 
   factory StoryModel.fromMap(Map<String, dynamic>? data) {
@@ -121,6 +122,7 @@ class StoryModel {
       storyData: data?[storyDataKey],
       authorUsername: data?[storyAuthorUsernameKey],
       authorDisplayname: data?[storyAuthorDisplayNameKey],
+       storyCreationPrompt: data?[storyStoryCreationPromptKey],
     );
   }
 }

@@ -30,7 +30,7 @@ class CreateGameViewState extends ConsumerState<CreateGameView> {
   @override
   Widget build(BuildContext context) {
     final currentUser = FirebaseAuth.instance.currentUser;
-    final chaperoneUser =
+    final chapeoneUser =
         ref.watch(chaperoneUserDataProvider(currentUser?.uid)).value;
     Future<void> sendPrompt() async {
       if (_promptController.text.isEmpty ||
@@ -77,21 +77,31 @@ class CreateGameViewState extends ConsumerState<CreateGameView> {
             _isLoading = false;
 
             MyReusableFunctions.showCustomDialog(
-                // barrierDismissible: false,
+                barrierDismissible:
+                    currentUser?.email == 'increasedwisdom@gmail.com' ||
+                            currentUser?.email == 'yuhanghan97@gmail.com'
+                        ? true
+                        : false,
                 context: context,
                 message:
                     'Your game has been created successfully. Click the button below to preview the game and generate game images.',
                 actions: [
                   TextButton(
-                      onPressed: () {
+                      onPressed: () async {
                         final chaperoneUser = ref
                             .read(chaperoneUserDataProvider(firebaseUser?.uid))
                             .value;
+                        final databaseServiceForStoryPromptUpdate =
+                            DatabaseService(
+                                uid: chaperoneUser!.gameBeingBuilt ?? '');
                         if (kDebugMode) {
                           print(
-                              "Uid of game being built: ${chaperoneUser!.gameBeingBuilt}");
+                              "Uid of game being built: ${chaperoneUser.gameBeingBuilt}");
                         }
-
+                        await databaseServiceForStoryPromptUpdate
+                            .updateAnyStoriesData(
+                                fieldName: storyStoryCreationPromptKey,
+                                newValue: _promptController.text);
                         Navigator.of(context);
                         Navigator.pushReplacement(
                           context,
@@ -186,55 +196,54 @@ class CreateGameViewState extends ConsumerState<CreateGameView> {
                 ),
                 const SizedBox(height: 24),
                 // if (kDebugMode)
-                  Expanded(
-                    child: Card(
-                      elevation: 4,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(16),
-                      ),
-                      child: SingleChildScrollView(
-                        padding: const EdgeInsets.all(16),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              'Generated Story (Raw Template)',
-                              style: TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.bold,
-                                color: Theme.of(context).primaryColor,
-                              ),
+                Expanded(
+                  child: Card(
+                    elevation: 4,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(16),
+                    ),
+                    child: SingleChildScrollView(
+                      padding: const EdgeInsets.all(16),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            'Generated Story (Raw Template)',
+                            style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                              color: Theme.of(context).primaryColor,
                             ),
+                          ),
+                          const SizedBox(height: 16),
+                          Container(
+                            width: double.infinity,
+                            padding: const EdgeInsets.all(16),
+                            decoration: BoxDecoration(
+                              color: Colors.grey[50],
+                              borderRadius: BorderRadius.circular(12),
+                            ),
+                            child: SelectableText(
+                              _response,
+                              style: const TextStyle(fontSize: 15, height: 1.5),
+                            ),
+                          ),
+                          if (_rawResponse.isNotEmpty) ...[
                             const SizedBox(height: 16),
-                            Container(
-                              width: double.infinity,
-                              padding: const EdgeInsets.all(16),
-                              decoration: BoxDecoration(
-                                color: Colors.grey[50],
-                                borderRadius: BorderRadius.circular(12),
-                              ),
-                              child: SelectableText(
-                                _response,
-                                style:
-                                    const TextStyle(fontSize: 15, height: 1.5),
+                            Text(
+                              _rawResponse,
+                              style: TextStyle(
+                                color: Colors.grey[600],
+                                fontSize: 14,
+                                fontStyle: FontStyle.italic,
                               ),
                             ),
-                            if (_rawResponse.isNotEmpty) ...[
-                              const SizedBox(height: 16),
-                              Text(
-                                _rawResponse,
-                                style: TextStyle(
-                                  color: Colors.grey[600],
-                                  fontSize: 14,
-                                  fontStyle: FontStyle.italic,
-                                ),
-                              ),
-                            ],
                           ],
-                        ),
+                        ],
                       ),
                     ),
                   ),
+                ),
               ],
             ),
           ),

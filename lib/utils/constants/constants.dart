@@ -115,6 +115,7 @@ const String storyFollowersKey = 'followers';
 const String storyBookmarksListKey = 'bookmarksList';
 const String storyFavouritesListKey = 'favouritesList';
 const String storyDataKey = 'storyData';
+const String storyStoryCreationPromptKey = 'storyCreationPrompt';
 
 const String placeholderImageUrl =
     'https://firebasestorage.googleapis.com/v0/b/chaperonegame.firebasestorage.app/o/placeholder_images%2Fimage12.png?alt=media&token=b761023d-6840-4495-9cc7-731c17206f2f';
@@ -238,9 +239,7 @@ We may update these terms with notice to users.
 """;
 }
 
-
 const String kCurrentGame = 'currentGame';
 const String kIsFavorite = 'isFavorite';
 const String kByAuthor = 'byAuthor';
 const String kStoriesDefaultEmptyMessage = 'No stories found';
-
