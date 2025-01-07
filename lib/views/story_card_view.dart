@@ -184,8 +184,9 @@ class StoryCard extends StatelessWidget {
                         if (kDebugMode)
                           IconButton(
                             onPressed: () async {
-                              await authService
-                                  .deleteStoryDoc(scenario.storyUid);
+                              await authService.deleteStoryDoc(
+                                  scenario.storyUid,
+                                  scenario.storyData![storyTitleKey]);
                             },
                             icon: const Icon(
                               Icons.delete,
@@ -198,6 +199,7 @@ class StoryCard extends StatelessWidget {
                               fieldName: storyViewsKey,
                               newValue: FieldValue.increment(1),
                             );
+
                             Navigator.push(
                               context,
                               MaterialPageRoute(

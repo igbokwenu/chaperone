@@ -1,10 +1,12 @@
 import 'dart:async';
 import 'package:animate_do/animate_do.dart';
+import 'package:chaperone/services/audio_manager.dart';
 import 'package:chaperone/utils/constants/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:chaperone/models/story_model.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class QuestionCard extends StatefulWidget {
+class QuestionCard extends ConsumerStatefulWidget {
   final StoryModel scenario;
   final VoidCallback onTimeUp;
   final String currentNode;
@@ -19,10 +21,10 @@ class QuestionCard extends StatefulWidget {
   });
 
   @override
-  State<QuestionCard> createState() => _QuestionCardState();
+  ConsumerState<QuestionCard> createState() => _QuestionCardState();
 }
 
-class _QuestionCardState extends State<QuestionCard>
+class _QuestionCardState extends ConsumerState<QuestionCard>
     with SingleTickerProviderStateMixin {
   late Timer _timer;
   double _progress = 1.0;
@@ -82,6 +84,7 @@ class _QuestionCardState extends State<QuestionCard>
           ),
         ),
         onPressed: () {
+          ref.read(audioControllerProvider.notifier).playSoundEffect();
           widget.onOptionSelected(optionData['nextNode']);
         },
         child: Padding(

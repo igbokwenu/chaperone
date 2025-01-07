@@ -16,7 +16,7 @@ class CreateGameView extends ConsumerStatefulWidget {
   const CreateGameView({super.key});
 
   @override
-  CreateGameViewState createState() => CreateGameViewState();
+  ConsumerState<CreateGameView> createState() => CreateGameViewState();
 }
 
 class CreateGameViewState extends ConsumerState<CreateGameView> {
@@ -57,7 +57,7 @@ class CreateGameViewState extends ConsumerState<CreateGameView> {
         if (result != null) {}
 
         await databaseService.createStoryDocument(storyData: result);
-
+        ref.invalidate(chaperoneUserDataProvider(firebaseUser?.uid));
         setState(() {
           _response = result != null
               ? const JsonEncoder.withIndent('  ').convert(result)
@@ -77,29 +77,32 @@ class CreateGameViewState extends ConsumerState<CreateGameView> {
             _isLoading = false;
 
             MyReusableFunctions.showCustomDialog(
+                barrierDismissible: false,
                 context: context,
                 message:
-                    'Your game has been created successfully. Go to the home page to play the game.',
+                    'Your game has been created successfully. Click the button below to preview the game and generate game images.',
                 actions: [
                   TextButton(
                       onPressed: () {
+                        final chaperoneUser = ref
+                            .read(chaperoneUserDataProvider(firebaseUser?.uid))
+                            .value;
                         if (kDebugMode) {
                           print(
                               "Uid of game being built: ${chaperoneUser!.gameBeingBuilt}");
                         }
-                        Navigator.push(
+
+                        Navigator.of(context);
+                        Navigator.pushReplacement(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => Consumer(
-                                    builder: (context, ref, child) =>
-                                        DynamicStoriesView(
-                                      providerKey: kCurrentGame,
-                                      storyUid: chaperoneUser!.gameBeingBuilt!,
-                                    ),
+                              builder: (context) => DynamicStoriesView(
+                                    providerKey: kCurrentGame,
+                                    storyUid: chaperoneUser!.gameBeingBuilt!,
                                   )),
                         );
                       },
-                      child: const Text("Go to home"))
+                      child: const Text("Preview Game"))
                 ]);
           });
         });

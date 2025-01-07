@@ -1,25 +1,29 @@
 import 'package:chaperone/models/story_model.dart';
+import 'package:chaperone/services/audio_manager.dart';
 import 'package:chaperone/utils/constants/constants.dart';
 import 'package:chaperone/views/home_view.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class ResultView extends StatefulWidget {
+class ResultView extends ConsumerStatefulWidget {
   final StoryModel scenario;
   final List<String> pathTaken;
   const ResultView(
       {super.key, required this.scenario, required this.pathTaken});
 
   @override
-  State<ResultView> createState() => _ResultViewState();
+  ConsumerState<ResultView> createState() => _ResultViewState();
 }
 
-class _ResultViewState extends State<ResultView> with TickerProviderStateMixin {
+class _ResultViewState extends ConsumerState<ResultView>
+    with TickerProviderStateMixin {
   late AnimationController _controller;
   late Animation<double> _animation;
 
   @override
   void initState() {
     super.initState();
+    ref.read(audioControllerProvider.notifier).playResultMusic();
     _controller = AnimationController(
       duration: const Duration(seconds: 40),
       vsync: this,
@@ -44,6 +48,7 @@ class _ResultViewState extends State<ResultView> with TickerProviderStateMixin {
   @override
   void dispose() {
     _controller.dispose();
+    ref.read(audioControllerProvider.notifier).stopResultMusic();
     super.dispose();
   }
 

@@ -1,4 +1,6 @@
+// main.dart
 import 'package:chaperone/firebase_options.dart';
+import 'package:chaperone/services/audio_manager.dart';
 import 'package:chaperone/services/auth_wrapper.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -30,8 +32,39 @@ class MyApp extends StatelessWidget {
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
           useMaterial3: true,
         ),
-        home: const AuthWrapper(),
+        home: const AppInitializer(),
       ),
     );
+  }
+}
+
+class AppInitializer extends ConsumerStatefulWidget {
+  const AppInitializer({super.key});
+
+  @override
+  ConsumerState<AppInitializer> createState() => _AppInitializerState();
+}
+
+class _AppInitializerState extends ConsumerState<AppInitializer> {
+  @override
+  void initState() {
+    super.initState();
+    _initializeAudio();
+  }
+
+  Future<void> _initializeAudio() async {
+    await ref.read(audioControllerProvider.notifier).initAudio();
+    await ref.read(audioControllerProvider.notifier).playThemeMusic();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return const AuthWrapper();
+  }
+
+  @override
+  void dispose() {
+    ref.read(audioControllerProvider.notifier).dispose();
+    super.dispose();
   }
 }

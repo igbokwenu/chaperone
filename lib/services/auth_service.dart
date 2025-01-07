@@ -205,7 +205,7 @@ class AuthService {
   }
 
   // Delete story document
-  Future<void> deleteStoryDoc(String docId) async {
+  Future<void> deleteStoryDoc(String docId, String stoyTitle) async {
     // MyReusableFunctions.showProcessingToast();
     try {
       // Get the currently signed-in user
@@ -217,7 +217,7 @@ class AuthService {
         await databaseService.storiesCollection.doc(docId).delete();
 
         MyReusableFunctions.showCustomToast(
-          description: "Story was deleted successfully: $docId",
+          description: "$stoyTitle was deleted successfully: $docId",
           type: ToastificationType.success,
         );
       } else {
