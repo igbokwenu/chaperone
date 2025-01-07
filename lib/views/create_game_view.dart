@@ -77,7 +77,7 @@ class CreateGameViewState extends ConsumerState<CreateGameView> {
             _isLoading = false;
 
             MyReusableFunctions.showCustomDialog(
-                barrierDismissible: false,
+                // barrierDismissible: false,
                 context: context,
                 message:
                     'Your game has been created successfully. Click the button below to preview the game and generate game images.',
@@ -185,7 +185,7 @@ class CreateGameViewState extends ConsumerState<CreateGameView> {
                         ),
                 ),
                 const SizedBox(height: 24),
-                if (kDebugMode)
+                // if (kDebugMode)
                   Expanded(
                     child: Card(
                       elevation: 4,

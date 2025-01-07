@@ -2,6 +2,7 @@ import 'package:chaperone/models/story_model.dart';
 import 'package:chaperone/services/audio_manager.dart';
 import 'package:chaperone/utils/constants/constants.dart';
 import 'package:chaperone/views/home_view.dart';
+import 'package:chaperone/views/settings_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -206,17 +207,17 @@ class _ResultViewState extends ConsumerState<ResultView>
                   ),
                   child: Row(
                     children: [
-                      IconButton(
-                        icon: const Icon(Icons.arrow_back, color: Colors.white),
-                        onPressed: () {
-                          Navigator.of(context).pushAndRemoveUntil(
-                            MaterialPageRoute(
-                              builder: (context) => const HomeView(),
-                            ),
-                            (route) => false,
-                          );
-                        },
-                      ),
+                      // IconButton(
+                      //   icon: const Icon(Icons.arrow_back, color: Colors.white),
+                      //   onPressed: () {
+                      //     Navigator.of(context).pushAndRemoveUntil(
+                      //       MaterialPageRoute(
+                      //         builder: (context) => const HomeView(),
+                      //       ),
+                      //       (route) => false,
+                      //     );
+                      //   },
+                      // ),
                       Expanded(
                         child: Text(
                           widget.scenario.storyData![storyTitleKey],
@@ -229,15 +230,12 @@ class _ResultViewState extends ConsumerState<ResultView>
                         ),
                       ),
                       IconButton(
-                        icon: const Icon(Icons.close, color: Colors.white),
-                        onPressed: () {
-                          Navigator.of(context).pushAndRemoveUntil(
-                            MaterialPageRoute(
-                              builder: (context) => const HomeView(),
-                            ),
-                            (route) => false,
-                          );
-                        },
+                        icon: const Icon(Icons.settings, color: Colors.white),
+                        onPressed: () => Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const SettingsScreen()),
+                        ),
                       ),
                     ],
                   ),
@@ -342,7 +340,7 @@ class _ResultViewState extends ConsumerState<ResultView>
                           );
                         },
                         child: const Text(
-                          'Next Game',
+                          'View More Games',
                           style: TextStyle(
                             color: Colors.white,
                             fontSize: 16,
