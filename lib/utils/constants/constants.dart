@@ -243,3 +243,8 @@ const String kCurrentGame = 'currentGame';
 const String kIsFavorite = 'isFavorite';
 const String kByAuthor = 'byAuthor';
 const String kStoriesDefaultEmptyMessage = 'No stories found';
+
+
+const String goldenYearsImageUrl = 'https://firebasestorage.googleapis.com/v0/b/chaperonegame.firebasestorage.app/o/game_images%2Fgolden_years.jpeg?alt=media&token=a5531ae2-c4b8-4953-8b71-f62e6fbc91f7';
+const String lotteryImageUrl = 'https://firebasestorage.googleapis.com/v0/b/chaperonegame.firebasestorage.app/o/game_images%2Flottery.jpeg?alt=media&token=13d7859c-122a-4f13-bfe2-01cdf259f996';
+const String smileSuppressionImageUrl = 'https://console.firebase.google.com/u/0/project/chaperonegame/storage/chaperonegame.firebasestorage.app/files/~2Fgame_images#:~:text=Name-,smile_suppression.jpeg,-Size';

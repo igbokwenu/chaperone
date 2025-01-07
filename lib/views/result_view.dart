@@ -285,7 +285,7 @@ class _ResultViewState extends ConsumerState<ResultView>
                             borderRadius: BorderRadius.circular(8),
                           ),
                           child: Text(
-                            'You finished playing "${widget.scenario.storyData!['title']}" and some very interesting choices.',
+                            'You finished playing "${widget.scenario.storyData!['title']}" and made some very interesting choices.',
                             style: const TextStyle(
                               color: Colors.white,
                               fontSize: 16,

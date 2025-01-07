@@ -140,7 +140,7 @@ class _OnboardingViewState extends State<OnboardingView>
                         ),
                         const SizedBox(height: 24),
                         Text(
-                          "A world where stories come alive through captivating narratives and interactive adventures, blurring the lines between reality and imagination as you share your own journey or explore those crafted by a global community of players.",
+                          "A world where stories come alive through captivating narratives and interactive adventures. Blur the lines between reality and imagination as you share your own journey or explore those crafted by a global community of players.",
                           textAlign: TextAlign.center,
                           style: TextStyle(
                             fontSize: 18,
