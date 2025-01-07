@@ -185,11 +185,22 @@ class StoryPreviewCard extends StatelessWidget {
                         ],
                       ),
                       const SizedBox(height: 16),
-                      Text(
-                        scenario.storyData![storySynopsisKey],
-                        style: const TextStyle(
-                          color: Colors.white,
-                          fontSize: 14,
+                      Container(
+                        padding: const EdgeInsets.all(8),
+                        decoration: BoxDecoration(
+                          color: Colors.black.withOpacity(0.3),
+                          borderRadius: BorderRadius.circular(8),
+                          // border: Border.all(
+                          //   color: Colors.white.withOpacity(0.2),
+                          //   width: 1,
+                          // ),
+                        ),
+                        child: Text(
+                          scenario.storyData![storySynopsisKey],
+                          style: const TextStyle(
+                            color: Colors.white,
+                            fontSize: 14,
+                          ),
                         ),
                       ),
                       const SizedBox(height: 16),

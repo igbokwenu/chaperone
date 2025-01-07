@@ -1,5 +1,6 @@
 import 'package:chaperone/models/story_model.dart';
 import 'package:chaperone/providers/stories_provider.dart';
+import 'package:chaperone/views/settings_view.dart';
 import 'package:chaperone/views/story_card_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -52,12 +53,20 @@ class DiscoverView extends StatelessWidget {
                 prefixIcon: const Icon(Icons.search),
                 suffixIcon: Container(
                   margin: const EdgeInsets.all(8),
-                  padding: const EdgeInsets.all(8),
                   decoration: BoxDecoration(
                     color: Colors.grey[200],
                     borderRadius: BorderRadius.circular(8),
                   ),
-                  child: const Icon(Icons.tune),
+                  child: IconButton(
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const SettingsScreen(),
+                          ),
+                        );
+                      },
+                      icon: const Icon(Icons.tune)),
                 ),
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(16),

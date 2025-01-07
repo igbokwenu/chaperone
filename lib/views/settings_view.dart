@@ -1,4 +1,5 @@
 import 'package:chaperone/services/audio_manager.dart';
+import 'package:chaperone/utils/reusable_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -65,6 +66,13 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                   onChanged: (value) => audioController.setEffectsVolume(value),
                   min: 0.0,
                   max: 1.0,
+                ),
+                const SizedBox(
+                  height: 40,
+                ),
+                const LegalLinksWidget(),
+                const SizedBox(
+                  height: 12,
                 ),
               ],
             ),

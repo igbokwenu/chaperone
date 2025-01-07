@@ -265,10 +265,7 @@ class AccountView extends ConsumerWidget {
         const SizedBox(
           height: 12,
         ),
-        const LegalLinksWidget(),
-        const SizedBox(
-          height: 12,
-        ),
+      
       ],
     );
   }
