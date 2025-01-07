@@ -9,8 +9,8 @@ class AnimatedTipText extends StatefulWidget {
 
 class _AnimatedTipTextState extends State<AnimatedTipText> {
   final List<String> tips = [
-    "Tip: Craft a vivid and detailed prompt to unlock a rich and captivating tale. Get creative and have fun!",
-    "Pro Tip: Add depth and nuance to your prompt to unleash a truly enchanting story."
+    "Tip:\nCraft a vivid and detailed prompt to unlock a rich and captivating tale. Get creative and have fun!",
+    "Pro Tip:\nAdd depth and nuance to your prompt to unleash a truly enchanting story."
   ];
 
   int currentTipIndex = 0;

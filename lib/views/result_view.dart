@@ -1,3 +1,4 @@
+import 'package:animate_do/animate_do.dart';
 import 'package:chaperone/models/story_model.dart';
 import 'package:chaperone/services/audio_manager.dart';
 import 'package:chaperone/services/auth_wrapper.dart';
@@ -303,20 +304,28 @@ class _ResultViewState extends ConsumerState<ResultView>
                   padding: const EdgeInsets.all(24.0),
                   child: Column(
                     children: [
-                      ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.blue,
-                          minimumSize: const Size(double.infinity, 50),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(25),
+                      Pulse(
+                        delay: const Duration(milliseconds: 2000),
+                        child: TextButton.icon(
+                          style: TextButton.styleFrom(
+                            minimumSize: const Size(double.infinity, 50),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(25),
+                            ),
                           ),
-                        ),
-                        onPressed: _showJourneyDialog,
-                        child: const Text(
-                          'View Journey',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 16,
+                          onPressed: () {
+                            ref
+                                .read(audioControllerProvider.notifier)
+                                .stopResultMusic();
+                            Navigator.pop(context);
+                          },
+                          icon: const Icon(Icons.replay, color: Colors.white),
+                          label: const Text(
+                            'Replay Journey',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 16,
+                            ),
                           ),
                         ),
                       ),
@@ -341,7 +350,7 @@ class _ResultViewState extends ConsumerState<ResultView>
                           );
                         },
                         child: const Text(
-                          'View More Games',
+                          'Play More Stories',
                           style: TextStyle(
                             color: Colors.white,
                             fontSize: 16,

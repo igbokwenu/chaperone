@@ -78,7 +78,10 @@ class AccountView extends ConsumerWidget {
                   ),
                 );
               },
-              icon: const Icon(Icons.settings),
+              icon: const Icon(
+                Icons.settings,
+                color: Colors.blue,
+              ),
             ),
           ],
         ),
@@ -89,7 +92,10 @@ class AccountView extends ConsumerWidget {
               // User Profile Section
               Container(
                 padding: const EdgeInsets.all(16),
-                color: Colors.white,
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(20),
+                ),
                 child: Column(
                   children: [
                     // Profile Picture
@@ -209,7 +215,7 @@ class AccountView extends ConsumerWidget {
 
   Widget _buildActions(BuildContext context, AuthService authService) {
     return Column(
-      spacing: 5,
+      // spacing: 5,
       children: [
         ElevatedButton.icon(
           onPressed: () {
@@ -224,6 +230,9 @@ class AccountView extends ConsumerWidget {
           icon: const Icon(Icons.visibility, size: 24),
           label: const Text('View Stories You Created'),
         ),
+        const SizedBox(
+          height: 20,
+        ),
         ElevatedButton(
           onPressed: () async {
             if (authService.isUserAnonymous()) {
@@ -236,6 +245,9 @@ class AccountView extends ConsumerWidget {
             }
           },
           child: const Text('Sign Out'),
+        ),
+        const SizedBox(
+          height: 10,
         ),
         ElevatedButton(
           onPressed: () async {
@@ -265,7 +277,6 @@ class AccountView extends ConsumerWidget {
         const SizedBox(
           height: 12,
         ),
-      
       ],
     );
   }

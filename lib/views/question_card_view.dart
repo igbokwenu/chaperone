@@ -29,7 +29,7 @@ class _QuestionCardState extends ConsumerState<QuestionCard>
     with TickerProviderStateMixin {
   late Timer _timer;
   double _progress = 1.0;
-  final int _totalSeconds = 12;
+  final int _totalSeconds = 8;
   bool _showOptions = false;
 
   // Animation controllers
