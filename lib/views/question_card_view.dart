@@ -39,6 +39,10 @@ class _QuestionCardState extends ConsumerState<QuestionCard>
   @override
   void initState() {
     super.initState();
+    _initializeAnimations();
+  }
+
+  void _initializeAnimations() {
     startTimer();
 
     _animationController = AnimationController(
@@ -51,6 +55,21 @@ class _QuestionCardState extends ConsumerState<QuestionCard>
       end: 1.2,
     ).animate(_animationController);
 
+    _animationController.forward();
+  }
+
+  void _resetAnimations() {
+    // Reset progress bar
+    setState(() {
+      _progress = 1.0;
+    });
+
+    // Cancel existing timer and start a new one
+    _timer.cancel();
+    startTimer();
+
+    // Reset and restart scale animation
+    _animationController.reset();
     _animationController.forward();
   }
 
@@ -86,6 +105,7 @@ class _QuestionCardState extends ConsumerState<QuestionCard>
         ),
         onPressed: () {
           ref.read(audioControllerProvider.notifier).playSoundEffect();
+          _resetAnimations(); // Reset animations before transitioning
           widget.onOptionSelected(optionData['nextNode']);
         },
         child: Padding(
