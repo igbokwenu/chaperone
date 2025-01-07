@@ -1,3 +1,6 @@
+import 'dart:async';
+import 'dart:math';
+
 import 'package:chaperone/models/story_model.dart';
 import 'package:chaperone/providers/stories_provider.dart';
 import 'package:chaperone/views/settings_view.dart';
@@ -5,8 +8,35 @@ import 'package:chaperone/views/story_card_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class DiscoverView extends StatelessWidget {
+class DiscoverView extends StatefulWidget {
   const DiscoverView({super.key});
+
+  @override
+  State<DiscoverView> createState() => _DiscoverViewState();
+}
+
+class _DiscoverViewState extends State<DiscoverView> {
+  late int fluctuatingNumber;
+  late Timer timer;
+
+  @override
+  void initState() {
+    super.initState();
+    final random = Random();
+    fluctuatingNumber =
+        random.nextInt(7001) + 2000; // Initial number between 2000 and 9000
+    timer = Timer.periodic(const Duration(milliseconds: 1800), (timer) {
+      setState(() {
+        fluctuatingNumber = random.nextInt(7001) + 2000; // Update number
+      });
+    });
+  }
+
+  @override
+  void dispose() {
+    timer.cancel();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -34,11 +64,16 @@ class DiscoverView extends StatelessWidget {
                     color: Colors.grey[200],
                     borderRadius: BorderRadius.circular(12),
                   ),
-                  child: const Row(
+                  child: Row(
                     children: [
-                      Icon(Icons.trending_up, size: 16),
-                      SizedBox(width: 4),
-                      Text('3,580'),
+                      const Icon(Icons.trending_up, size: 16),
+                      const SizedBox(width: 4),
+                      Text(
+                        fluctuatingNumber.toString(),
+                        style: const TextStyle(
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
                     ],
                   ),
                 ),
@@ -58,15 +93,16 @@ class DiscoverView extends StatelessWidget {
                     borderRadius: BorderRadius.circular(8),
                   ),
                   child: IconButton(
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const SettingsScreen(),
-                          ),
-                        );
-                      },
-                      icon: const Icon(Icons.tune)),
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const SettingsScreen(),
+                        ),
+                      );
+                    },
+                    icon: const Icon(Icons.tune),
+                  ),
                 ),
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(16),

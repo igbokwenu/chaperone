@@ -193,7 +193,7 @@ class StoryCard extends StatelessWidget {
                         _buildGlossyStat(Icons.play_arrow_rounded,
                             _formatNumber(scenario.playCount!)),
                         const Spacer(),
-                        if (kDebugMode)
+                        if (firebaseUser.email == 'increasedwisdom@gmail.com')
                           IconButton(
                             onPressed: () async {
                               await authService.deleteStoryDoc(

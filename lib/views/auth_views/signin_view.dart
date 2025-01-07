@@ -50,7 +50,7 @@ class _SignInViewState extends State<SignInView> {
                   padding: EdgeInsets.all(16.0),
                   child: Column(
                     children: [
-                      Icon(Icons.games, size: 48, color: Colors.blue),
+                      Icon(Icons.person, size: 48, color: Colors.blue),
                       SizedBox(height: 8),
                       Text(
                         'Welcome Back!',
