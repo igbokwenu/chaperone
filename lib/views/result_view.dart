@@ -48,7 +48,7 @@ class _ResultViewState extends ConsumerState<ResultView>
   @override
   void dispose() {
     _controller.dispose();
-    ref.read(audioControllerProvider.notifier).stopResultMusic();
+
     super.dispose();
   }
 
@@ -267,14 +267,14 @@ class _ResultViewState extends ConsumerState<ResultView>
                               fontWeight: FontWeight.bold,
                             ),
                             children: [
-                              TextSpan(text: 'You are an '),
+                              TextSpan(text: 'You are '),
                               TextSpan(
-                                text: 'Alpha',
+                                text: 'Spectacular',
                                 style: TextStyle(
                                   color: Colors.blue,
                                 ),
                               ),
-                              TextSpan(text: ' woman.'),
+                              // TextSpan(text: ' player.'),
                             ],
                           ),
                         ),
@@ -331,6 +331,9 @@ class _ResultViewState extends ConsumerState<ResultView>
                           ),
                         ),
                         onPressed: () {
+                          ref
+                              .read(audioControllerProvider.notifier)
+                              .stopResultMusic();
                           Navigator.of(context).pushAndRemoveUntil(
                             MaterialPageRoute(
                               builder: (context) => const HomeView(),

@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:animate_do/animate_do.dart';
 import 'package:chaperone/services/audio_manager.dart';
 import 'package:chaperone/utils/constants/constants.dart';
+import 'package:chaperone/views/settings_view.dart';
 import 'package:flutter/material.dart';
 import 'package:chaperone/models/story_model.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -164,9 +165,14 @@ class _QuestionCardState extends ConsumerState<QuestionCard>
                               ),
                             ),
                             IconButton(
-                              icon:
-                                  const Icon(Icons.close, color: Colors.white),
-                              onPressed: () => Navigator.pop(context),
+                              icon: const Icon(Icons.settings,
+                                  color: Colors.white),
+                              onPressed: () => Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        const SettingsScreen()),
+                              ),
                             ),
                           ],
                         ),

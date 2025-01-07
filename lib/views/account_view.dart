@@ -4,6 +4,7 @@ import 'package:chaperone/utils/constants/constants.dart';
 import 'package:chaperone/utils/reusable_functions.dart';
 import 'package:chaperone/views/auth_views/signup_view.dart';
 import 'package:chaperone/views/dynamic_stories_view.dart';
+import 'package:chaperone/views/settings_view.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -63,6 +64,17 @@ class AccountView extends ConsumerWidget {
               title: const Text('Account'),
               backgroundColor: Colors.white,
               elevation: 0,
+              actions: [
+                IconButton(
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const SettingsScreen()),
+                      );
+                    },
+                    icon: const Icon(Icons.settings))
+              ],
             ),
             body: SingleChildScrollView(
               child: Column(

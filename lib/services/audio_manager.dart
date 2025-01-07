@@ -1,28 +1,35 @@
-
+// audio_manager.dart
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-// State class to manage audio settings
 class AudioState {
   final bool isThemeMusicEnabled;
   final bool isSoundEffectsEnabled;
   final bool isThemePlaying;
+  final double musicVolume;      // For theme and result music
+  final double effectsVolume;    // For sound effects
 
   AudioState({
     required this.isThemeMusicEnabled,
     required this.isSoundEffectsEnabled,
     required this.isThemePlaying,
+    required this.musicVolume,
+    required this.effectsVolume,
   });
 
   AudioState copyWith({
     bool? isThemeMusicEnabled,
     bool? isSoundEffectsEnabled,
     bool? isThemePlaying,
+    double? musicVolume,
+    double? effectsVolume,
   }) {
     return AudioState(
       isThemeMusicEnabled: isThemeMusicEnabled ?? this.isThemeMusicEnabled,
       isSoundEffectsEnabled: isSoundEffectsEnabled ?? this.isSoundEffectsEnabled,
       isThemePlaying: isThemePlaying ?? this.isThemePlaying,
+      musicVolume: musicVolume ?? this.musicVolume,
+      effectsVolume: effectsVolume ?? this.effectsVolume,
     );
   }
 }
@@ -33,6 +40,8 @@ class AudioController extends StateNotifier<AudioState> {
           isThemeMusicEnabled: true,
           isSoundEffectsEnabled: true,
           isThemePlaying: false,
+          musicVolume: 0.5,      // Default to 50% volume
+          effectsVolume: 0.5,    // Default to 50% volume
         ));
 
   final AudioPlayer _themePlayer = AudioPlayer();
@@ -41,18 +50,44 @@ class AudioController extends StateNotifier<AudioState> {
 
   Future<void> initAudio() async {
     await _themePlayer.setSource(AssetSource('audio/theme.mp3'));
-    await _themePlayer.setReleaseMode(ReleaseMode.loop);
     await _resultPlayer.setSource(AssetSource('audio/result.mp3'));
     await _soundEffectPlayer.setSource(AssetSource('audio/answer.mp3'));
+    
+    await _themePlayer.setReleaseMode(ReleaseMode.loop);
+    
+    // Set initial volumes
+    await _updateMusicVolume(state.musicVolume);
+    await _updateEffectsVolume(state.effectsVolume);
   }
 
   Future<void> toggleThemeMusic() async {
-    state = state.copyWith(isThemeMusicEnabled: !state.isThemeMusicEnabled);
-    if (!state.isThemeMusicEnabled) {
+    final newEnabledState = !state.isThemeMusicEnabled;
+    state = state.copyWith(isThemeMusicEnabled: newEnabledState);
+    
+    if (!newEnabledState) {
       await pauseThemeMusic();
-    } else if (state.isThemePlaying) {
+    } else {
       await playThemeMusic();
     }
+  }
+
+  Future<void> setMusicVolume(double volume) async {
+    state = state.copyWith(musicVolume: volume);
+    await _updateMusicVolume(volume);
+  }
+
+  Future<void> setEffectsVolume(double volume) async {
+    state = state.copyWith(effectsVolume: volume);
+    await _updateEffectsVolume(volume);
+  }
+
+  Future<void> _updateMusicVolume(double volume) async {
+    await _themePlayer.setVolume(volume);
+    await _resultPlayer.setVolume(volume);
+  }
+
+  Future<void> _updateEffectsVolume(double volume) async {
+    await _soundEffectPlayer.setVolume(volume);
   }
 
   Future<void> toggleSoundEffects() async {
@@ -98,7 +133,6 @@ class AudioController extends StateNotifier<AudioState> {
   }
 }
 
-// Providers
 final audioControllerProvider =
     StateNotifierProvider<AudioController, AudioState>((ref) {
   return AudioController();
