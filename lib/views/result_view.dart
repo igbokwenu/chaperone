@@ -284,9 +284,9 @@ class _ResultViewState extends ConsumerState<ResultView>
                             color: Colors.black.withOpacity(0.5),
                             borderRadius: BorderRadius.circular(8),
                           ),
-                          child: const Text(
-                            'You are uncomfortable with bias but prefer to focus on professionalism or address the issue privately rather than openly.',
-                            style: TextStyle(
+                          child: Text(
+                            'You finished playing "${widget.scenario.storyData!['title']}" and some very interesting choices.',
+                            style: const TextStyle(
                               color: Colors.white,
                               fontSize: 16,
                             ),

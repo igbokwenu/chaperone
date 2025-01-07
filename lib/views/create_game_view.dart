@@ -4,6 +4,7 @@ import 'package:chaperone/providers/user_data_provider.dart';
 import 'package:chaperone/services/auth_wrapper.dart';
 import 'package:chaperone/services/database_service.dart';
 import 'package:chaperone/services/gemini_ai_service.dart';
+import 'package:chaperone/utils/constants/animated_tip_widget.dart';
 import 'package:chaperone/utils/constants/constants.dart';
 import 'package:chaperone/utils/reusable_functions.dart';
 import 'package:chaperone/views/dynamic_stories_view.dart';
@@ -84,7 +85,7 @@ class CreateGameViewState extends ConsumerState<CreateGameView> {
                         : false,
                 context: context,
                 message:
-                    'Your game has been created successfully. Click the button below to preview the game and generate game images.',
+                    'Your game has been created successfully. Click the button below to preview the game. (Image generation coming soon).',
                 actions: [
                   TextButton(
                       onPressed: () async {
@@ -98,10 +99,18 @@ class CreateGameViewState extends ConsumerState<CreateGameView> {
                           print(
                               "Uid of game being built: ${chaperoneUser.gameBeingBuilt}");
                         }
+
+                        //Save story creaton prompt
                         await databaseServiceForStoryPromptUpdate
                             .updateAnyStoriesData(
                                 fieldName: storyStoryCreationPromptKey,
                                 newValue: _promptController.text);
+
+                        //Update Story display name
+                        await databaseServiceForStoryPromptUpdate
+                            .updateAnyStoriesData(
+                                fieldName: storyAuthorDisplayNameKey,
+                                newValue: chaperoneUser.displayName);
                         Navigator.of(context);
                         Navigator.pushReplacement(
                           context,
@@ -140,10 +149,14 @@ class CreateGameViewState extends ConsumerState<CreateGameView> {
             ),
           ),
           child: Padding(
-            padding: const EdgeInsets.all(24.0),
+            padding: const EdgeInsets.all(20.0),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
+                const AnimatedTipText(),
+                const SizedBox(
+                  height: 5,
+                ),
                 Card(
                   elevation: 4,
                   shape: RoundedRectangleBorder(
@@ -195,55 +208,57 @@ class CreateGameViewState extends ConsumerState<CreateGameView> {
                         ),
                 ),
                 const SizedBox(height: 24),
-                // if (kDebugMode)
-                Expanded(
-                  child: Card(
-                    elevation: 4,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(16),
-                    ),
-                    child: SingleChildScrollView(
-                      padding: const EdgeInsets.all(16),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            'Generated Story (Raw Template)',
-                            style: TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.bold,
-                              color: Theme.of(context).primaryColor,
-                            ),
-                          ),
-                          const SizedBox(height: 16),
-                          Container(
-                            width: double.infinity,
-                            padding: const EdgeInsets.all(16),
-                            decoration: BoxDecoration(
-                              color: Colors.grey[50],
-                              borderRadius: BorderRadius.circular(12),
-                            ),
-                            child: SelectableText(
-                              _response,
-                              style: const TextStyle(fontSize: 15, height: 1.5),
-                            ),
-                          ),
-                          if (_rawResponse.isNotEmpty) ...[
-                            const SizedBox(height: 16),
+                if (currentUser?.email == 'increasedwisdom@gmail.com' ||
+                    currentUser?.email == 'yuhanghan97@gmail.com')
+                  Expanded(
+                    child: Card(
+                      elevation: 4,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(16),
+                      ),
+                      child: SingleChildScrollView(
+                        padding: const EdgeInsets.all(16),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
                             Text(
-                              _rawResponse,
+                              'Generated Story (Raw Template)',
                               style: TextStyle(
-                                color: Colors.grey[600],
-                                fontSize: 14,
-                                fontStyle: FontStyle.italic,
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                                color: Theme.of(context).primaryColor,
                               ),
                             ),
+                            const SizedBox(height: 16),
+                            Container(
+                              width: double.infinity,
+                              padding: const EdgeInsets.all(16),
+                              decoration: BoxDecoration(
+                                color: Colors.grey[50],
+                                borderRadius: BorderRadius.circular(12),
+                              ),
+                              child: SelectableText(
+                                _response,
+                                style:
+                                    const TextStyle(fontSize: 15, height: 1.5),
+                              ),
+                            ),
+                            if (_rawResponse.isNotEmpty) ...[
+                              const SizedBox(height: 16),
+                              Text(
+                                _rawResponse,
+                                style: TextStyle(
+                                  color: Colors.grey[600],
+                                  fontSize: 14,
+                                  fontStyle: FontStyle.italic,
+                                ),
+                              ),
+                            ],
                           ],
-                        ],
+                        ),
                       ),
                     ),
                   ),
-                ),
               ],
             ),
           ),
