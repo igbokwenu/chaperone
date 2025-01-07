@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:animate_do/animate_do.dart';
 import 'package:chaperone/services/audio_manager.dart';
 import 'package:chaperone/utils/constants/constants.dart';
 import 'package:chaperone/views/settings_view.dart';
@@ -76,6 +77,17 @@ class _QuestionCardState extends ConsumerState<QuestionCard>
     startTimer();
   }
 
+  void _skipAnimations() {
+    _timer.cancel();
+    _scaleController.forward(from: 1.0);
+    setState(() {
+      _progress = 0.0;
+      _showOptions = true;
+    });
+    _optionsController.forward();
+    widget.onTimeUp();
+  }
+
   void _resetAnimations() {
     setState(() {
       _progress = 1.0;
@@ -149,6 +161,44 @@ class _QuestionCardState extends ConsumerState<QuestionCard>
                 textAlign: TextAlign.center,
               ),
             ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildSkipButton() {
+    return Opacity(
+      opacity: _showOptions ? 0.0 : 1.0, // Hide when options are shown
+      child: Padding(
+        padding: const EdgeInsets.only(
+            bottom: 16), // Add spacing between skip button and question
+        child: TextButton(
+          onPressed: _showOptions ? null : _skipAnimations,
+          style: TextButton.styleFrom(
+            backgroundColor: Colors.black26,
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(20),
+            ),
+          ),
+          child: const Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text(
+                'Skip',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 14,
+                ),
+              ),
+              SizedBox(width: 4),
+              Icon(
+                Icons.fast_forward,
+                color: Colors.white,
+                size: 16,
+              ),
+            ],
           ),
         ),
       ),
@@ -265,6 +315,10 @@ class _QuestionCardState extends ConsumerState<QuestionCard>
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
                       children: [
+                        Pulse(
+                            delay: const Duration(milliseconds: 1500),
+                            child:
+                                _buildSkipButton()), // Skip button added here
                         Container(
                           padding: const EdgeInsets.all(12),
                           decoration: BoxDecoration(
