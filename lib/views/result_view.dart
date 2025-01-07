@@ -1,5 +1,6 @@
 import 'package:chaperone/models/story_model.dart';
 import 'package:chaperone/services/audio_manager.dart';
+import 'package:chaperone/services/auth_wrapper.dart';
 import 'package:chaperone/utils/constants/constants.dart';
 import 'package:chaperone/views/home_view.dart';
 import 'package:chaperone/views/settings_view.dart';
@@ -334,7 +335,7 @@ class _ResultViewState extends ConsumerState<ResultView>
                               .stopResultMusic();
                           Navigator.of(context).pushAndRemoveUntil(
                             MaterialPageRoute(
-                              builder: (context) => const HomeView(),
+                              builder: (context) => const AuthWrapper(),
                             ),
                             (route) => false,
                           );

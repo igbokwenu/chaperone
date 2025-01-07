@@ -34,7 +34,7 @@ class DynamicStoriesView extends StatelessWidget {
     String dynamicTitle(String providerKey) {
       switch (providerKey) {
         case kIsFavorite:
-          return 'Favorites';
+          return 'Favorites 🤍';
         case kByAuthor:
           return 'Stories By You';
         case kCurrentGame:

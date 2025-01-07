@@ -138,26 +138,26 @@ class CreateGameOnboardingView extends StatelessWidget {
                             ),
 
                             // Author Info
-                            Positioned(
-                              bottom: 16,
-                              left: 16,
-                              child: Row(
-                                children: [
-                                  const CircleAvatar(
-                                    radius: 12,
-                                    backgroundColor: Colors.white,
-                                  ),
-                                  const SizedBox(width: 8),
-                                  Text(
-                                    'Author',
-                                    style: TextStyle(
-                                      color: Colors.white.withOpacity(0.9),
-                                      fontSize: 14,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
+                            // Positioned(
+                            //   bottom: 16,
+                            //   left: 16,
+                            //   child: Row(
+                            //     children: [
+                            //       const CircleAvatar(
+                            //         radius: 12,
+                            //         backgroundColor: Colors.white,
+                            //       ),
+                            //       const SizedBox(width: 8),
+                            //       Text(
+                            //         'Author',
+                            //         style: TextStyle(
+                            //           color: Colors.white.withOpacity(0.9),
+                            //           fontSize: 14,
+                            //         ),
+                            //       ),
+                            //     ],
+                            //   ),
+                            // ),
                           ],
                         ),
                       ),

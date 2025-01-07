@@ -1,12 +1,12 @@
 // main.dart
 import 'package:chaperone/firebase_options.dart';
-import 'package:chaperone/services/audio_manager.dart';
 import 'package:chaperone/services/auth_wrapper.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:toastification/toastification.dart';
+import 'package:chaperone/services/audio_manager.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -45,11 +45,32 @@ class AppInitializer extends ConsumerStatefulWidget {
   ConsumerState<AppInitializer> createState() => _AppInitializerState();
 }
 
-class _AppInitializerState extends ConsumerState<AppInitializer> {
+class _AppInitializerState extends ConsumerState<AppInitializer>
+    with WidgetsBindingObserver {
   @override
   void initState() {
     super.initState();
+    WidgetsBinding.instance.addObserver(this);
     _initializeAudio();
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    final audioController = ref.read(audioControllerProvider.notifier);
+
+    switch (state) {
+      case AppLifecycleState.paused:
+      case AppLifecycleState.inactive:
+      case AppLifecycleState.detached:
+      case AppLifecycleState.hidden:
+        // App is in background, hidden, or being closed
+        audioController.pauseThemeMusic();
+      case AppLifecycleState.resumed:
+        // App is in foreground
+        if (ref.read(audioControllerProvider).isThemeMusicEnabled) {
+          audioController.playThemeMusic();
+        }
+    }
   }
 
   Future<void> _initializeAudio() async {
@@ -64,6 +85,7 @@ class _AppInitializerState extends ConsumerState<AppInitializer> {
 
   @override
   void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
     ref.read(audioControllerProvider.notifier).dispose();
     super.dispose();
   }

@@ -6,8 +6,8 @@ class AudioState {
   final bool isThemeMusicEnabled;
   final bool isSoundEffectsEnabled;
   final bool isThemePlaying;
-  final double musicVolume;      // For theme and result music
-  final double effectsVolume;    // For sound effects
+  final double musicVolume;
+  final double effectsVolume;
 
   AudioState({
     required this.isThemeMusicEnabled,
@@ -26,7 +26,8 @@ class AudioState {
   }) {
     return AudioState(
       isThemeMusicEnabled: isThemeMusicEnabled ?? this.isThemeMusicEnabled,
-      isSoundEffectsEnabled: isSoundEffectsEnabled ?? this.isSoundEffectsEnabled,
+      isSoundEffectsEnabled:
+          isSoundEffectsEnabled ?? this.isSoundEffectsEnabled,
       isThemePlaying: isThemePlaying ?? this.isThemePlaying,
       musicVolume: musicVolume ?? this.musicVolume,
       effectsVolume: effectsVolume ?? this.effectsVolume,
@@ -40,35 +41,43 @@ class AudioController extends StateNotifier<AudioState> {
           isThemeMusicEnabled: true,
           isSoundEffectsEnabled: true,
           isThemePlaying: false,
-          musicVolume: 0.5,      // Default to 50% volume
-          effectsVolume: 0.5,    // Default to 50% volume
+          musicVolume: 0.5,
+          effectsVolume: 0.5,
         ));
 
   final AudioPlayer _themePlayer = AudioPlayer();
   final AudioPlayer _resultPlayer = AudioPlayer();
   final AudioPlayer _soundEffectPlayer = AudioPlayer();
+  bool _isInitialized = false;
 
   Future<void> initAudio() async {
+    if (_isInitialized) return;
+
     await _themePlayer.setSource(AssetSource('audio/theme.mp3'));
     await _resultPlayer.setSource(AssetSource('audio/result.mp3'));
     await _soundEffectPlayer.setSource(AssetSource('audio/answer.mp3'));
-    
+
     await _themePlayer.setReleaseMode(ReleaseMode.loop);
-    
-    // Set initial volumes
+
     await _updateMusicVolume(state.musicVolume);
     await _updateEffectsVolume(state.effectsVolume);
+
+    _isInitialized = true;
   }
 
   Future<void> toggleThemeMusic() async {
     final newEnabledState = !state.isThemeMusicEnabled;
     state = state.copyWith(isThemeMusicEnabled: newEnabledState);
-    
+
     if (!newEnabledState) {
       await pauseThemeMusic();
     } else {
       await playThemeMusic();
     }
+  }
+
+  Future<void> toggleSoundEffects() async {
+    state = state.copyWith(isSoundEffectsEnabled: !state.isSoundEffectsEnabled);
   }
 
   Future<void> setMusicVolume(double volume) async {
@@ -90,39 +99,61 @@ class AudioController extends StateNotifier<AudioState> {
     await _soundEffectPlayer.setVolume(volume);
   }
 
-  Future<void> toggleSoundEffects() async {
-    state = state.copyWith(isSoundEffectsEnabled: !state.isSoundEffectsEnabled);
-  }
-
   Future<void> playThemeMusic() async {
-    if (state.isThemeMusicEnabled) {
+    if (!state.isThemeMusicEnabled || state.isThemePlaying) return;
+
+    try {
+      final playerState = await _themePlayer.state;
+      if (playerState == PlayerState.playing) return;
+
       await _themePlayer.resume();
       state = state.copyWith(isThemePlaying: true);
+    } catch (e) {
+      print('Error playing theme music: $e');
     }
   }
 
   Future<void> pauseThemeMusic() async {
-    await _themePlayer.pause();
-    state = state.copyWith(isThemePlaying: false);
+    if (!state.isThemePlaying) return;
+
+    try {
+      await _themePlayer.pause();
+      state = state.copyWith(isThemePlaying: false);
+    } catch (e) {
+      print('Error pausing theme music: $e');
+    }
   }
 
   Future<void> playResultMusic() async {
     await pauseThemeMusic();
     if (state.isThemeMusicEnabled) {
-      await _resultPlayer.resume();
+      try {
+        await _resultPlayer.resume();
+      } catch (e) {
+        print('Error playing result music: $e');
+      }
     }
   }
 
   Future<void> stopResultMusic() async {
-    await _resultPlayer.stop();
-    if (state.isThemeMusicEnabled) {
-      await playThemeMusic();
+    try {
+      await _resultPlayer.stop();
+      if (state.isThemeMusicEnabled) {
+        await playThemeMusic();
+      }
+    } catch (e) {
+      print('Error stopping result music: $e');
     }
   }
 
   Future<void> playSoundEffect() async {
     if (state.isSoundEffectsEnabled) {
-      await _soundEffectPlayer.resume();
+      try {
+        await _soundEffectPlayer.seek(Duration.zero); // Reset to start
+        await _soundEffectPlayer.resume();
+      } catch (e) {
+        print('Error playing sound effect: $e');
+      }
     }
   }
 
@@ -130,6 +161,7 @@ class AudioController extends StateNotifier<AudioState> {
     _themePlayer.dispose();
     _resultPlayer.dispose();
     _soundEffectPlayer.dispose();
+    _isInitialized = false;
   }
 }
 
