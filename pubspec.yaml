@@ -1,7 +1,7 @@
 name: chaperone
 description: "Chaperone: Stories By You."
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
-version: 1.0.3+3
+version: 1.0.3+4
 
 environment:
   sdk: ^3.5.3
