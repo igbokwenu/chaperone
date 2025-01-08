@@ -5,16 +5,13 @@ const String gpt4OModel = "gpt-4o";
 const String gpt4OMiniModel = "gpt-4o-mini";
 
 class AppRoutes {
-  static const String authWrapper = '/authWrapper';
+  static const String appInitializer = '/';
   static const String signUp = '/sign_up';
   static const String passwordRecovery = '/password_recovery';
-  // static const String home = '/home';
-  static const String about = '/about';
+  static const String contact = '/contact';
   static const String privacy = '/privacy';
   static const String terms = '/terms';
   static const String account = '/account';
-  static const String download = '/download';
-  static const String onboardingWrapper = '/';
 }
 
 const String logoAssetImageUrlCircular = "assets/images/logo_circular.png";
@@ -185,7 +182,7 @@ At Chaperone, we value your privacy and are committed to protecting your persona
 
 5. Data Deletion
 You can permanently delete your account and all associated data through the Account Settings section. This process is irreversible and will remove:
-- All stories you've created
+- All account data
 - Your profile information
 - Interaction history and preferences
 
@@ -205,7 +202,7 @@ Last Updated: January 6, 2025
 By accessing or using Chaperone, you agree to be bound by these Terms of Service.
 
 2. User Content
-- You retain ownership of your stories
+- You retain ownership of your story creation prompts
 - You grant us license to display and distribute your content
 - You are responsible for the content you create
 - Content must not violate our community guidelines
@@ -244,7 +241,9 @@ const String kIsFavorite = 'isFavorite';
 const String kByAuthor = 'byAuthor';
 const String kStoriesDefaultEmptyMessage = 'No stories found';
 
-
-const String goldenYearsImageUrl = 'https://firebasestorage.googleapis.com/v0/b/chaperonegame.firebasestorage.app/o/game_images%2Fgolden_years.jpeg?alt=media&token=a5531ae2-c4b8-4953-8b71-f62e6fbc91f7';
-const String lotteryImageUrl = 'https://firebasestorage.googleapis.com/v0/b/chaperonegame.firebasestorage.app/o/game_images%2Flottery.jpeg?alt=media&token=13d7859c-122a-4f13-bfe2-01cdf259f996';
-const String smileSuppressionImageUrl = 'https://console.firebase.google.com/u/0/project/chaperonegame/storage/chaperonegame.firebasestorage.app/files/~2Fgame_images#:~:text=Name-,smile_suppression.jpeg,-Size';
+const String goldenYearsImageUrl =
+    'https://firebasestorage.googleapis.com/v0/b/chaperonegame.firebasestorage.app/o/game_images%2Fgolden_years.jpeg?alt=media&token=a5531ae2-c4b8-4953-8b71-f62e6fbc91f7';
+const String lotteryImageUrl =
+    'https://firebasestorage.googleapis.com/v0/b/chaperonegame.firebasestorage.app/o/game_images%2Flottery.jpeg?alt=media&token=13d7859c-122a-4f13-bfe2-01cdf259f996';
+const String smileSuppressionImageUrl =
+    'https://console.firebase.google.com/u/0/project/chaperonegame/storage/chaperonegame.firebasestorage.app/files/~2Fgame_images#:~:text=Name-,smile_suppression.jpeg,-Size';

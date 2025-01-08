@@ -321,7 +321,7 @@ class _ResultViewState extends ConsumerState<ResultView>
                           },
                           icon: const Icon(Icons.replay, color: Colors.white),
                           label: const Text(
-                            'Replay Journey',
+                            'Replay Game',
                             style: TextStyle(
                               color: Colors.white,
                               fontSize: 16,

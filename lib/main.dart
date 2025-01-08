@@ -1,12 +1,20 @@
 // main.dart
 import 'package:chaperone/firebase_options.dart';
+import 'package:chaperone/services/auth_service.dart';
 import 'package:chaperone/services/auth_wrapper.dart';
+import 'package:chaperone/utils/constants/constants.dart';
+import 'package:chaperone/views/auth_views/forgot_password_view.dart';
+import 'package:chaperone/views/auth_views/signup_view.dart';
+import 'package:chaperone/views/compliance_views/contact_view.dart';
+import 'package:chaperone/views/compliance_views/privacy_policy_view.dart';
+import 'package:chaperone/views/compliance_views/terms_view.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:toastification/toastification.dart';
 import 'package:chaperone/services/audio_manager.dart';
+import 'package:url_strategy/url_strategy.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -16,6 +24,7 @@ Future<void> main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+  setPathUrlStrategy();
   runApp(const ProviderScope(child: MyApp()));
 }
 
@@ -24,6 +33,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final authService = AuthService();
     return ToastificationWrapper(
       child: MaterialApp(
         title: 'Chaperone',
@@ -32,7 +42,20 @@ class MyApp extends StatelessWidget {
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue),
           useMaterial3: true,
         ),
-        home: const AppInitializer(),
+        initialRoute: '/',
+        routes: {
+          AppRoutes.appInitializer: (context) => const AppInitializer(),
+          AppRoutes.signUp: (context) => SignUpView(
+                authService: authService,
+                isAnonymous: authService.isUserAnonymous(),
+              ),
+          AppRoutes.passwordRecovery: (context) => ForgotPasswordView(
+                authService: authService,
+              ),
+          AppRoutes.contact: (context) => const ContactView(),
+          AppRoutes.privacy: (context) => const PrivacyPolicyView(),
+          AppRoutes.terms: (context) => const TermsView(),
+        },
       ),
     );
   }
