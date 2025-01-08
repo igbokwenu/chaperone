@@ -306,7 +306,7 @@ class _ResultViewState extends ConsumerState<ResultView>
                   child: Column(
                     children: [
                       Pulse(
-                        delay: const Duration(milliseconds: 2000),
+                        delay: const Duration(milliseconds: 4000),
                         child: TextButton.icon(
                           style: TextButton.styleFrom(
                             minimumSize: const Size(double.infinity, 50),

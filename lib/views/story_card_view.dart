@@ -210,12 +210,31 @@ class StoryCard extends StatelessWidget {
                                 ? Colors.blue
                                 : Colors.white70),
                         const Spacer(),
-                        if (firebaseUser.email == 'increasedwisdom@gmail.com')
+                        if (MyReusableFunctions.isAdmin(firebaseUser.email!))
                           IconButton(
                             onPressed: () async {
-                              await authService.deleteStoryDoc(
-                                  scenario.storyUid,
-                                  scenario.storyData![storyTitleKey]);
+                              MyReusableFunctions.showCustomDialog(
+                                  context: context,
+                                  dialogIconColor: Colors.red,
+                                  message:
+                                      'Are you sure you want to delete ${scenario.storyData![storyTitleKey]}? This cannot be reversed! 💀',
+                                  actions: [
+                                    TextButton(
+                                      onPressed: () async {
+                                        Navigator.pop(context);
+                                        await authService.deleteStoryDoc(
+                                            scenario.storyUid,
+                                            scenario.storyData![storyTitleKey]);
+                                      },
+                                      child: const Text(
+                                        "Delete",
+                                        style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.red,
+                                        ),
+                                      ),
+                                    )
+                                  ]);
                             },
                             icon: const Icon(
                               Icons.delete,

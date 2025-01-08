@@ -36,7 +36,7 @@ class CreateGameViewState extends ConsumerState<CreateGameView>
   void initState() {
     super.initState();
     // Start the timer to cycle through prompts
-    _timer = Timer.periodic(const Duration(seconds: 8), (timer) {
+    _timer = Timer.periodic(const Duration(seconds: 5), (timer) {
       setState(() {
         _currentPromptIndex =
             (_currentPromptIndex + 1) % storyPromptsExamples.length;
@@ -208,7 +208,7 @@ class CreateGameViewState extends ConsumerState<CreateGameView>
                         filled: true,
                         fillColor: Colors.grey[50],
                       ),
-                      maxLines: 3,
+                      maxLines: 5,
                       style: const TextStyle(fontSize: 16),
                     ),
                   ),

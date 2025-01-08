@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:chaperone/utils/constants/constants.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
@@ -55,6 +56,10 @@ class MyReusableFunctions {
       // use inAppWebView to open within the app
       throw Exception('Could not launch search');
     }
+  }
+
+  static bool isAdmin(String value) {
+    return adminsList.contains(value);
   }
 
   static Future<void> launchCustomUrl(

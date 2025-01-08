@@ -72,6 +72,8 @@ const String userStoryList = 'storyList';
 const String userProgressList = 'progressList';
 const String userProgressAnalysis = 'progressAnalysis';
 const String userGameBeingBuilt = 'gameBeingBuilt';
+const String userMusicVolumeLevel = 'musicVolumeLevel';
+const String userSoundEffectVolumeLevel = 'soundEffectVolumeLevel';
 
 //
 const String storyUidKey = 'storyUid';
@@ -255,4 +257,9 @@ List<String> storyPromptsExamples = [
   "You discover an old diary belonging to your estranged grandmother, filled with tales of her forbidden love during a time of war. As you follow her story, you uncover family secrets that could change your life forever.",
   "Every time you tell a lie, a scar appears on your skin. When a mysterious stranger offers to erase them for a price, you must decide whether to face your truth or pay the ultimate cost.",
   "Click here to enter your story prompt"
+];
+
+const List<String> adminsList = [
+  'increasedwisdom@gmail.com',
+  'yuhanghan97@gmail.com',
 ];

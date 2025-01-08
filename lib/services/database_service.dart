@@ -89,6 +89,8 @@ class DatabaseService {
         userGameBeingBuilt: '',
         userDevice: userDevice,
         userTimeStamp: FieldValue.serverTimestamp(),
+        userMusicVolumeLevel: 0,
+        userSoundEffectVolumeLevel: 0,
       });
 
       print("User document created with ID: $uid");

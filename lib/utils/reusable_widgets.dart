@@ -109,7 +109,8 @@ class AppStoreButtonsWidget extends StatelessWidget {
         GestureDetector(
           onTap: () {
             MyReusableFunctions.launchCustomUrl(
-                url: 'https://testflight.apple.com/join/rtAUsa3U');
+                url:
+                    'https://apps.apple.com/us/app/chaperone-stories-by-you/id6740037309');
           },
           child: Image.asset(
             'assets/images/app_store_onlight.png',
