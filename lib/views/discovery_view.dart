@@ -23,10 +23,10 @@ class _DiscoverViewState extends State<DiscoverView> {
     super.initState();
     final random = Random();
     fluctuatingNumber =
-        random.nextInt(7001) + 2000; // Initial number between 2000 and 9000
+        random.nextInt(501) + 2000; // Initial number between 2000 and 2500
     timer = Timer.periodic(const Duration(milliseconds: 1800), (timer) {
       setState(() {
-        fluctuatingNumber = random.nextInt(7001) + 2000; // Update number
+        fluctuatingNumber = random.nextInt(501) + 2000; // Update number
       });
     });
   }

@@ -2,6 +2,7 @@ import 'package:animate_do/animate_do.dart';
 import 'package:chaperone/main.dart';
 import 'package:chaperone/models/story_model.dart';
 import 'package:chaperone/services/audio_manager.dart';
+import 'package:chaperone/services/auth_wrapper.dart';
 import 'package:chaperone/utils/constants/constants.dart';
 import 'package:chaperone/views/settings_view.dart';
 import 'package:flutter/material.dart';
@@ -184,7 +185,8 @@ class _ResultViewState extends ConsumerState<ResultView>
                     decoration: const BoxDecoration(
                       image: DecorationImage(
                         image: NetworkImage(
-                            'https://firebasestorage.googleapis.com/v0/b/chaperonegame.firebasestorage.app/o/placeholder_images%2Fimage7.png?alt=media&token=00568f96-1310-4e57-9dbb-8c324c44c0ff'),
+                          'https://firebasestorage.googleapis.com/v0/b/chaperonegame.firebasestorage.app/o/placeholder_images%2Fimage7.png?alt=media&token=00568f96-1310-4e57-9dbb-8c324c44c0ff',
+                        ),
                         fit: BoxFit.cover,
                         colorFilter: ColorFilter.mode(
                           Colors.black54,
@@ -344,7 +346,7 @@ class _ResultViewState extends ConsumerState<ResultView>
                           Navigator.pushReplacement(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => const AppInitializer()),
+                                builder: (context) => const AuthWrapper()),
                           );
                         },
                         child: const Text(

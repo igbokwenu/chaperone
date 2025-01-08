@@ -1,8 +1,10 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:chaperone/models/story_model.dart';
 import 'package:chaperone/services/auth_service.dart';
 import 'package:chaperone/services/database_service.dart';
 import 'package:chaperone/utils/constants/constants.dart';
 import 'package:chaperone/utils/reusable_functions.dart';
+import 'package:chaperone/utils/reusable_widgets.dart';
 import 'package:chaperone/views/story_preview_card.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -38,12 +40,21 @@ class StoryCard extends StatelessWidget {
                 tag: 'story-image-${scenario.storyUid}',
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(kDefaultPadding),
-                  child: Image.network(
-                    scenario.thumbnailUrl,
-                    height: 400,
-                    width: double.infinity,
-                    fit: BoxFit.cover,
-                  ),
+                  child: kIsWeb
+                      ? Image.network(
+                          scenario.thumbnailUrl,
+                          height: 400,
+                          width: double.infinity,
+                          fit: BoxFit.cover,
+                        )
+                      : CachedNetworkImage(
+                          imageUrl: scenario.thumbnailUrl,
+                          height: 400,
+                          width: double.infinity,
+                          fit: BoxFit.cover,
+                          placeholder: (context, url) =>
+                              const ChaperoneLogoImageWidget(),
+                        ),
                 ),
               ),
               Container(
@@ -76,8 +87,7 @@ class StoryCard extends StatelessWidget {
                   ),
                   child: IconButton(
                     onPressed: () async {
-                      if (scenario.favouritesList!
-                          .contains(firebaseUser.uid)) {
+                      if (scenario.favouritesList!.contains(firebaseUser.uid)) {
                         await databaseService.updateAnyStoriesData(
                           fieldName: storyFavouritesListKey,
                           newValue: FieldValue.arrayRemove([firebaseUser.uid]),

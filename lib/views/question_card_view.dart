@@ -1,8 +1,11 @@
 import 'dart:async';
 import 'package:animate_do/animate_do.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:chaperone/services/audio_manager.dart';
 import 'package:chaperone/utils/constants/constants.dart';
+import 'package:chaperone/utils/reusable_widgets.dart';
 import 'package:chaperone/views/settings_view.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:chaperone/models/story_model.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -219,12 +222,21 @@ class _QuestionCardState extends ConsumerState<QuestionCard>
             builder: (context, child) {
               return Transform.scale(
                 scale: _scaleAnimation.value,
-                child: Image.network(
-                  imageUrl,
-                  width: double.infinity,
-                  height: double.infinity,
-                  fit: BoxFit.cover,
-                ),
+                child: kIsWeb
+                    ? Image.network(
+                        imageUrl,
+                        width: double.infinity,
+                        height: double.infinity,
+                        fit: BoxFit.cover,
+                      )
+                    : CachedNetworkImage(
+                        imageUrl: imageUrl,
+                        width: double.infinity,
+                        height: double.infinity,
+                        fit: BoxFit.cover,
+                        placeholder: (context, url) =>
+                            const ChaperoneLogoImageWidget(),
+                      ),
               );
             },
           ),

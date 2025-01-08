@@ -1,11 +1,14 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:chaperone/models/story_model.dart';
 import 'package:chaperone/services/database_service.dart';
 import 'package:chaperone/utils/constants/constants.dart';
 import 'package:chaperone/utils/reusable_functions.dart';
+import 'package:chaperone/utils/reusable_widgets.dart';
 import 'package:chaperone/views/question_card_view.dart';
 import 'package:chaperone/views/result_view.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
@@ -79,10 +82,17 @@ class StoryPreviewCard extends StatelessWidget {
                         topLeft: Radius.circular(24),
                         topRight: Radius.circular(24),
                       ),
-                      child: Image.network(
-                        scenario.thumbnailUrl,
-                        fit: BoxFit.cover,
-                      ),
+                      child: kIsWeb
+                          ? Image.network(
+                              scenario.thumbnailUrl,
+                              fit: BoxFit.cover,
+                            )
+                          : CachedNetworkImage(
+                              imageUrl: scenario.thumbnailUrl,
+                              fit: BoxFit.cover,
+                              placeholder: (context, url) =>
+                                  const ChaperoneLogoImageWidget(),
+                            ),
                     ),
                   ),
                 ),

@@ -1,8 +1,10 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:chaperone/services/auth_service.dart';
 import 'package:chaperone/utils/auth_buttons.dart';
 import 'package:chaperone/utils/constants/constants.dart';
 import 'package:chaperone/utils/reusable_functions.dart';
 import 'package:chaperone/utils/reusable_widgets.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 class OnboardingView extends StatefulWidget {
@@ -68,44 +70,62 @@ class _OnboardingViewState extends State<OnboardingView>
           // Background images with crossfade
           Stack(
             children: [
-              Image.network(
-                backgroundImages[currentImageIndex],
-                fit: BoxFit.cover,
-                width: double.infinity,
-                height: double.infinity,
-                loadingBuilder: (context, child, loadingProgress) {
-                  if (loadingProgress == null) return child;
-                  return Container(
-                    color: Colors.black,
-                  );
-                },
-                errorBuilder: (context, error, stackTrace) {
-                  return Container(
-                    color: Colors.black,
-                    child: const Icon(Icons.error),
-                  );
-                },
-              ),
+              kIsWeb
+                  ? Image.network(
+                      backgroundImages[currentImageIndex],
+                      fit: BoxFit.cover,
+                      width: double.infinity,
+                      height: double.infinity,
+                      loadingBuilder: (context, child, loadingProgress) {
+                        if (loadingProgress == null) return child;
+                        return Container(
+                          color: Colors.black,
+                        );
+                      },
+                      errorBuilder: (context, error, stackTrace) {
+                        return Container(
+                          color: Colors.black,
+                          child: const Icon(Icons.error),
+                        );
+                      },
+                    )
+                  : CachedNetworkImage(
+                      imageUrl: backgroundImages[currentImageIndex],
+                      width: double.infinity,
+                      height: double.infinity,
+                      fit: BoxFit.cover,
+                      placeholder: (context, url) =>
+                          const ChaperoneLogoImageWidget(),
+                    ),
               Opacity(
                 opacity: _animation.value,
-                child: Image.network(
-                  backgroundImages[nextImageIndex],
-                  fit: BoxFit.cover,
-                  width: double.infinity,
-                  height: double.infinity,
-                  loadingBuilder: (context, child, loadingProgress) {
-                    if (loadingProgress == null) return child;
-                    return Container(
-                      color: Colors.black,
-                    );
-                  },
-                  errorBuilder: (context, error, stackTrace) {
-                    return Container(
-                      color: Colors.black,
-                      child: const Icon(Icons.error),
-                    );
-                  },
-                ),
+                child: kIsWeb
+                    ? Image.network(
+                        backgroundImages[nextImageIndex],
+                        fit: BoxFit.cover,
+                        width: double.infinity,
+                        height: double.infinity,
+                        loadingBuilder: (context, child, loadingProgress) {
+                          if (loadingProgress == null) return child;
+                          return Container(
+                            color: Colors.black,
+                          );
+                        },
+                        errorBuilder: (context, error, stackTrace) {
+                          return Container(
+                            color: Colors.black,
+                            child: const Icon(Icons.error),
+                          );
+                        },
+                      )
+                    : CachedNetworkImage(
+                        imageUrl: backgroundImages[nextImageIndex],
+                        width: double.infinity,
+                        height: double.infinity,
+                        fit: BoxFit.cover,
+                        placeholder: (context, url) =>
+                            const ChaperoneLogoImageWidget(),
+                      ),
               ),
               // Dark overlay for better text readability
               Container(
@@ -190,7 +210,9 @@ class _OnboardingViewState extends State<OnboardingView>
                       ],
                     ),
                   ),
-                  const LegalLinksWidget(),
+                  kIsWeb
+                      ? const AppStoreButtonsWidget()
+                      : const LegalLinksWidget(),
                   const SizedBox(height: 16),
                 ],
               ),

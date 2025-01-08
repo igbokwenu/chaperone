@@ -1,3 +1,4 @@
+import 'package:chaperone/utils/reusable_functions.dart';
 import 'package:chaperone/views/compliance_views/contact_view.dart';
 import 'package:chaperone/views/compliance_views/privacy_policy_view.dart';
 import 'package:chaperone/views/compliance_views/terms_view.dart';
@@ -65,6 +66,58 @@ class AgreementTextWidget extends StatelessWidget {
         textAlign: TextAlign.center,
         style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
       ),
+    );
+  }
+}
+
+class ChaperoneLogoImageWidget extends StatelessWidget {
+  const ChaperoneLogoImageWidget({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Image.asset(
+      'assets/images/logo.png',
+      height: 400,
+      fit: BoxFit.contain,
+    );
+  }
+}
+
+class AppStoreButtonsWidget extends StatelessWidget {
+  const AppStoreButtonsWidget({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        GestureDetector(
+          onTap: () {
+            MyReusableFunctions.launchCustomUrl(
+                url:
+                    'https://play.google.com/store/apps/details?id=com.increasedw.chaperone');
+          },
+          child: Image.asset(
+            'assets/images/play_store_onlight.png',
+            height: 40,
+            fit: BoxFit.contain,
+          ),
+        ),
+        const SizedBox(width: 20),
+        GestureDetector(
+          onTap: () {
+            MyReusableFunctions.launchCustomUrl(
+                url: 'https://testflight.apple.com/join/rtAUsa3U');
+          },
+          child: Image.asset(
+            'assets/images/app_store_onlight.png',
+            height: 40,
+            fit: BoxFit.contain,
+          ),
+        ),
+      ],
     );
   }
 }

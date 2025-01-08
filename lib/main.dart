@@ -9,6 +9,7 @@ import 'package:chaperone/views/compliance_views/contact_view.dart';
 import 'package:chaperone/views/compliance_views/privacy_policy_view.dart';
 import 'package:chaperone/views/compliance_views/terms_view.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -70,6 +71,8 @@ class AppInitializer extends ConsumerStatefulWidget {
 
 class _AppInitializerState extends ConsumerState<AppInitializer>
     with WidgetsBindingObserver {
+  bool _hasUserConsent = !kIsWeb; // Automatically true for mobile platforms
+
   @override
   void initState() {
     super.initState();
@@ -86,11 +89,10 @@ class _AppInitializerState extends ConsumerState<AppInitializer>
       case AppLifecycleState.inactive:
       case AppLifecycleState.detached:
       case AppLifecycleState.hidden:
-        // App is in background, hidden, or being closed
         audioController.pauseThemeMusic();
       case AppLifecycleState.resumed:
-        // App is in foreground
-        if (ref.read(audioControllerProvider).isThemeMusicEnabled) {
+        if (ref.read(audioControllerProvider).isThemeMusicEnabled &&
+            _hasUserConsent) {
           audioController.playThemeMusic();
         }
     }
@@ -98,7 +100,72 @@ class _AppInitializerState extends ConsumerState<AppInitializer>
 
   Future<void> _initializeAudio() async {
     await ref.read(audioControllerProvider.notifier).initAudio();
-    await ref.read(audioControllerProvider.notifier).playThemeMusic();
+    if (!kIsWeb) {
+      // For mobile platforms, play immediately
+      await ref.read(audioControllerProvider.notifier).playThemeMusic();
+    } else {
+      // For web, show consent dialog
+      _showConsentDialog();
+    }
+  }
+
+  Future<void> _showConsentDialog() async {
+    if (!mounted) return;
+
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Welcome to Chaperone'),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const Text(
+                'By playing Chaperone game, you agree to our Privacy Policy and Terms of Service.',
+              ),
+              const SizedBox(height: 16),
+              Row(
+                children: [
+                  TextButton(
+                    child: const Text('Privacy Policy'),
+                    onPressed: () {
+                      Navigator.pushNamed(context, AppRoutes.privacy);
+                    },
+                  ),
+                  TextButton(
+                    child: const Text('Terms of Service'),
+                    onPressed: () {
+                      Navigator.pushNamed(context, AppRoutes.terms);
+                    },
+                  ),
+                ],
+              ),
+            ],
+          ),
+          actions: [
+            TextButton(
+              child: const Text('Decline'),
+              onPressed: () {
+                setState(() => _hasUserConsent = false);
+                Navigator.of(context).pop();
+              },
+            ),
+            FilledButton(
+              child: const Text('Accept'),
+              onPressed: () async {
+                setState(() => _hasUserConsent = true);
+                Navigator.of(context).pop();
+                await ref
+                    .read(audioControllerProvider.notifier)
+                    .playThemeMusic();
+              },
+            ),
+          ],
+        );
+      },
+    );
   }
 
   @override
