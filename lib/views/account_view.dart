@@ -167,7 +167,7 @@ class AccountView extends ConsumerWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
+          const Text(
             'Account Details',
             style: TextStyle(
               fontWeight: FontWeight.bold,

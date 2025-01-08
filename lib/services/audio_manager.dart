@@ -103,7 +103,7 @@ class AudioController extends StateNotifier<AudioState> {
     if (!state.isThemeMusicEnabled || state.isThemePlaying) return;
 
     try {
-      final playerState = await _themePlayer.state;
+      final playerState = _themePlayer.state;
       if (playerState == PlayerState.playing) return;
 
       await _themePlayer.resume();
@@ -157,6 +157,7 @@ class AudioController extends StateNotifier<AudioState> {
     }
   }
 
+  @override
   void dispose() {
     _themePlayer.dispose();
     _resultPlayer.dispose();

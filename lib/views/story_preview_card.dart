@@ -19,7 +19,7 @@ class StoryPreviewCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final databaseService = DatabaseService(uid: scenario.storyUid!);
+    final databaseService = DatabaseService(uid: scenario.storyUid);
     final firebaseUser = FirebaseAuth.instance.currentUser;
     void startGame(BuildContext context) async {
       await databaseService.updateAnyStoriesData(
@@ -102,7 +102,7 @@ class StoryPreviewCard extends StatelessWidget {
                     child: IconButton(
                       onPressed: () async {
                         if (scenario.favouritesList!
-                            .contains(firebaseUser!.uid)) {
+                            .contains(firebaseUser.uid)) {
                           await databaseService.updateAnyStoriesData(
                             fieldName: storyFavouritesListKey,
                             newValue:

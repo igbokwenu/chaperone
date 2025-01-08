@@ -1,10 +1,8 @@
-import 'package:chaperone/test.dart';
 import 'package:chaperone/utils/constants/constants.dart';
 import 'package:chaperone/views/account_view.dart';
 import 'package:chaperone/views/create_game_onboarding_view.dart';
 import 'package:chaperone/views/discovery_view.dart';
 import 'package:chaperone/views/dynamic_stories_view.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class HomeView extends StatefulWidget {

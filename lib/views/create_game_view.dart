@@ -117,7 +117,7 @@ class CreateGameViewState extends ConsumerState<CreateGameView> {
                           MaterialPageRoute(
                               builder: (context) => DynamicStoriesView(
                                     providerKey: kCurrentGame,
-                                    storyUid: chaperoneUser!.gameBeingBuilt!,
+                                    storyUid: chaperoneUser.gameBeingBuilt!,
                                   )),
                         );
                       },

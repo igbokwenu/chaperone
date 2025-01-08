@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'dart:math';
 
-import 'package:chaperone/models/story_model.dart';
 import 'package:chaperone/providers/stories_provider.dart';
 import 'package:chaperone/views/settings_view.dart';
 import 'package:chaperone/views/story_card_view.dart';

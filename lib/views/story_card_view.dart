@@ -22,7 +22,7 @@ class StoryCard extends StatelessWidget {
     const double kDefaultPadding = 12;
     final authService = AuthService();
     final firebaseUser = FirebaseAuth.instance.currentUser;
-    final databaseService = DatabaseService(uid: scenario.storyUid!);
+    final databaseService = DatabaseService(uid: scenario.storyUid);
     return Container(
       margin: const EdgeInsets.all(6.0),
       decoration: BoxDecoration(
@@ -77,7 +77,7 @@ class StoryCard extends StatelessWidget {
                   child: IconButton(
                     onPressed: () async {
                       if (scenario.favouritesList!
-                          .contains(firebaseUser!.uid)) {
+                          .contains(firebaseUser.uid)) {
                         await databaseService.updateAnyStoriesData(
                           fieldName: storyFavouritesListKey,
                           newValue: FieldValue.arrayRemove([firebaseUser.uid]),
