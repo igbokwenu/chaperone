@@ -187,7 +187,10 @@ class StoryCard extends StatelessWidget {
                         _buildGlossyStat(Icons.visibility_outlined,
                             _formatNumber(scenario.views)),
                         const SizedBox(width: 12),
-                        _buildGlossyStat(Icons.favorite_border,
+                        _buildGlossyStat(
+                            scenario.favouritesList!.contains(firebaseUser.uid)
+                                ? Icons.favorite
+                                : Icons.favorite_outline,
                             _formatNumber(scenario.favouritesList!.length)),
                         const SizedBox(width: 12),
                         _buildGlossyStat(Icons.play_arrow_rounded,

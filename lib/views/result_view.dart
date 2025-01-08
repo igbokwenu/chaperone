@@ -1,4 +1,5 @@
 import 'package:animate_do/animate_do.dart';
+import 'package:chaperone/main.dart';
 import 'package:chaperone/models/story_model.dart';
 import 'package:chaperone/services/audio_manager.dart';
 import 'package:chaperone/services/auth_wrapper.dart';
@@ -342,11 +343,10 @@ class _ResultViewState extends ConsumerState<ResultView>
                           ref
                               .read(audioControllerProvider.notifier)
                               .stopResultMusic();
-                          Navigator.of(context).pushAndRemoveUntil(
+                          Navigator.pushReplacement(
+                            context,
                             MaterialPageRoute(
-                              builder: (context) => const AuthWrapper(),
-                            ),
-                            (route) => false,
+                                builder: (context) => const AppInitializer()),
                           );
                         },
                         child: const Text(
