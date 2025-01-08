@@ -24,6 +24,7 @@ class AccountView extends ConsumerWidget {
     if (authService.isUserAnonymous()) {
       return Center(
         child: Column(
+          spacing: 10,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             const Text(

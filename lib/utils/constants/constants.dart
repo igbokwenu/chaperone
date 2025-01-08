@@ -247,3 +247,12 @@ const String lotteryImageUrl =
     'https://firebasestorage.googleapis.com/v0/b/chaperonegame.firebasestorage.app/o/game_images%2Flottery.jpeg?alt=media&token=13d7859c-122a-4f13-bfe2-01cdf259f996';
 const String smileSuppressionImageUrl =
     'https://console.firebase.google.com/u/0/project/chaperonegame/storage/chaperonegame.firebasestorage.app/files/~2Fgame_images#:~:text=Name-,smile_suppression.jpeg,-Size';
+
+List<String> storyPromptsExamples = [
+  "I used to be bullied as a child, now I suffer with severe anxiety and self esteem issues. Create a game about how childhood bullying can ruin someones life.",
+  "In a world where dreams are currencies, you’re hired to recover a lost memory hidden in a nightmare. Can you navigate surreal landscapes and uncover the truth, or will you keep the power for yourself?",
+  "I invited all my friends and classmates to my birthday party and none of them came. Now I never want to celebrate my birthday ever again! I am devastated.",
+  "You discover an old diary belonging to your estranged grandmother, filled with tales of her forbidden love during a time of war. As you follow her story, you uncover family secrets that could change your life forever.",
+  "Every time you tell a lie, a scar appears on your skin. When a mysterious stranger offers to erase them for a price, you must decide whether to face your truth or pay the ultimate cost.",
+  "Click here to enter your story prompt"
+];

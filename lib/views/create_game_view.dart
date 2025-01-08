@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 
 import 'package:chaperone/providers/user_data_provider.dart';
@@ -20,13 +21,38 @@ class CreateGameView extends ConsumerStatefulWidget {
   ConsumerState<CreateGameView> createState() => CreateGameViewState();
 }
 
-class CreateGameViewState extends ConsumerState<CreateGameView> {
+class CreateGameViewState extends ConsumerState<CreateGameView>
+    with SingleTickerProviderStateMixin {
   final TextEditingController _promptController = TextEditingController();
+  late Timer _timer;
+  int _currentPromptIndex = 0;
 
   String _response = '';
   String _rawResponse = '';
   bool _isLoading = false;
   int minCharacter = 20;
+
+  @override
+  void initState() {
+    super.initState();
+    // Start the timer to cycle through prompts
+    _timer = Timer.periodic(const Duration(seconds: 8), (timer) {
+      setState(() {
+        _currentPromptIndex =
+            (_currentPromptIndex + 1) % storyPromptsExamples.length;
+      });
+    });
+  }
+
+  @override
+  void dispose() {
+    _timer.cancel();
+    _promptController.dispose();
+    super.dispose();
+  }
+
+  // Get current hint text
+  String get _currentHintText => storyPromptsExamples[_currentPromptIndex];
 
   @override
   Widget build(BuildContext context) {
@@ -163,12 +189,18 @@ class CreateGameViewState extends ConsumerState<CreateGameView> {
                     borderRadius: BorderRadius.circular(16),
                   ),
                   child: Padding(
-                    padding: const EdgeInsets.all(16.0),
+                    padding: const EdgeInsets.all(6.0),
                     child: TextField(
                       controller: _promptController,
                       decoration: InputDecoration(
-                        labelText:
-                            'Enter your story prompt (min $minCharacter characters)',
+                        // labelText:
+                        //     'Enter your story prompt (min $minCharacter characters)',
+                        hintText: _currentHintText,
+                        hintMaxLines: 5, // Allow hint text to wrap
+                        hintStyle: TextStyle(
+                          color: Colors.grey[500],
+                          fontSize: 14,
+                        ),
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(12),
                           borderSide: BorderSide.none,
@@ -265,11 +297,5 @@ class CreateGameViewState extends ConsumerState<CreateGameView> {
         ),
       ),
     );
-  }
-
-  @override
-  void dispose() {
-    _promptController.dispose();
-    super.dispose();
   }
 }

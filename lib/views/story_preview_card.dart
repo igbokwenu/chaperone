@@ -29,6 +29,10 @@ class StoryPreviewCard extends StatelessWidget {
         fieldName: storyPlayCountKey,
         newValue: FieldValue.increment(1),
       );
+      await databaseService.updateAnyStoriesData(
+        fieldName: storyBookmarksListKey,
+        newValue: FieldValue.arrayUnion([firebaseUser?.uid]),
+      );
       // Start with the 'start' node of the story
       Navigator.push(
         context,

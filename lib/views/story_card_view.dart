@@ -203,8 +203,12 @@ class StoryCard extends StatelessWidget {
                                 : Icons.favorite_outline,
                             _formatNumber(scenario.favouritesList!.length)),
                         const SizedBox(width: 12),
-                        _buildGlossyStat(Icons.play_arrow_rounded,
-                            _formatNumber(scenario.playCount!)),
+                        _buildGlossyStat(
+                            Icons.play_arrow_rounded,
+                            _formatNumber(scenario.playCount!),
+                            scenario.bookmarksList!.contains(firebaseUser.uid)
+                                ? Colors.blue
+                                : Colors.white70),
                         const Spacer(),
                         if (firebaseUser.email == 'increasedwisdom@gmail.com')
                           IconButton(
@@ -254,13 +258,13 @@ class StoryCard extends StatelessWidget {
     );
   }
 
-  Widget _buildGlossyStat(IconData icon, String value) {
+  Widget _buildGlossyStat(IconData icon, String value, [Color? color]) {
     return Row(
       children: [
         Icon(
           icon,
           size: 20,
-          color: Colors.white70,
+          color: color ?? Colors.white70,
         ),
         const SizedBox(width: 2),
         Text(
