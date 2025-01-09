@@ -72,17 +72,16 @@ class MyReusableFunctions {
   }
 
   static String formatText(String text) {
-  if (text.length > 28) {
-    int mid = text.length ~/ 2;
-    int splitIndex = text.lastIndexOf(' ', mid);
-    if (splitIndex == -1) {
-      splitIndex = mid; // Fallback to a direct split if no space is found
+    if (text.length > 28) {
+      int splitIndex = text.indexOf(' ', 20);
+      if (splitIndex == -1 || splitIndex >= text.length) {
+        splitIndex = text
+            .length; // If no space is found after 22nd character, don't split
+      }
+      return '${text.substring(0, splitIndex).trim()}\n${text.substring(splitIndex).trim()}';
     }
-    return '${text.substring(0, splitIndex).trim()}\n${text.substring(splitIndex).trim()}';
+    return text;
   }
-  return text;
-}
-
 
   // Static method to show custom toast
   static void showCustomToast({

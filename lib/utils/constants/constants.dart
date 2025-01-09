@@ -12,6 +12,7 @@ class AppRoutes {
   static const String privacy = '/privacy';
   static const String terms = '/terms';
   static const String account = '/account';
+  static const String settings = '/settings';
 }
 
 const String logoAssetImageUrlCircular = "assets/images/logo_circular.png";
@@ -116,9 +117,6 @@ const String storyFavouritesListKey = 'favouritesList';
 const String storyDataKey = 'storyData';
 const String storyStoryCreationPromptKey = 'storyCreationPrompt';
 
-const String placeholderImageUrl =
-    'https://firebasestorage.googleapis.com/v0/b/chaperonegame.firebasestorage.app/o/placeholder_images%2Fimage12.png?alt=media&token=b761023d-6840-4495-9cc7-731c17206f2f';
-
 const String createGamePitchText = """
 Step into the exciting world of interactive storytelling! Create your own game about anything! Whether it's a story inspired by true events, an emotional journey from your life, a fantastical fiction, or a topic you're passionate about, the possibilities are endless!
 
@@ -138,19 +136,32 @@ Whether you're looking to heal, entertain, or simply explore your creativity, Ch
 """;
 
 const String chaperoneLogoUrl512 =
-    'https://firebasestorage.googleapis.com/v0/b/chaperonegame.firebasestorage.app/o/branding%2Flogo_only_4x_black_bg_512.png?alt=media&token=38a70e8a-a1fb-494f-81de-22f7fa013453';
+    'https://chaperonegame.s3.us-east-1.amazonaws.com/logo/logo_only_4x_black_bg_512.png';
 
 const String guyImageUrl =
-    'https://firebasestorage.googleapis.com/v0/b/chaperonegame.firebasestorage.app/o/placeholder_images%2Fimage10.png?alt=media&token=73ff6db0-8a45-421f-8774-a73e3ac37749';
+    'https://chaperonegame.s3.us-east-1.amazonaws.com/placeholder_images/image10.png';
 const String blackLadyImageUrl =
-    'https://firebasestorage.googleapis.com/v0/b/chaperonegame.firebasestorage.app/o/placeholder_images%2Fimage9.png?alt=media&token=3325b642-0ccf-419f-b6f7-2453a3844359';
+    'https://chaperonegame.s3.us-east-1.amazonaws.com/placeholder_images/image9.png';
 const String whiteLadyImageUrl =
-    'https://firebasestorage.googleapis.com/v0/b/chaperonegame.firebasestorage.app/o/placeholder_images%2Fimage2.png?alt=media&token=4b8b52c0-34fe-40cb-b6fb-374c717d89c0';
+    'https://chaperonegame.s3.us-east-1.amazonaws.com/placeholder_images/image2.png';
 const String dramaticImageUrl =
-    'https://firebasestorage.googleapis.com/v0/b/chaperonegame.firebasestorage.app/o/placeholder_images%2Fimage8.png?alt=media&token=3aa283e1-1199-423f-933a-0d90e179154d';
+    'https://chaperonegame.s3.us-east-1.amazonaws.com/placeholder_images/image8.png';
 
-const String bg3Gif =
-    'https://firebasestorage.googleapis.com/v0/b/chaperonegame.firebasestorage.app/o/branding%2Fbg3.gif?alt=media&token=027065fa-e3df-466d-93cb-8743dee47799';
+const String gamePlaceholderBg =
+    'https://chaperonegame.s3.us-east-1.amazonaws.com/gifs/bg3.gif';
+
+const String resultPageImageUrl =
+    'https://chaperonegame.s3.us-east-1.amazonaws.com/placeholder_images/image7.png';
+const String createGameImageUrl =
+    'https://chaperonegame.s3.us-east-1.amazonaws.com/placeholder_images/image11.png';
+const String str3 = '';
+const String str4 = '';
+const String str5 = '';
+const String str6 = '';
+const String str7 = '';
+const String str8 = '';
+const String str9 = '';
+const String str10 = '';
 
 class AppStrings {
   static const String privacyPolicyText = """
@@ -242,13 +253,6 @@ const String kCurrentGame = 'currentGame';
 const String kIsFavorite = 'isFavorite';
 const String kByAuthor = 'byAuthor';
 const String kStoriesDefaultEmptyMessage = 'No stories found';
-
-const String goldenYearsImageUrl =
-    'https://firebasestorage.googleapis.com/v0/b/chaperonegame.firebasestorage.app/o/game_images%2Fgolden_years.jpeg?alt=media&token=a5531ae2-c4b8-4953-8b71-f62e6fbc91f7';
-const String lotteryImageUrl =
-    'https://firebasestorage.googleapis.com/v0/b/chaperonegame.firebasestorage.app/o/game_images%2Flottery.jpeg?alt=media&token=13d7859c-122a-4f13-bfe2-01cdf259f996';
-const String smileSuppressionImageUrl =
-    'https://console.firebase.google.com/u/0/project/chaperonegame/storage/chaperonegame.firebasestorage.app/files/~2Fgame_images#:~:text=Name-,smile_suppression.jpeg,-Size';
 
 List<String> storyPromptsExamples = [
   "I used to be bullied as a child, now I suffer with severe anxiety and self esteem issues. Create a game about how childhood bullying can ruin someones life.",

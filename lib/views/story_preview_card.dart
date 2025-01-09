@@ -57,7 +57,8 @@ class StoryPreviewCard extends StatelessWidget {
                   const Spacer(),
                   Center(
                     child: Text(
-                      scenario.storyData![storyTitleKey],
+                      MyReusableFunctions.formatText(
+                          scenario.storyData![storyTitleKey]),
                       style: const TextStyle(
                         fontSize: 15,
                         fontWeight: FontWeight.bold,
@@ -67,7 +68,9 @@ class StoryPreviewCard extends StatelessWidget {
                   const Spacer(),
                   IconButton(
                     icon: const Icon(Icons.more_horiz),
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.pushNamed(context, AppRoutes.settings);
+                    },
                   ),
                 ],
               ),

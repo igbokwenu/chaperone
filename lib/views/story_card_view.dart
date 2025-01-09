@@ -10,7 +10,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:marquee/marquee.dart';
 
 class StoryCard extends StatelessWidget {
   final StoryModel scenario;
@@ -140,38 +139,15 @@ class StoryCard extends StatelessWidget {
                                 width: 1,
                               ),
                             ),
-                            child: scenario.storyData![storyTitleKey].length >
-                                    28
-                                ? SizedBox(
-                                    height: 20,
-                                    child: Marquee(
-                                      text: scenario.storyData![storyTitleKey],
-                                      style: const TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.w600,
-                                      ),
-                                      scrollAxis: Axis.horizontal,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.center,
-                                      blankSpace: 20.0,
-                                      velocity: 50.0,
-                                      startPadding: 10.0,
-                                      accelerationDuration:
-                                          Duration(seconds: 1),
-                                      decelerationDuration:
-                                          Duration(milliseconds: 500),
-                                    ),
-                                  )
-                                : Text(
-                                    scenario.storyData![storyTitleKey],
-                                    style: const TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.w600,
-                                    ),
-                                    textAlign: TextAlign.center,
-                                  ),
+                            child: Text(
+                              MyReusableFunctions.formatText(
+                                  scenario.storyData![storyTitleKey]),
+                              style: const TextStyle(
+                                color: Colors.white,
+                                fontSize: 16,
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
                           ),
                           const SizedBox(width: 4),
                           Container(
@@ -289,7 +265,10 @@ class StoryCard extends StatelessWidget {
                               borderRadius: BorderRadius.circular(20),
                             ),
                           ),
-                          child: const Text('Play'),
+                          child: Text(
+                              scenario.bookmarksList!.contains(firebaseUser.uid)
+                                  ? 'Replay'
+                                  : 'Play '),
                         ),
                       ],
                     ),

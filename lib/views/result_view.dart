@@ -184,7 +184,7 @@ class _ResultViewState extends ConsumerState<ResultView>
                     decoration: const BoxDecoration(
                       image: DecorationImage(
                         image: NetworkImage(
-                          'https://firebasestorage.googleapis.com/v0/b/chaperonegame.firebasestorage.app/o/placeholder_images%2Fimage7.png?alt=media&token=00568f96-1310-4e57-9dbb-8c324c44c0ff',
+                          resultPageImageUrl,
                         ),
                         fit: BoxFit.cover,
                         colorFilter: ColorFilter.mode(

@@ -253,7 +253,7 @@ class DatabaseService {
         storyIsBookmarkedKey: false,
         storySynopsisKey: '',
         storyQuestion1Key: '',
-        storyQuestionOneImageUrlKey: bg3Gif,
+        storyQuestionOneImageUrlKey: gamePlaceholderBg,
         storyAnswer1aKey: '',
         storyAnswer1bKey: '',
         storyLikeCountKey: 0,

@@ -8,6 +8,7 @@ import 'package:chaperone/views/auth_views/signup_view.dart';
 import 'package:chaperone/views/compliance_views/contact_view.dart';
 import 'package:chaperone/views/compliance_views/privacy_policy_view.dart';
 import 'package:chaperone/views/compliance_views/terms_view.dart';
+import 'package:chaperone/views/settings_view.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -56,6 +57,7 @@ class MyApp extends StatelessWidget {
           AppRoutes.contact: (context) => const ContactView(),
           AppRoutes.privacy: (context) => const PrivacyPolicyView(),
           AppRoutes.terms: (context) => const TermsView(),
+          AppRoutes.settings: (context) => const SettingsScreen(),
         },
       ),
     );

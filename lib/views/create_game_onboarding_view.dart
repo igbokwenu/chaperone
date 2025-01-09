@@ -80,7 +80,7 @@ class CreateGameOnboardingView extends StatelessWidget {
                               width: double.infinity,
                               child: _AnimatedBackgroundImage(
                                 imageUrl:
-                                    'https://firebasestorage.googleapis.com/v0/b/chaperonegame.firebasestorage.app/o/placeholder_images%2Fimage11.png?alt=media&token=971206dc-72f9-4d68-840c-eeffee94da73',
+                                    createGameImageUrl,
                               ),
                             ),
 
