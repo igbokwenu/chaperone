@@ -1,5 +1,4 @@
 import 'package:animate_do/animate_do.dart';
-import 'package:chaperone/main.dart';
 import 'package:chaperone/models/story_model.dart';
 import 'package:chaperone/services/audio_manager.dart';
 import 'package:chaperone/services/auth_wrapper.dart';

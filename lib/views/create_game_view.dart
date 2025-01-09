@@ -2,7 +2,6 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:chaperone/providers/user_data_provider.dart';
-import 'package:chaperone/services/auth_wrapper.dart';
 import 'package:chaperone/services/database_service.dart';
 import 'package:chaperone/services/gemini_ai_service.dart';
 import 'package:chaperone/utils/constants/animated_tip_widget.dart';

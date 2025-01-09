@@ -28,6 +28,7 @@ dependencies:
   audioplayers: ^6.1.0
   url_strategy: ^0.3.0
   amplify_api: ^2.5.0
+  marquee: ^2.3.0
 
 dev_dependencies:
   flutter_test:
