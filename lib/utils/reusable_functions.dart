@@ -58,6 +58,7 @@ class MyReusableFunctions {
     }
   }
 
+//I use this to show sensitive widgets only to users with administrative access
   static bool isAdmin(String value) {
     return adminsList.contains(value);
   }

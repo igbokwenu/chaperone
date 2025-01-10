@@ -212,7 +212,8 @@ class StoryCard extends StatelessWidget {
                                 : Colors.white70),
                         const Spacer(),
                         if (MyReusableFunctions.isAdmin(
-                            firebaseUser.email ?? ''))
+                                firebaseUser.email ?? '') ||
+                            scenario.authorUid == firebaseUser.uid)
                           IconButton(
                             onPressed: () async {
                               MyReusableFunctions.showCustomDialog(
@@ -266,9 +267,15 @@ class StoryCard extends StatelessWidget {
                             ),
                           ),
                           child: Text(
-                              scenario.bookmarksList!.contains(firebaseUser.uid)
-                                  ? 'Replay'
-                                  : 'Play '),
+                            scenario.bookmarksList!.contains(firebaseUser.uid)
+                                ? 'Replay'
+                                : 'Play ',
+                            style: TextStyle(
+                                fontSize: scenario.bookmarksList!
+                                        .contains(firebaseUser.uid)
+                                    ? 12
+                                    : 14),
+                          ),
                         ),
                       ],
                     ),

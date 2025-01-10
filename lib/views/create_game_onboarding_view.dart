@@ -1,6 +1,7 @@
 import 'package:chaperone/services/auth_service.dart';
 import 'package:chaperone/utils/constants/constants.dart';
 import 'package:chaperone/utils/reusable_functions.dart';
+import 'package:chaperone/utils/reusable_widgets.dart';
 import 'package:chaperone/views/create_game_view.dart';
 import 'package:chaperone/views/home_view.dart';
 import 'package:flutter/material.dart';
@@ -12,6 +13,18 @@ class CreateGameOnboardingView extends StatelessWidget {
   Widget build(BuildContext context) {
     final authService = AuthService();
     return Scaffold(
+      appBar: AppBar(
+        title: const Center(
+          child: Text(
+            'The World Awaits',
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              fontSize: 20,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+        ),
+      ),
       backgroundColor: Colors.white,
       body: SafeArea(
         child: Column(
@@ -21,41 +34,36 @@ class CreateGameOnboardingView extends StatelessWidget {
                 child: Column(
                   children: [
                     // Top Navigation Bar
-                    Padding(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 16.0,
-                        vertical: 8.0,
-                      ),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          IconButton(
-                            icon: const Icon(Icons.arrow_back),
-                            onPressed: () {
-                              Navigator.of(context).pushAndRemoveUntil(
-                                MaterialPageRoute(
-                                  builder: (context) => const HomeView(),
-                                ),
-                                (route) => false,
-                              );
-                            },
-                          ),
-                          const Spacer(),
-                          const Text(
-                            'The World Awaits',
-                            style: TextStyle(
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          const Spacer(),
-                          IconButton(
-                            icon: const Icon(Icons.more_horiz),
-                            onPressed: () {},
-                          ),
-                        ],
-                      ),
-                    ),
+                    // Padding(
+                    //   padding: const EdgeInsets.symmetric(
+                    //     horizontal: 16.0,
+                    //     vertical: 8.0,
+                    //   ),
+                    //   child: Row(
+                    //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    //     children: [
+                    //       // IconButton(
+                    //       //   icon: const Icon(Icons.arrow_back),
+                    //       //   onPressed: () {
+
+                    //       //   },
+                    //       // ),
+                    //       const Spacer(),
+                    //       const Text(
+                    //         'The World Awaits',
+                    //         style: TextStyle(
+                    //           fontSize: 20,
+                    //           fontWeight: FontWeight.bold,
+                    //         ),
+                    //       ),
+                    //       const Spacer(),
+                    //       IconButton(
+                    //         icon: const Icon(Icons.more_horiz),
+                    //         onPressed: () {},
+                    //       ),
+                    //     ],
+                    //   ),
+                    // ),
 
                     // Game Card
                     Container(
@@ -79,8 +87,7 @@ class CreateGameOnboardingView extends StatelessWidget {
                               height: 400,
                               width: double.infinity,
                               child: _AnimatedBackgroundImage(
-                                imageUrl:
-                                    createGameImageUrl,
+                                imageUrl: createGameImageUrl,
                               ),
                             ),
 
@@ -131,7 +138,7 @@ class CreateGameOnboardingView extends StatelessWidget {
                                       color: Colors.white,
                                       borderRadius: BorderRadius.circular(25),
                                     ),
-                                    child: _AnimatedButtonText(),
+                                    child: const AnimatedButtonText(),
                                   ),
                                 ),
                               ),
@@ -204,7 +211,7 @@ class CreateGameOnboardingView extends StatelessWidget {
                                       );
                                     }
                                   },
-                                  child: _AnimatedButtonText(),
+                                  child: const AnimatedButtonText(),
                                 ),
                               ]);
                         },
@@ -298,57 +305,6 @@ class _AnimatedBackgroundImageState extends State<_AnimatedBackgroundImage>
           ),
         );
       },
-    );
-  }
-}
-
-class _AnimatedButtonText extends StatefulWidget {
-  @override
-  _AnimatedButtonTextState createState() => _AnimatedButtonTextState();
-}
-
-class _AnimatedButtonTextState extends State<_AnimatedButtonText> {
-  bool _showFirstText = true;
-
-  @override
-  void initState() {
-    super.initState();
-    _startAnimation();
-  }
-
-  void _startAnimation() {
-    Future.delayed(const Duration(seconds: 5), () {
-      if (mounted) {
-        setState(() {
-          _showFirstText = !_showFirstText;
-        });
-        _startAnimation();
-      }
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return AnimatedCrossFade(
-      firstChild: const Text(
-        'Create A Game',
-        style: TextStyle(
-          color: Colors.black87,
-          fontSize: 16,
-          fontWeight: FontWeight.w500,
-        ),
-      ),
-      secondChild: const Text(
-        'Tell Your Story',
-        style: TextStyle(
-          color: Colors.black87,
-          fontSize: 16,
-          fontWeight: FontWeight.w500,
-        ),
-      ),
-      crossFadeState:
-          _showFirstText ? CrossFadeState.showFirst : CrossFadeState.showSecond,
-      duration: const Duration(milliseconds: 500),
     );
   }
 }

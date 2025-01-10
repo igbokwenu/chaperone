@@ -3,6 +3,8 @@ import 'package:chaperone/models/story_model.dart';
 import 'package:chaperone/services/audio_manager.dart';
 import 'package:chaperone/services/auth_wrapper.dart';
 import 'package:chaperone/utils/constants/constants.dart';
+import 'package:chaperone/utils/reusable_widgets.dart';
+import 'package:chaperone/views/create_game_onboarding_view.dart';
 import 'package:chaperone/views/settings_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -355,6 +357,29 @@ class _ResultViewState extends ConsumerState<ResultView>
                             fontSize: 16,
                           ),
                         ),
+                      ),
+                      const SizedBox(height: 12),
+                      ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.green,
+                          minimumSize: const Size(double.infinity, 50),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(25),
+                          ),
+                        ),
+                        onPressed: () {
+                          ref
+                              .read(audioControllerProvider.notifier)
+                              .stopResultMusic();
+                          Navigator.pop(context);
+                          Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) =>
+                                    const CreateGameOnboardingView()),
+                          );
+                        },
+                        child: const AnimatedButtonText(),
                       ),
                       const SizedBox(height: 12),
                       TextButton(

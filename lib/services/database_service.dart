@@ -217,20 +217,20 @@ class DatabaseService {
       }
 
       // Determine user device
-      String userDevice;
+      String authorDevice;
       if (kIsWeb) {
-        userDevice = 'Web';
+        authorDevice = 'Web';
       } else {
         // Use defaultTargetPlatform to determine the platform in non-web environments
         switch (defaultTargetPlatform) {
           case TargetPlatform.android:
-            userDevice = 'Android';
+            authorDevice = 'Android';
             break;
           case TargetPlatform.iOS:
-            userDevice = 'iOS';
+            authorDevice = 'iOS';
             break;
           default:
-            userDevice = 'Unknown';
+            authorDevice = 'Unknown';
         }
       }
 
@@ -292,7 +292,7 @@ class DatabaseService {
         userAiTextUsageCount: 0,
         userAiGeneralMediaUsageCount: 0,
         userAiGeneralTextUsageCount: 0,
-        userDevice: userDevice,
+        userDevice: authorDevice,
         userTimeStamp: FieldValue.serverTimestamp(),
         usersMessagingToken: [],
       });

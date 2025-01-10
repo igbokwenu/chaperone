@@ -4,6 +4,7 @@ import 'package:chaperone/services/database_service.dart';
 import 'package:chaperone/utils/constants/constants.dart';
 import 'package:chaperone/utils/reusable_functions.dart';
 import 'package:chaperone/utils/reusable_widgets.dart';
+import 'package:chaperone/views/admin_view.dart';
 import 'package:chaperone/views/question_card_view.dart';
 import 'package:chaperone/views/result_view.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -243,6 +244,22 @@ class StoryPreviewCard extends StatelessWidget {
                             _buildStat(Icons.play_circle,
                                 _formatNumber(scenario.playCount!)),
                             const Spacer(),
+                            if (MyReusableFunctions.isAdmin(
+                                firebaseUser.email ?? ''))
+                              IconButton(
+                                  onPressed: () {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) =>
+                                            AdminView(scenario: scenario),
+                                      ),
+                                    );
+                                  },
+                                  icon: const Icon(
+                                    Icons.info,
+                                    color: Colors.yellow,
+                                  )),
                             ElevatedButton(
                               onPressed: () => startGame(context),
                               style: ElevatedButton.styleFrom(

@@ -33,6 +33,10 @@ class StoryModel {
   final String? authorUid;
   final String? authorUsername;
   final String? authorDisplayname;
+  final String? authorCountry;
+  final String? authorState;
+  final String? authorDevice;
+
   final bool? forMale;
   final bool? forFemale;
   final List<String>? followers;
@@ -81,6 +85,9 @@ class StoryModel {
     this.authorUsername,
     this.authorDisplayname,
     this.storyCreationPrompt,
+    this.authorCountry,
+    this.authorState,
+    this.authorDevice,
   });
 
   factory StoryModel.fromMap(Map<String, dynamic>? data) {
@@ -124,6 +131,9 @@ class StoryModel {
       authorUsername: data?[storyAuthorUsernameKey],
       authorDisplayname: data?[storyAuthorDisplayNameKey],
       storyCreationPrompt: data?[storyStoryCreationPromptKey],
+      authorCountry: data?[userCountry],
+      authorState: data?[userState],
+      authorDevice: data?[userDevice],
     );
   }
 }

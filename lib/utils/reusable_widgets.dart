@@ -122,3 +122,56 @@ class AppStoreButtonsWidget extends StatelessWidget {
     );
   }
 }
+
+class AnimatedButtonText extends StatefulWidget {
+  const AnimatedButtonText({super.key});
+
+  @override
+  AnimatedButtonTextState createState() => AnimatedButtonTextState();
+}
+
+class AnimatedButtonTextState extends State<AnimatedButtonText> {
+  bool _showFirstText = true;
+
+  @override
+  void initState() {
+    super.initState();
+    _startAnimation();
+  }
+
+  void _startAnimation() {
+    Future.delayed(const Duration(seconds: 5), () {
+      if (mounted) {
+        setState(() {
+          _showFirstText = !_showFirstText;
+        });
+        _startAnimation();
+      }
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return AnimatedCrossFade(
+      firstChild: const Text(
+        'Create A Game',
+        style: TextStyle(
+          color: Colors.black87,
+          fontSize: 16,
+          fontWeight: FontWeight.w500,
+        ),
+      ),
+      secondChild: const Text(
+        'Tell Your Story',
+        style: TextStyle(
+          color: Colors.black87,
+          fontSize: 16,
+          fontWeight: FontWeight.w500,
+        ),
+      ),
+      crossFadeState:
+          _showFirstText ? CrossFadeState.showFirst : CrossFadeState.showSecond,
+      duration: const Duration(milliseconds: 500),
+    );
+  }
+}

@@ -3,6 +3,7 @@ import 'package:chaperone/firebase_options.dart';
 import 'package:chaperone/services/auth_service.dart';
 import 'package:chaperone/services/auth_wrapper.dart';
 import 'package:chaperone/utils/constants/constants.dart';
+import 'package:chaperone/views/admin_view.dart';
 import 'package:chaperone/views/auth_views/forgot_password_view.dart';
 import 'package:chaperone/views/auth_views/signup_view.dart';
 import 'package:chaperone/views/compliance_views/contact_view.dart';
